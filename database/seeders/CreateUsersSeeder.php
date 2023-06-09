@@ -50,7 +50,7 @@ class CreateUsersSeeder extends Seeder
  
                 'email'=>'deliver@deliver.com',
  
-                'type'=> 2,
+                'type'=> 3,
  
                 'password'=> bcrypt('123456'),
  
@@ -61,7 +61,7 @@ class CreateUsersSeeder extends Seeder
 
                'email'=>'account@account.com',
 
-               'type'=> 3,
+               'type'=> 2,
 
                'password'=> bcrypt('123456'),
 
