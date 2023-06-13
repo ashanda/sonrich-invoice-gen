@@ -12,7 +12,7 @@
         </div>
     @endif
 
-    <table class="table">
+    <table id="dataTable" class="table">
         <thead>
             <tr>
                 <th>ID</th>

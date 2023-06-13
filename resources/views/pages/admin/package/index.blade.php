@@ -5,7 +5,7 @@
     <div class="container">
         <h1>Product Packages</h1>
         <a href="{{ route('product_packages.create') }}" class="btn btn-primary mb-2">Create New Product Package</a>
-        <table class="table">
+        <table id="dataTable" class="table">
             <thead>
                 <tr>
                     <th>ID</th>
