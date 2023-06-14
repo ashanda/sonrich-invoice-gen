@@ -7,36 +7,36 @@
     <a href="{{ route('staff.create') }}" class="btn btn-primary mb-3">Create Staff Member</a>
 
     @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            {{ $message }}
-        </div>
+    <div class="alert alert-success">
+        {{ $message }}
+    </div>
     @endif
-
-    <table id="dataTable" class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Type</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($staff as $member)
+    <div class="table-responsive">
+        <table id="dataTable" class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($staff as $member)
                 <tr>
                     <td>{{ $member->id }}</td>
                     <td>{{ $member->name }}</td>
                     <td>{{ $member->email }}</td>
                     @php
                     if($member->type == 'admin'){
-                        $role = 'Administrator';
+                    $role = 'Administrator';
                     }elseif ($member->type == 'deliver') {
-                        $role = 'Delivery Department';
+                    $role = 'Delivery Department';
                     }elseif ($member->type == 'manager') {
-                        $role = 'Account Department';
+                    $role = 'Account Department';
                     }else{
-                        $role = 'Agent';
+                    $role = 'Agent';
                     }
                     @endphp
                     <td>{{ $role }}</td>
@@ -49,10 +49,11 @@
                         </form>
                     </td>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+                @endforeach
+            </tbody>
+        </table>
     </div>
+</div>
 
 
 @endsection
