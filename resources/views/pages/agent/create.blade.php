@@ -2,95 +2,95 @@
 
 @section('content')
 <div class="content">
-    <div class="container">
-<form id="invoiceForm" action="{{ route('invoice.store') }}" enctype="multipart/form-data" method="POST">
-    @csrf
-    @php
-        $prefix = 'INV-';
-        $randomNumber = mt_rand(1000, 9999);
-        $uniqueNumber = $prefix . time() . $randomNumber;
+  <div class="container-fluid">
+    <form id="invoiceForm" action="{{ route('invoice.store') }}" enctype="multipart/form-data" method="POST">
+      @csrf
+      @php
+      $prefix = 'INV-';
+      $randomNumber = mt_rand(1000, 9999);
+      $uniqueNumber = $prefix . time() . $randomNumber;
 
-    @endphp
+      @endphp
 
-    <div class="form-group">
+      <div class="form-group">
         <label for="invoiceNo">Invoice No:</label>
         <input type="text" name="invoiceNo" id="invoiceNo" class="form-control" value="{{  $uniqueNumber  }}" readonly>
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label for="sriNo1">SRI No:</label>
         <input type="text" name="sriNo1" id="sriNo1" class="form-control">
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label for="sriNo2">SRI No:</label>
         <input type="text" name="sriNo2" id="sriNo2" class="form-control">
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label for="sriNo3">SRI No:</label>
         <input type="text" name="sriNo3" id="sriNo3" class="form-control">
-    </div>
-    <div class="form-group">
+      </div>
+      <div class="form-group">
         <label for="futurePlan">Future Plan:</label>
         <div id="futurePlanFields">
-            <!-- Future plan input fields will be dynamically added here -->
+          <!-- Future plan input fields will be dynamically added here -->
         </div>
         <button type="button" id="addFuturePlan" class="btn btn-secondary">Add Future Plan</button>
-    </div>
-    <div class="form-group">
+      </div>
+      <div class="form-group">
         <label for="customerName">Customer Name:</label>
         <input type="text" name="customerName" id="customerName" class="form-control">
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label for="customerAddress">Customer Address:</label>
         <textarea name="customerAddress" id="customerAddress" class="form-control"></textarea>
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label for="customerDistrict">District:</label>
         <input type="text" name="customerDistrict" id="customerDistrict" class="form-control">
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label for="mobileNo1">Mobile No:</label>
         <input type="text" name="mobileNo1" id="mobileNo1" class="form-control">
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label for="mobileNo2">Mobile No:</label>
         <input type="text" name="mobileNo2" id="mobileNo2" class="form-control">
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label for="mainProductPackage">Main Product Package:</label>
         <select name="mainProductPackage" id="mainProductPackage" class="form-control">
-            <option value="N/A" data-main="{{ '0.00' }}">N/A</option>
-            <!-- Add other package options here -->
-            @foreach ( $packages_main as $package_main)
-            <option value="{{ $package_main->id }}" data-main="{{ $package_main->amount }}">{{ $package_main->title }}</option>
-            @endforeach
+          <option value="N/A" data-main="{{ '0.00' }}">N/A</option>
+          <!-- Add other package options here -->
+          @foreach ( $packages_main as $package_main)
+          <option value="{{ $package_main->id }}" data-main="{{ $package_main->amount }}">{{ $package_main->title }}</option>
+          @endforeach
         </select>
-    </div>
-    
-    <div class="form-group">
+      </div>
+
+      <div class="form-group">
         <label for="futureProductPackages">Future Product Packages:</label>
         <select name="futureProductPackages[]" id="futureProductPackages" class="form-control" multiple>
-            <option value="N/A" data-future="{{ "0.00" }}">N/A</option>
-            @foreach ( $packages_future as $package_future)
-            <option value="{{ $package_future->id }}" data-future="{{ $package_future->amount }}">{{ $package_future->title }}</option>
-            @endforeach
+          <option value="N/A" data-future="{{ "0.00" }}">N/A</option>
+          @foreach ( $packages_future as $package_future)
+          <option value="{{ $package_future->id }}" data-future="{{ $package_future->amount }}">{{ $package_future->title }}</option>
+          @endforeach
         </select>
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label for="amount">Amount:</label>
         <input type="text" name="amount" id="amount" class="form-control" readonly>
-    </div>
+      </div>
 
-    
-    <div class="form-group">
+
+      <div class="form-group">
         <label for="attachments1">Attachments 01:</label>
         <div class="custom-file">
           <input type="file" name="attachments1" id="attachments1" class="custom-file-input" onchange="displayFileName(this, 'attachments1Label')">
@@ -98,7 +98,7 @@
         </div>
         <span id="attachments1FileName"></span>
       </div>
-      
+
       <div class="form-group">
         <label for="attachments2">Attachments 02:</label>
         <div class="custom-file">
@@ -107,7 +107,7 @@
         </div>
         <span id="attachments2FileName"></span>
       </div>
-      
+
       <div class="form-group">
         <label for="attachments3">Attachments 03:</label>
         <div class="custom-file">
@@ -116,7 +116,7 @@
         </div>
         <span id="attachments3FileName"></span>
       </div>
-      
+
       <div class="form-group">
         <label for="attachments4">Attachments 04:</label>
         <div class="custom-file">
@@ -125,7 +125,7 @@
         </div>
         <span id="attachments4FileName"></span>
       </div>
-      
+
       <div class="form-group">
         <label for="attachments5">Attachments 05:</label>
         <div class="custom-file">
@@ -136,15 +136,15 @@
       </div>
       <button class="btn btn-primary" id="saveButton" data-confirm-save="true">Save</button>
 
-    <button type="button" id="noButton" class="btn btn-secondary">NO</button>
-</form>
-</div>
+      <button type="button" id="noButton" class="btn btn-secondary">NO</button>
+    </form>
+  </div>
 </div>
 @endsection
 
 @section('script')
 <script type="text/javascript">
-$(document).ready(function() {
+  $(document).ready(function() {
     $('.custom-file-input').on('change', function() {
       var fileName = $(this).val().split('\\').pop();
       $(this).next('.custom-file-label').addClass('selected').html(fileName);
@@ -152,10 +152,10 @@ $(document).ready(function() {
   });
 </script>
 <script type="text/javascript">
-$(document).ready(function() {
+  $(document).ready(function() {
     $('#saveButton').on('click', function(e) {
       e.preventDefault();
-  
+
       Swal.fire({
         title: 'Confirm Save',
         text: 'Are you sure you want to save?',
@@ -171,7 +171,5 @@ $(document).ready(function() {
       });
     });
   });
-  </script>
+</script>
 @endsection
-
-

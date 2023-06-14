@@ -1,26 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-    <div class="container-fluid">
-      <div class="navbar-wrapper">
-        <div class="navbar-toggle">
-          <button type="button" class="navbar-toggler">
-            <span class="navbar-toggler-bar bar1"></span>
-            <span class="navbar-toggler-bar bar2"></span>
-            <span class="navbar-toggler-bar bar3"></span>
-          </button>
-        </div>
-        @php
-            if(Auth::user()->type == 'admin'){
-                $role = 'Administrator';
-            }elseif (Auth::user()->type == 'deliver') {
-                $role = 'Delivery Department';
-            }elseif (Auth::user()->type == 'manager') {
-                $role = 'Account Department';
-            }else{
-                $role = 'Agent';
-            }
-        @endphp
-        <a class="navbar-brand" href="javascript:;">Hi ..{{ $role }}</a>
+  <div class="container-fluid">
+    <div class="navbar-wrapper">
+      <div class="navbar-toggle">
+        <button type="button" class="navbar-toggler">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
       </div>
+      @php
+      if(Auth::user()->type == 'admin'){
+      $role = 'Administrator';
+      }elseif (Auth::user()->type == 'deliver') {
+      $role = 'Delivery Department';
+      }elseif (Auth::user()->type == 'manager') {
+      $role = 'Account Department';
+      }else{
+      $role = 'Agent';
+      }
+      @endphp
+      <a class="navbar-brand" href="javascript:;">Hi.. {{ $role }}</a>
+    </div>
+    <div class="d-none">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-bar navbar-kebab"></span>
         <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -70,4 +71,5 @@
         </ul>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>

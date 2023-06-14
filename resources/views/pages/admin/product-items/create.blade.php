@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="content">
-    <div class="container">
+    <div class="container-fluid">
         <h3>Create Product Item</h3>
 
         <form action="{{ route('product_items.store') }}" method="POST">

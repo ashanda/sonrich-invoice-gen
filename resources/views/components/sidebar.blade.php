@@ -58,19 +58,19 @@
       
 
 
-      <li>
+      <!-- <li>
         <a href="./notifications.html">
           <i class="nc-icon nc-bell-55"></i>
           <p>Notifications</p>
         </a>
-      </li>
+      </li> -->
       <li>
         <a href="{{ route('staff.index') }}">
           <i class="nc-icon nc-single-02"></i>
           <p>Staff</p>
         </a>
       </li>
-      <li>
+      <!-- <li>
         <a href="./tables.html">
           <i class="nc-icon nc-tile-56"></i>
           <p>Table List</p>
@@ -81,7 +81,7 @@
           <i class="nc-icon nc-caps-small"></i>
           <p>Typography</p>
         </a>
-      </li>
+      </li> -->
       @endif
         @if (Auth::user()->type == 'admin' || Auth::user()->type == 'deliver' || Auth::user()->type == 'manager' || Auth::user()->type == 'user')
         <li>
@@ -94,12 +94,12 @@
           </a>
         </li>
         @endif
-      <li class="active-pro">
+      <!-- <li class="active-pro">
         <a href="./upgrade.html">
           <i class="nc-icon nc-spaceship"></i>
           <p>Upgrade to PRO</p>
         </a>
-      </li>
+      </li> -->
       
     </ul>
   </div>
