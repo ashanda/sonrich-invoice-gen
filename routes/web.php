@@ -7,6 +7,8 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ProductItemController;
 use App\Http\Controllers\ProductPackageController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ReportController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,6 +68,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::resource('admin/product_items', ProductItemController::class);
     Route::resource('product_packages', ProductPackageController::class);
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
+    Route::get('/reports', [ReportController::class, 'report'])->name('admin.report');
 });
 
 /*------------------------------------------
@@ -97,6 +100,7 @@ Route::middleware(['auth', 'user-access:deliver'])->group(function () {
 
     Route::get('/deliver/home', [HomeController::class, 'deliverHome'])->name('deliver.home');
     Route::put('deliver/{id}', [InvoiceController::class, 'delive_update'])->name('deliver.update');
+    Route::get('/deliver/print/{id}', [InvoiceController::class, 'print_show'])->name('print_show');
 });
 
 

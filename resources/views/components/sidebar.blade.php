@@ -56,20 +56,18 @@
         </a>
       </li>
       
-
-
-      <!-- <li>
-        <a href="./notifications.html">
-          <i class="nc-icon nc-bell-55"></i>
-          <p>Notifications</p>
-        </a>
-      </li> -->
       <li>
         <a href="{{ route('staff.index') }}">
           <i class="nc-icon nc-single-02"></i>
           <p>Staff</p>
         </a>
       </li>
+      <li>
+        <a href="{{ route('admin.report') }}">
+          <i class="nc-icon nc-bell-55"></i>
+          <p>Reports</p>
+        </a>
+      </li> 
       <!-- <li>
         <a href="./tables.html">
           <i class="nc-icon nc-tile-56"></i>

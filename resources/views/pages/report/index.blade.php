@@ -9,7 +9,7 @@
                 <div class="card card-plain">
                   <div class="card-header">
                     <h4 class="card-title">All Invoices</h4>
-                    
+                   
                   </div>
                 
 
@@ -22,20 +22,23 @@
                             Invoice Number
                           </th>
                           <th>
-                            Customer Name
+                            Delivery Code
                           </th>
                           <th>
-                            Customer Address
+                            Delivery ID
                           </th>
-                          
                           <th>
-                            Customer Contact
+                            Amount
                           </th>
-                          
+                          <th>
+                            Acoount Department
+                          </th>
                           <th>
                             Deliver Department
                           </th>
-                          
+                          <th>
+                            Create Date
+                          </th>
                           <th>
                             Update Date
                           </th>
@@ -50,33 +53,31 @@
                                   {{ $invoice->invoice_no }}
                                 </td>
                                 <td>
-                                    {{ $invoice->customer_name }}
+                                    {{ $invoice->delivery_code }}
                                 </td>
                                 <td>
-                                    {{ $invoice->customer_address }}<br />
-                                    {{ $invoice->customer_district }}
+                                    {{ $invoice->delivery_id }}
+                                   
+                                </td>
+
+                                <td>
+                                    {{ $invoice->amount }}
                                 </td>
                                 <td>
-                                    {{ $invoice->mobile_no1 }}<br />
-                                    {{ $invoice->mobile_no2 }}<br />
+                                    {{ $invoice->account_departmet_checked }}
                                 </td>
-                                
-                                
                                 <td>
                                     {{ $invoice->deliver_departmet_checked }}
                                 </td>
-                                
+                                <td>
+                                  {{ $invoice->created_at }}
+                                </td>
                                 <td>
                                   {{ $invoice->updated_at }}
                                  </td>
                                 <td class="text-right">
-                                    @if ($invoice->deliver_departmet_checked == "printed")
-                                        All Ready Printed
-                                    @else
-                                <a href="{{ route('print_show', $invoice->id) }}" class="btn btn-primary mb-2">show</a>
-                                    @endif
-                                   
-                                </td>
+                                    <a href="{{ route('invoice.show', $invoice->id) }}" class="btn btn-success mb-2">show</a>  
+                                  </td>
                               </tr>
                             @endforeach
                           
@@ -94,30 +95,6 @@
 @endsection
 
 @section('script')
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#saveButton').on('click', function(e) {
-          e.preventDefault();
-      
-          Swal.fire({
-            title: 'Confirm Print',
-
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, print it!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-                $('.invoiceForm').submit(); // Submit the form
-            }
-          });
-        });
-     
-       
-    });
-      </script>
-      
 
 @endsection
 

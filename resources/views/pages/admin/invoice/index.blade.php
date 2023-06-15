@@ -9,7 +9,7 @@
                 <div class="card card-plain">
                   <div class="card-header">
                     <h4 class="card-title">All Invoices</h4>
-                    
+                    <a href="{{ route('invoice.create') }}" class="btn btn-primary mb-2">Add Invoice</a>
                   </div>
                 
 

@@ -36,6 +36,8 @@ return new class extends Migration
             $table->string('attachments5')->nullable();
             $table->string('account_departmet_checked')->default('unchecked');
             $table->string('deliver_departmet_checked')->default('not printed');
+            $table->string('delivery_code')->nullable();
+            $table->string('delivery_id')->nullable();
             $table->timestamps();
 
         });

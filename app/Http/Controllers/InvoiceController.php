@@ -24,13 +24,13 @@ class InvoiceController extends Controller
             $invoices = Invoice::orderBy('created_at', 'asc')->get();
             return view('pages.admin.invoice.index',compact('invoices'));
         }else if(Auth::user()->type == 'manager'){
-            $invoices = Invoice::orderBy('created_at', 'asc')->get();
+            $invoices = Invoice::where('account_departmet_checked','unchecked')->orderBy('created_at', 'asc')->get();
             return view('pages.account.invoice.index',compact('invoices'));
         }else if(Auth::user()->type == 'deliver'){
-            $invoices = Invoice::where('account_departmet_checked','checked')->orderBy('created_at', 'asc')->get();
+            $invoices = Invoice::where('account_departmet_checked','checked')->where('deliver_departmet_checked','not printed')->orderBy('created_at', 'asc')->get();
             return view('pages.deliver.invoice.index',compact('invoices'));
         }else{
-            $invoices = Invoice::orderBy('created_at', 'asc')->get();
+            $invoices = Invoice::where('user_id',Auth::user()->id)->orderBy('created_at', 'asc')->get();
             return view('pages.agent.index',compact('invoices'));
         }
     }
@@ -287,6 +287,8 @@ class InvoiceController extends Controller
         
         $invoice = Invoice::findOrFail($id);
         $invoice->deliver_departmet_checked = 'printed';
+        $invoice->delivery_code  = $request->delivery_code;
+        $invoice->delivery_id = $request->delivery_id;
         $invoice->deliver_id = Auth::user()->id;
         $invoice->save();
          
@@ -311,6 +313,19 @@ $pdfUrl = asset($directory . $filename);
 // Return the PDF file for download
 return response()->download(public_path($directory . $filename))->deleteFileAfterSend(true);
         }
+
+
+        public function  print_show(string $id)
+        {
+            
+            $invoice = Invoice::where('id',$id)->first();
+            $packages_main = ProductPackage::where('product_type','Main')->get();
+            $packages_future = ProductPackage::where('product_type','Future')->get();
+            $title = 'Confirm!';
+            $text = "Are you sure you want to save this?";
+            confirmDelete($title, $text);
+            return view('pages.deliver.invoice.show',compact('invoice', 'packages_main', 'packages_future'));
+        }    
 
         
     
