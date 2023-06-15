@@ -14,7 +14,7 @@
               <div class="col-7 col-md-8">
                 <div class="numbers">
                   <p class="card-category">Total Invoice</p>
-                  <p class="card-title">150GB<p>
+                  <p class="card-title">{{ totalinvoicescount() }}<p>
                 </div>
               </div>
             </div>
@@ -40,7 +40,7 @@
               <div class="col-7 col-md-8">
                 <div class="numbers">
                   <p class="card-category">Product Items</p>
-                  <p class="card-title">$ 1,345<p>
+                  <p class="card-title">{{ productscount()}}<p>
                 </div>
               </div>
             </div>
@@ -66,7 +66,7 @@
               <div class="col-7 col-md-8">
                 <div class="numbers">
                   <p class="card-category">Product Packages</p>
-                  <p class="card-title">23<p>
+                  <p class="card-title">{{ packagesscount()}}<p>
                 </div>
               </div>
             </div>
@@ -92,7 +92,7 @@
               <div class="col-7 col-md-8">
                 <div class="numbers">
                   <p class="card-category">Staff</p>
-                  <p class="card-title">+45K<p>
+                  <p class="card-title">{{ staffcount()}}<p>
                 </div>
               </div>
             </div>
