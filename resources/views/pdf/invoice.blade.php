@@ -499,10 +499,10 @@ border: none;
         }
     }
 
-    @media screen and (max-width: 576px) {
+    /* @media screen and (max-width: 576px) {
         .invoice-hea {
             position: relative;
-            /* margin: 0px 10px; */
+            margin: 0px 10px;
         }
 
         .in-row-heading h2 {
@@ -580,7 +580,7 @@ border: none;
             display: block;
         }
 
-    }
+    } */
 
     @media (min-width: 1500px) and (max-width: 1920px) {
         .in-row-logo {
@@ -602,12 +602,7 @@ border: none;
         width: 100% !important;
     }
 
-    .invoice-c-table table.ta-1,
-    .invoice-c-table table.ta-2 {
-        margin: 0 !important;
-        width: 50% !important;
-        display: table-cell;
-    }
+
 
     .row.inv-row p {
         margin: 5px 0px;
@@ -616,6 +611,33 @@ border: none;
     .col-01,
     .col-02 {
         width: 25% !important;
+    }
+
+    .table_sec {
+        width: 100%;
+        display: flex;
+    }
+
+    .ta-1,
+    .ta-2 {
+        width: 50% !important;
+        margin: 0;
+
+    }
+
+    table.ta-1,
+    table.ta-2 {
+        margin: 0;
+    }
+
+    .invoice-last-table th,
+    .invoice-last-table td {
+        border: none;
+        padding: 0;
+    }
+
+    .invoice-last-table p {
+        margin: 0 auto;
     }
 </style>
 
@@ -647,66 +669,51 @@ border: none;
 
             <!-- </div> -->
 
-            <div class="invoice-c-table">
-                <table class="ta-1">
-                    <tr>
-                        <th width="40%" rowspan="2">Sender:</th>
-                        <th>Number: </th>
-                    </tr>
 
-                    <tr>
-                        <th>Date:</th>
-                    </tr>
-                    <tr>
-                        <td>Company Name:</td>
-                        <td>Sonrich Asia (pvt) ltd</td>
-                    </tr>
-                    <tr>
-                        <td>Company Address:</td>
-                        <td>No.02, Union Place, Colombo</td>
-                    </tr>
-                    <tr>
-                        <td>Phone No 1:</td>
-                        <td>0472224445</td>
-                    </tr>
-                    <tr>
-                        <td>Email Address:</td>
-                        <td>sonrich@gmail.com</td>
-                    </tr>
-                </table>
+            <table class="ta-1" style="width: 100%!important;">
+                <tr>
+                    <th width="40%" rowspan="2">Sender:</th>
+                    <th>Number: </th>
+                    <th width="40%" rowspan="2">Receiver:</th>
+                    <th>Number:</th>
+                </tr>
 
-                <table class="ta-2">
-                    <tr>
-                        <th width="40%" rowspan="2">Receiver:</th>
-                        <th>Number:</th>
+                <tr>
+                    <th>Date:</th>
+                    <th>Date:</th>
+                </tr>
+                <tr>
+                    <td>Company Name:</td>
+                    <td>Sonrich Asia (pvt) ltd</td>
+                    <td>Customer Name:</td>
+                    <td>{{ $invoice->customer_name }}</td>
+                </tr>
+                <tr>
+                    <td>Company Address:</td>
+                    <td>No.02, Union Place, Colombo</td>
+                    <td>Customer Address:</td>
+                    <td>{{ $invoice->customer_address }}</td>
+                </tr>
+                <tr>
+                    <td>Phone No 1:</td>
+                    <td>0472224445</td>
+                    <td>Phone No 1:</td>
+                    <td>{{ $invoice->mobile_no1 }}</td>
+                </tr>
+                <tr>
+                    <td>Email Address:</td>
+                    <td>sonrich@gmail.com</td>
+                    <td>Phone No 2:</td>
+                    <td>{{ $invoice->mobile_no2 }}</td>
+                </tr>
+            </table>
 
-                    </tr>
 
-                    <tr>
-                        <th>Date:</th>
-                    </tr>
-
-                    <tr>
-                        <td>Customer Name:</td>
-                        <td>{{ $invoice->customer_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Customer Address:</td>
-                        <td>{{ $invoice->customer_address }}</td>
-                    </tr>
-                    <tr>
-                        <td>Phone No 1:</td>
-                        <td>{{ $invoice->mobile_no1 }}</td>
-                    </tr>
-                    <tr>
-                        <td>Phone No 2:</td>
-                        <td>{{ $invoice->mobile_no2 }}</td>
-                    </tr>
-                </table>
-            </div>
         </section>
 
         <div class="section-break"></div>
+
+
 
         <section class="invi-heading border-bottom-2px">
             <div class="row invi-row">
@@ -725,8 +732,169 @@ border: none;
 
         </section>
 
+
         <section class="invoice-last-table">
-            <div class="tn-ta">
+            <table style="border: none;">
+                <tr>
+                    <th width="40%">
+                        <p class="hea"><strong>DESCRIPTION</strong></p>
+                    </th>
+                    <th width="20%">
+                        <p class="hea uni-middle right-align"><strong>RATE</strong></p>
+                    </th>
+                    <th width="20%">
+                        <p class="hea uni-middlec right-align"><strong>QTY</strong></p>
+                    </th>
+                    <th width="20%">
+                        <p class="hea uni"><strong>AMOUNT</strong></p>
+                    </th>
+                </tr>
+                <tr>
+                    <td><strong>Services</strong></td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.10000</p>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">10</p>
+                    </td>
+                    <td>
+                        <p class="last-un">Rs.5000</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Cost of various services</p>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">+Tax</p>
+                        <hr>
+                    </td>
+                    <td>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <br>
+                        <hr>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Consulting</strong></td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.12000
+                        </p>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">5</p>
+                    </td>
+                    <td>
+                        <p class="last-un">Rs.30000</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Consultant for your business</p>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">+Tax</p>
+                        <hr>
+                    </td>
+                    <td>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <br>
+                        <hr>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Subtotals</b></p>
+                    </td>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.500000</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Discount</b></p>
+                    </td>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.300000</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+                       
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Tax</b></p>
+                        <hr>
+                    </td>
+                    <td>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.100000</p>
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Total</b></p>
+                    </td>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.2000000</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Deposit Requested
+                        </b></p>
+                    </td>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.1500000</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+                       
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Deposit Due</b></p>
+                        <hr>
+                    </td>
+                    <td>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.3000000</p>
+                        <hr>
+                    </td>
+                </tr>
+            </table>
+
+
+
+            <!-- <div class="tn-ta">
                 <div class="row inv-row border-bottom">
                     <div class="col-01">
                         <p class="hea"><strong>DESCRIPTION</strong></p>
@@ -856,7 +1024,7 @@ border: none;
                         <p class="last-un">Rs.3000000</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </section>
 
         <section class="signature-section">
