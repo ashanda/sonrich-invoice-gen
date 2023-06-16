@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('customer_district');
             $table->string('mobile_no1');
             $table->string('mobile_no2');
-            $table->unsignedBigInteger('main_product_package');
-            $table->json('future_product_packages');
+            $table->unsignedBigInteger('main_product_package')->nullable();
+            $table->json('future_product_packages')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('manager_id')->nullable();
             $table->unsignedBigInteger('deliver_id')->nullable();

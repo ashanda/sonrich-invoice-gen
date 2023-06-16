@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
+
     <title>Invoice</title>
 </head>
 <style>
@@ -235,11 +236,11 @@
     }
 
     .col-01 {
-        width: 40%;
+        width: 100%;
     }
 
     .col-02 {
-        width: 40%;
+        width: 100%;
     }
 
     section.invoice-last-table {
@@ -501,7 +502,7 @@ border: none;
     @media screen and (max-width: 576px) {
         .invoice-hea {
             position: relative;
-            margin: 0px 10px;
+            /* margin: 0px 10px; */
         }
 
         .in-row-heading h2 {
@@ -578,6 +579,7 @@ border: none;
         .row.header-row {
             display: block;
         }
+
     }
 
     @media (min-width: 1500px) and (max-width: 1920px) {
@@ -595,9 +597,23 @@ border: none;
             left: -600px !important;
         }
     }
+
+    table.ta-1,
+    table.ta-2 {
+        margin-left: 0;
+    }
+
+    .invoice-c-table table.ta-2 {
+        margin-top: 10px;
+    }
+
+    .row.inv-row p {
+        margin: 5px 0px;
+    }
 </style>
+
 <body>
-    
+
     <div class="full-content">
 
         <section class="full-invoice-content">
@@ -605,9 +621,9 @@ border: none;
 
             <div class="invoice-hea">
                 <div class="row header-row">
-                    <div class="header-title">
+                    <!-- <div class="header-title">
                         
-                    </div>
+                    </div> -->
                     <div class="col-new2">
                         <p class="inv-title">Sonrich Asia (PVT) Ltd</p>
                         <div class="address-company">
@@ -615,7 +631,7 @@ border: none;
                                 <span>TP:</span>0472224445
                             </p>
                             <p class="email-n"><span>sonrich@gmail.com</span></p>
-                            <p class="last-p"><span>Reciept Number : </span>{{ $invoice->invoice_no }}<</p>
+                            <p class="last-p"><span>Reciept Number : </span>{{ $invoice->invoice_no }}</p>
                         </div>
                     </div>
                 </div>
@@ -627,7 +643,7 @@ border: none;
             <div class="invoice-c-table">
                 <table class="ta-1">
                     <tr>
-                        <th rowspan="2">Sender:</th>
+                        <th width="40%" rowspan="2">Sender:</th>
                         <th>Number: </th>
                     </tr>
 
@@ -654,7 +670,7 @@ border: none;
 
                 <table class="ta-2">
                     <tr>
-                        <th rowspan="2">Receiver:</th>
+                        <th width="40%" rowspan="2">Receiver:</th>
                         <th>Number:</th>
 
                     </tr>
@@ -853,4 +869,5 @@ border: none;
 
     <!-- Display other invoice details as needed -->
 </body>
+
 </html>
