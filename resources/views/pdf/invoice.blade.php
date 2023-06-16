@@ -598,17 +598,24 @@ border: none;
         }
     }
 
-    table.ta-1,
-    table.ta-2 {
-        margin-left: 0;
+    .invoice-c-table {
+        width: 100% !important;
     }
 
+    .invoice-c-table table.ta-1,
     .invoice-c-table table.ta-2 {
-        margin-top: 10px;
+        margin: 0 !important;
+        width: 50% !important;
+        display: table-cell;
     }
 
     .row.inv-row p {
         margin: 5px 0px;
+    }
+
+    .col-01,
+    .col-02 {
+        width: 25% !important;
     }
 </style>
 
