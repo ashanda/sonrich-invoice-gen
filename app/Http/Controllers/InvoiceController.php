@@ -290,7 +290,7 @@ class InvoiceController extends Controller
         $invoice->delivery_code  = $request->delivery_code;
         $invoice->delivery_id = $request->delivery_id;
         $invoice->deliver_id = Auth::user()->id;
-    //    $invoice->save();
+       $invoice->save();
         $invoice['date'] = '';
         $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice]);
 
