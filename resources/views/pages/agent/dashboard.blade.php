@@ -12,20 +12,40 @@
   $role = 'Agent';
   }
   @endphp
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card ">
-          <div class="card-header ">
-            <h3 class="card-title">Welcome Back {{ $role }}</h3>
-            <h5 class="card-title mt-5">Hi..{{ Auth::user()->name }} </h5>
-          </div>
-          <div class="card-body ">
-            <canvas id=chartHours width="400" height="100"></canvas>
-          </div>
 
+  <div class="wel_sec bg-primary">
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-5">
+        <div class="left_sec py-4 px-5">
+          <h1 class="text-light font-weight-bold ">Welcome Back, {{ Auth::user()->name }}</h1>
+          <p class="text-light mt-3 desc">You’ve learned 70% of your goal this week!
+            Keep it up and improve your progress.</p>
+        </div>
+      </div>
+      <div class="col-md-1 col-lg-2 col-xl-2 d-none d-xl-inline"></div>
+      <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+        <div class="left_sec text-center">
+          <img class="w-100 right_img" src="{{ asset('img/Humaaans_Space.png')}}" alt="">
         </div>
       </div>
     </div>
-
   </div>
-  @endsection
+
+  <!-- <div class="row">
+    <div class="col-md-12">
+      <div class="card ">
+        <div class="card-header ">
+          <h3 class="card-title">Welcome Back {{ $role }}</h3>
+            <h5 class="card-title mt-5">Hi..{{ Auth::user()->name }} </h5>
+        </div>
+        <div class="card-body">
+
+          <canvas id=chartHours width="400" height="100"></canvas>
+        </div>
+
+      </div>
+    </div>
+  </div> -->
+
+</div>
+@endsection

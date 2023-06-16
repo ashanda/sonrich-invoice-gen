@@ -149,7 +149,7 @@
                     <div class="form-group">
                         <label for="futurePlan{{$loop->iteration}}">Future Plan {{$loop->iteration}}:</label>
                         <input type="text" name="futurePlans[]" id="futurePlan{{$loop->iteration}}" class="form-control" value="{{$plan}}">
-                        <button type="button" class="btn btn-danger removeFuturePlan">Remove</button>
+                        <button type="button" class="btn btn-danger removeFuturePlan my-0">Remove</button>
                     </div>
                     @endforeach
                 </div>
@@ -291,7 +291,7 @@
             var html = '<div class="form-group">' +
                 '<label for="futurePlan' + futurePlanCounter + '">Future Plan ' + futurePlanCounter + ':</label>' +
                 '<input type="text" name="futurePlans[]" id="futurePlan' + futurePlanCounter + '" class="form-control">' +
-                '<button type="button" class="btn btn-danger removeFuturePlan">Remove</button>' +
+                '<button type="button" class="btn btn-danger removeFuturePlan my-0">Remove</button>' +
                 '</div>';
 
             $('#futurePlanFields').append(html);

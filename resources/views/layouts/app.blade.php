@@ -109,7 +109,7 @@
                 var futurePlanField = '<div class="input-group mb-3">' +
                     '<input type="number" min="0" name="futurePlans[]" class="form-control">' +
                     '<div class="input-group-append">' +
-                    '<button class="btn btn-danger removeFuturePlan" type="button">Remove</button>' +
+                    '<button class="btn btn-danger removeFuturePlan my-0" type="button">Remove</button>' +
                     '</div>' +
                     '</div>';
 
