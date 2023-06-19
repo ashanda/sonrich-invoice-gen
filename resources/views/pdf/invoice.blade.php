@@ -672,9 +672,9 @@ border: none;
 
             <table class="ta-1" style="width: 100%!important;">
                 <tr>
-                    <th width="40%" rowspan="2">Sender:</th>
+                    <th width="20%" rowspan="2">Sender:</th>
                     <th>Number: </th>
-                    <th width="40%" rowspan="2">Receiver:</th>
+                    <th width="20%" rowspan="2">Receiver:</th>
                     <th>Number:</th>
                 </tr>
 
@@ -746,7 +746,7 @@ border: none;
                         <p class="hea uni-middlec right-align"><strong>QTY</strong></p>
                     </th>
                     <th width="20%">
-                        <p class="hea uni"><strong>AMOUNT</strong></p>
+                        <p class="hea uni-middlec right-align"><strong>AMOUNT</strong></p>
                     </th>
                 </tr>
                 <tr>
@@ -758,7 +758,7 @@ border: none;
                         <p class="uni-middle-p right-align">10</p>
                     </td>
                     <td>
-                        <p class="last-un">Rs.5000</p>
+                        <p class="last-un right-align">Rs.5000</p>
                     </td>
                 </tr>
                 <tr>
@@ -790,7 +790,7 @@ border: none;
                         <p class="uni-middle-p right-align">5</p>
                     </td>
                     <td>
-                        <p class="last-un">Rs.30000</p>
+                        <p class="last-un right-align">Rs.30000</p>
                     </td>
                 </tr>
                 <tr>
@@ -1028,7 +1028,7 @@ border: none;
         </section>
 
         <section class="signature-section">
-            <div class="sign">
+            <div class="sign right-align">
                 <p>..........................................</p>
                 <p>Authorized Sign</p>
             </div>
