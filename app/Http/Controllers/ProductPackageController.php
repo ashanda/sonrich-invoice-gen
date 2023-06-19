@@ -54,8 +54,14 @@ public function edit(ProductPackage $productPackage)
 
 public function update(Request $request, ProductPackage $productPackage)
 {
-    $productPackage->update($request->all());
-    $productPackage->productItems()->sync($request->input('product_items'));
+
+    $productPackage->update([
+        'product_items' => $request->input('product_items'),
+        'title' => $request->input('title'),
+        'product_type' => $request->input('product_type'),
+        'amount' => $request->input('amount'),
+    ]);
+    //$productPackage->productItems()->sync($request->input('product_items'));
 
     return redirect()->route('product_packages.index')->with('success', 'Product Package updated successfully.');
 }

@@ -14,6 +14,11 @@
                 <input type="text" class="form-control" id="title" name="title" value="{{ $productItem->title }}">
             </div>
             <div class="form-group">
+                <label for="qty">Qty</label>
+                <input type="number" min="1" step="0" class="form-control" id="qty" name="qty" value="{{ $productItem->qty }}">
+
+            </div>
+            <div class="form-group">
                 <label for="amount">Amount</label>
                 <input type="number" min="100" step="0.01" class="form-control" id="amount" name="amount" value="{{ $productItem->amount }}">
 

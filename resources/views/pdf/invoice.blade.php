@@ -639,6 +639,7 @@ border: none;
     .invoice-last-table p {
         margin: 0 auto;
     }
+
 </style>
 
 <body>
@@ -735,6 +736,7 @@ border: none;
 
         <section class="invoice-last-table">
             <table style="border: none;">
+
                 <tr>
                     <th width="40%">
                         <p class="hea"><strong>DESCRIPTION</strong></p>
@@ -749,68 +751,74 @@ border: none;
                         <p class="hea uni-middlec right-align"><strong>AMOUNT</strong></p>
                     </th>
                 </tr>
-                <tr>
-                    <td><strong>Services</strong></td>
-                    <td>
-                        <p class="uni-middle-p right-align">Rs.10000</p>
-                    </td>
-                    <td>
-                        <p class="uni-middle-p right-align">10</p>
-                    </td>
-                    <td>
-                        <p class="last-un right-align">Rs.5000</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p>Cost of various services</p>
-                        <hr>
-                    </td>
-                    <td>
-                        <p class="uni-middle-p right-align">+Tax</p>
-                        <hr>
-                    </td>
-                    <td>
-                        <br>
-                        <hr>
-                    </td>
-                    <td>
-                        <br>
-                        <hr>
-                    </td>
-                </tr>
 
-                <tr>
-                    <td><strong>Consulting</strong></td>
-                    <td>
-                        <p class="uni-middle-p right-align">Rs.12000
-                        </p>
-                    </td>
-                    <td>
-                        <p class="uni-middle-p right-align">5</p>
-                    </td>
-                    <td>
-                        <p class="last-un right-align">Rs.30000</p>
-                    </td>
-                </tr>
+                @php
+                $subtotal = 0;
+                @endphp
+
+                @foreach (json_decode($invoice->future_product_packages, true) as $packageId)
+                @foreach (product_items($packageId) as $productItem)
                 <tr>
                     <td>
-                        <p>Consultant for your business</p>
+                        <strong>{{ ucfirst($productItem->title) }}</strong>
+                        <br><br>
                         <hr>
                     </td>
                     <td>
-                        <p class="uni-middle-p right-align">+Tax</p>
-                        <hr>
-                    </td>
-                    <td>
+                        @php
+                        $rate = ceil($productItem->amount / $productItem->qty);
+                        @endphp
+                        <p class="uni-middle-p right-align">{{ $rate }}</p>
                         <br>
                         <hr>
                     </td>
                     <td>
+                        <p class="uni-middle-p right-align">{{ $productItem->qty }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="last-un right-align">{{ 'Rs ' . $productItem->amount }}</p>
                         <br>
                         <hr>
                     </td>
                 </tr>
+                @php
+                $subtotal += $productItem->amount;
+                @endphp
+                @endforeach
+                @endforeach
+
+                @foreach (product_items($invoice->main_product_package) as $productItem)
+                <tr>
+                    <td>
+                        <strong>{{ ucfirst($productItem->title) }}</strong>
+                        <br><br>
+                        <hr>
+                    </td>
+                    <td>
+                        @php
+                        $rate = ceil($productItem->amount / $productItem->qty);
+                        @endphp
+                        <p class="uni-middle-p right-align">{{ $rate }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">{{ $productItem->qty }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="last-un right-align">{{ 'Rs ' . $productItem->amount }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                </tr>
+                @php
+                $subtotal += $productItem->amount;
+                @endphp
+                @endforeach
 
                 <tr>
                     <td></td>
@@ -819,14 +827,15 @@ border: none;
                     </td>
                     <td></td>
                     <td>
-                        <p class="uni-middle-p right-align">Rs.500000</p>
+                        <p class="uni-middle-p right-align">Rs.{{ $subtotal }}</p>
                     </td>
                 </tr>
+
 
                 <tr>
                     <td></td>
                     <td>
-                        <p class="uni-middle-p right-align"><b>Discount</b></p>
+                        <p class="uni-middle-p right-align"><b>Whole Discount</b></p>
                     </td>
                     <td></td>
                     <td>
@@ -834,12 +843,46 @@ border: none;
                     </td>
                 </tr>
                 <tr>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Total Amount with Total Discount</b></p>
+                        <hr>
+                    </td>
+                    <td><br><br>
+                        <hr>
+                    </td>
+
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.300000</p>
+                        <br>
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
                     <td>
                         <br>
-                       
+
                     </td>
                     <td>
                         <p class="uni-middle-p right-align"><b>Tax</b></p>
+
+                    </td>
+                    <td>
+                        <br>
+
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.100000</p>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Deliver</b></p>
                         <hr>
                     </td>
                     <td>
@@ -861,35 +904,7 @@ border: none;
                         <p class="uni-middle-p right-align">Rs.2000000</p>
                     </td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <p class="uni-middle-p right-align"><b>Deposit Requested
-                        </b></p>
-                    </td>
-                    <td></td>
-                    <td>
-                        <p class="uni-middle-p right-align">Rs.1500000</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <br>
-                       
-                    </td>
-                    <td>
-                        <p class="uni-middle-p right-align"><b>Deposit Due</b></p>
-                        <hr>
-                    </td>
-                    <td>
-                        <br>
-                        <hr>
-                    </td>
-                    <td>
-                        <p class="uni-middle-p right-align">Rs.3000000</p>
-                        <hr>
-                    </td>
-                </tr>
+
             </table>
 
 

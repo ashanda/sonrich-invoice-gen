@@ -9,8 +9,13 @@
             @csrf
 
             <div class="form-group">
-                <label for="title">Title</label>
+                <label for="title">Name</label>
                 <input type="text" class="form-control" id="title" name="title">
+            </div>
+            <div class="form-group">
+                <label for="qty">Qty</label>
+                <input type="number" min="1" step="0" class="form-control" id="qty" name="qty">
+
             </div>
             <div class="form-group">
                 <label for="amount">Amount</label>

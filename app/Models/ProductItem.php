@@ -9,6 +9,7 @@ class ProductItem extends Model
     protected $fillable = [
         'title',
         'amount',
+        'qty',
         // Add more fillable fields as needed
     ];
 }

@@ -18,6 +18,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
+                        <th>Qty</th>
                         <th>Amount</th>
                         <th>Action</th>
                     </tr>
@@ -27,6 +28,7 @@
                     <tr>
                         <td>{{ $productItem->id }}</td>
                         <td>{{ $productItem->title }}</td>
+                        <td>{{ $productItem->qty }}</td>
                         <td>{{ $productItem->amount }}</td>
                         <td>
                             <a href="{{ route('product_items.edit', $productItem->id) }}" class="btn btn-primary">Edit</a>

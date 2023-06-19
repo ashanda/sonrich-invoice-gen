@@ -27,6 +27,7 @@ class ProductItemController extends Controller
         $validatedData = $request->validate([
             'title' => 'required',
             'amount' => 'required',
+            'qty' => 'required',
             // Add validation rules for other fields as needed
         ]);
 
@@ -48,6 +49,7 @@ class ProductItemController extends Controller
         $validatedData = $request->validate([
             'title' => 'required',
             'amount' => 'required',
+            'qty' => 'required',
             // Add validation rules for other fields as needed
         ]);
 

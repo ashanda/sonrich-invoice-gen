@@ -29,3 +29,15 @@ function packagesscount(){
     $packagesscount = ProductPackage::count();
     return $packagesscount;
 }
+
+function product_items($id){
+    $products = ProductPackage::where('id', $id)->first();
+    $productsItems = [];
+    foreach (json_decode($products->product_items, true) as $packageitemId){
+        $productItem = ProductItem::find($packageitemId);
+        if ($productItem) {
+            $productsItems[] = $productItem;
+        }
+    }
+    return $productsItems;
+}
