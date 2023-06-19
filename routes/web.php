@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductItemController;
 use App\Http\Controllers\ProductPackageController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,9 @@ Route::get('/', function () {
 
   
 
-Auth::routes();
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
   
 
