@@ -19,6 +19,10 @@
                 <label for="delivery_id">Delivery Id:</label>
                 <input type="text" name="delivery_id" id="delivery_id" class="form-control"  >
             </div>
+            <div class="form-group">
+                <label for="delivery_id">Delivery charge:</label>
+                <input type="number" min="100" step="0" name="delivery_charge" id="delivery_charge" class="form-control"  required>
+            </div>
             <button type="submit" id="saveButton" data-confirm-save="true" class="btn btn-primary mb-2">Print</button>
             <a href="{{ route('invoice.index') }}" class="btn btn-warning mb-2">You Click the button and you can't again this invoioce print</a>
         </form>

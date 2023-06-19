@@ -10,6 +10,7 @@ class ProductItem extends Model
         'title',
         'amount',
         'qty',
+        'discount',
         // Add more fillable fields as needed
     ];
 }

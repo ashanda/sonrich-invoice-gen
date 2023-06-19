@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->Integer('qty');
             $table->bigInteger('amount');
+            $table->bigInteger('discount');
             $table->timestamps();
         });
     }

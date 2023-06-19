@@ -754,6 +754,7 @@ border: none;
 
                 @php
                 $subtotal = 0;
+                $alldiscount = 0;
                 @endphp
 
                 @foreach (json_decode($invoice->future_product_packages, true) as $packageId)
@@ -785,6 +786,7 @@ border: none;
                 </tr>
                 @php
                 $subtotal += $productItem->amount;
+                $alldiscount += $productItem->discount;
                 @endphp
                 @endforeach
                 @endforeach
@@ -817,6 +819,7 @@ border: none;
                 </tr>
                 @php
                 $subtotal += $productItem->amount;
+                $alldiscount += $productItem->discount;
                 @endphp
                 @endforeach
 
@@ -839,7 +842,7 @@ border: none;
                     </td>
                     <td></td>
                     <td>
-                        <p class="uni-middle-p right-align">Rs.300000</p>
+                        <p class="uni-middle-p right-align">Rs.{{ $alldiscount }}</p>
                     </td>
                 </tr>
                 <tr>
@@ -853,7 +856,10 @@ border: none;
                     </td>
 
                     <td>
-                        <p class="uni-middle-p right-align">Rs.300000</p>
+                        @php
+                          $amountwithdiscount =   $subtotal - $alldiscount
+                        @endphp
+                        <p class="uni-middle-p right-align">Rs.{{ $amountwithdiscount }}</p>
                         <br>
                         <hr>
                     </td>
@@ -890,7 +896,7 @@ border: none;
                         <hr>
                     </td>
                     <td>
-                        <p class="uni-middle-p right-align">Rs.100000</p>
+                        <p class="uni-middle-p right-align">Rs.{{  $invoice->delivery_charge }}</p>
                         <hr>
                     </td>
                 </tr>
@@ -901,7 +907,7 @@ border: none;
                     </td>
                     <td></td>
                     <td>
-                        <p class="uni-middle-p right-align">Rs.2000000</p>
+                        <p class="uni-middle-p right-align">Rs.{{ $amountwithdiscount+$invoice->delivery_charge }}</p>
                     </td>
                 </tr>
 

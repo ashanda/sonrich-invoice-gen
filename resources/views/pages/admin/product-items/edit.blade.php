@@ -20,7 +20,12 @@
             </div>
             <div class="form-group">
                 <label for="amount">Amount</label>
-                <input type="number" min="100" step="0.01" class="form-control" id="amount" name="amount" value="{{ $productItem->amount }}">
+                <input type="number" min="100" step="0.01" class="form-control" name="amount" value="{{ $productItem->amount }}">
+
+            </div>
+            <div class="form-group">
+                <label for="discount">Discount</label>
+                <input type="number" min="10" step="0.01" class="form-control" id="discount" name="discount" value="{{ $productItem->discount }}">
 
             </div>
             <!-- Add more fields as needed -->

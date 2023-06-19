@@ -28,6 +28,7 @@ class ProductItemController extends Controller
             'title' => 'required',
             'amount' => 'required',
             'qty' => 'required',
+            'discount' => 'required',
             // Add validation rules for other fields as needed
         ]);
 
@@ -50,6 +51,7 @@ class ProductItemController extends Controller
             'title' => 'required',
             'amount' => 'required',
             'qty' => 'required',
+            'discount' => 'required',
             // Add validation rules for other fields as needed
         ]);
 

@@ -38,6 +38,7 @@ return new class extends Migration
             $table->string('deliver_departmet_checked')->default('not printed');
             $table->string('delivery_code')->nullable();
             $table->string('delivery_id')->nullable();
+            $table->bigInteger('delivery_charge')->nullable();
             $table->timestamps();
 
         });
