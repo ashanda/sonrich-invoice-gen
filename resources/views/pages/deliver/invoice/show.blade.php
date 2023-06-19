@@ -5,7 +5,43 @@
 @endsection
 
 @section('content')
+<style type="text/css">
+    .modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 400px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+</style>
 <div class="content">
     <div class="container-fluid">
         <form action="{{ route('deliver.update', $invoice->id) }}" method="POST" class="invoiceForm">
@@ -21,8 +57,10 @@
             </div>
             <button type="submit" id="saveButton" data-confirm-save="true" class="btn btn-primary mb-2">Print</button>
             <a href="{{ route('invoice.index') }}" class="btn btn-warning mb-2">You Click the button and you can't again this invoioce print</a>
+            
         </form>
-       
+        
+        <button class="btn btn-warning mb-2" id="openModalButton">remark</button>
         <hr>
         <div class="form-group">
             <label for="invoiceNo">Invoice No:</label>
@@ -86,7 +124,34 @@
 
     </div>
 </div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      
+      <h2>Remark</h2>
+  
+      <form action="{{ route('deliver.note', $invoice->id) }}" method="POST" class="invoiceForm">
+        @csrf
+        @method('PUT')
+        <div class="form-group">
+          
+           
+              
+                <textarea name="remark" id="remark" class="form-control" cols="30" rows="10" required>{{ !empty($invoice->remark) ? $invoice->remark : '' }}</textarea>
+             
+              
+          
+        </div>
 
+        <!-- Add more form fields here -->
+  
+        <div>
+          <button class="btn btn-success mb-2" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
 @endsection
 
 @section('script')
@@ -113,5 +178,32 @@
        
     });
       </script>
+      <script>
+        $(document).ready(function() {
+          // Get the modal element
+          var modal = $("#myModal");
+        
+          // Get the button that opens the modal
+          var btn = $("#openModalButton");
+        
+          // Get the <span> element that closes the modal
+          var span = $(".close");
+        
+          // When the button is clicked, open the modal
+          btn.click(function() {
+            modal.show();
+          });
+        
+          // When the <span> element or outside the modal is clicked, close the modal
+          span.click(function() {
+            modal.hide();
+          });
+          $(window).click(function(event) {
+            if (event.target == modal[0]) {
+              modal.hide();
+            }
+          });
+        });
+        </script>
 
 @endsection

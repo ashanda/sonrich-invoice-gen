@@ -100,7 +100,7 @@ All Deliver Routes List
 --------------------------------------------*/
 
 Route::middleware(['auth', 'user-access:deliver'])->group(function () {
-
+    Route::put('/note/{id}',[InvoiceController::class, 'note'])->name('deliver.note');
     Route::get('/deliver/home', [HomeController::class, 'deliverHome'])->name('deliver.home');
     
 });

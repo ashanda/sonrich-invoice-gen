@@ -115,22 +115,7 @@
 <div class="content">
     <div class="container-fluid">
         @if (Auth::user()->type == 'admin')
-        <form action="{{ route('deliver.update', $invoice->id) }}" method="POST" class="invoiceForm">
-            @csrf
-            @method('PUT')
-            <div class="form-group">
-                <label for="delivery_code">Delivery code:</label>
-                <input type="text" name="delivery_code" id="delivery_code" class="form-control"  >
-            </div>
-            <div class="form-group">
-                <label for="delivery_id">Delivery Id:</label>
-                <input type="text" name="delivery_id" id="delivery_id" class="form-control"  >
-            </div>
-            <button type="submit" id="saveButton" data-confirm-save="true" class="btn btn-primary mb-2">Print</button>
-            <a href="{{ route('invoice.index') }}" class="btn btn-warning mb-2">You Click the button and you can't again this invoioce print</a>
-        </form>
-       
-        <hr>
+
         @endif
         <div class="form-group">
             <label for="invoiceNo">Invoice No:</label>
@@ -301,6 +286,16 @@
                 <label for="radio-one">{{ $invoice->deliver_departmet_checked }}</label>
 
             </div>
+
+        </div>
+        <div class="form-group">
+            @if (Auth::user()->type == 'admin')
+            <div class="form-group">
+                <label for="amount">Remark:</label>
+             
+                <textarea name="remark" id="remark" class="form-control" cols="30" rows="10" readonly>{{ !empty($invoice->remark) ? $invoice->remark : '' }}</textarea>
+            </div>
+            @endif
 
         </div>
 

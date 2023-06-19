@@ -280,6 +280,18 @@ class InvoiceController extends Controller
     return redirect()->back();
     }
 
+    public function note(Request $request, $id){
+        $invoice = Invoice::findOrFail($id);
+        $invoice->remark = $request->remark;
+        $invoice->deliver_id = Auth::user()->id;
+        $invoice->save();
+        Alert::Alert('Success', 'Remark Update Sucessfully.')->persistent(true,false);
+        return redirect()->back();
+
+
+    }
+
+
     public function delive_update(Request $request, $id)
     {
         // Use $user_id and $id as needed
@@ -289,6 +301,7 @@ class InvoiceController extends Controller
         $invoice->deliver_departmet_checked = 'printed';
         $invoice->delivery_code  = $request->delivery_code;
         $invoice->delivery_id = $request->delivery_id;
+        $invoice->remark = $request->remark;
         $invoice->deliver_id = Auth::user()->id;
        // $invoice->save();
       //  dd($invoice);
