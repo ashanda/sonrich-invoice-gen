@@ -289,9 +289,8 @@ class InvoiceController extends Controller
         $invoice->deliver_departmet_checked = 'printed';
         $invoice->delivery_code  = $request->delivery_code;
         $invoice->delivery_id = $request->delivery_id;
-        $invoice->delivery_charge = $request->delivery_charge;
         $invoice->deliver_id = Auth::user()->id;
-        $invoice->save();
+       // $invoice->save();
       //  dd($invoice);
         $invoice['date'] = '';
         $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice]);

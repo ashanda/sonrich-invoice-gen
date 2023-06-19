@@ -8,12 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ProductPackage extends Model
 {
     use HasFactory;
-    protected $fillable = [
-    'product_items',
-    'title',
-    'product_type',
-    'amount'
-    ];
+    protected $fillable = ['product_items', 'quantity', 'title', 'product_type', 'amount', 'tax', 'discount', 'deliver_fee'];
+
     public function productItems()
     {
         return $this->belongsToMany(ProductItem::class, 'product_packages');

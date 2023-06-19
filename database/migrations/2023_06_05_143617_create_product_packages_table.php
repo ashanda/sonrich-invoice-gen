@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('product_type');
-            $table->decimal('amount', 10, 2);
             $table->json('product_items');
+            $table->json('quantity');
+            $table->bigInteger('amount');
+            $table->bigInteger('tax');
+            $table->bigInteger('discount');
+            $table->bigInteger('deliver_fee');
             $table->timestamps();
         });
     }

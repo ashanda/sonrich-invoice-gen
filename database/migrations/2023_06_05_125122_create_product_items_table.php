@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('product_items', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->Integer('qty');
             $table->bigInteger('amount');
-            $table->bigInteger('discount');
             $table->timestamps();
         });
     }

@@ -31,6 +31,10 @@ public function store(Request $request)
         'amount' => 'required',
         'product_type' => 'required',
         'product_items' => 'nullable|array',
+        'quantity' => 'nullable|array',
+        'tax' => 'required',
+        'discount' => 'required',
+        'deliver_fee' => 'required',
     ]);
 
     $productPackage = new ProductPackage;
@@ -38,6 +42,10 @@ public function store(Request $request)
     $productPackage->amount = $validatedData['amount'];
     $productPackage->product_type = $validatedData['product_type'];
     $productPackage->product_items = json_encode($validatedData['product_items']);
+    $productPackage->quantity = json_encode($validatedData['quantity']);
+    $productPackage->tax = $validatedData['tax'];
+    $productPackage->discount = $validatedData['discount'];
+    $productPackage->deliver_fee = $validatedData['deliver_fee'];
     $productPackage->save();
 
     // Redirect or perform any other actions
@@ -47,19 +55,25 @@ public function store(Request $request)
 
 public function edit(ProductPackage $productPackage)
 {
-    $productItems = ProductItem::all();
     
-    return view('pages.admin.package.edit', compact('productPackage', 'productItems'));
+    $productItems = ProductItem::all();
+    $productqtys = ProductPackage::where('id', $productPackage->id)->first();
+    return view('pages.admin.package.edit', compact('productPackage', 'productItems','productqtys'));
 }
 
 public function update(Request $request, ProductPackage $productPackage)
 {
 
+    
     $productPackage->update([
         'product_items' => $request->input('product_items'),
+        'quantity' => $request->input('quantity'),
         'title' => $request->input('title'),
         'product_type' => $request->input('product_type'),
         'amount' => $request->input('amount'),
+        'tax' => $request->input('tax'),
+        'discount' => $request->input('discount'),
+        'deliver_fee' => $request->input('deliver_fee'),
     ]);
     //$productPackage->productItems()->sync($request->input('product_items'));
 

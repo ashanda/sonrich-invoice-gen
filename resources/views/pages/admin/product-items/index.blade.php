@@ -18,9 +18,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <th>Qty</th>
                         <th>Amount</th>
-                        <th>Discount</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -29,9 +27,7 @@
                     <tr>
                         <td>{{ $productItem->id }}</td>
                         <td>{{ $productItem->title }}</td>
-                        <td>{{ $productItem->qty }}</td>
                         <td>{{ $productItem->amount }}</td>
-                        <td>{{ $productItem->discount }}</td>
                         <td>
                             <a href="{{ route('product_items.edit', $productItem->id) }}" class="btn btn-primary">Edit</a>
                             <form action="{{ route('product_items.destroy', $productItem->id) }}" method="POST" class="d-inline">

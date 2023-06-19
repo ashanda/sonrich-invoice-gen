@@ -12,6 +12,7 @@
                         <th>ID</th>
                         <th>Title</th>
                         <th>Amount</th>
+                        <th>Product Type</th>
                         <th>Product Items</th>
                         <th>Action</th>
                     </tr>
@@ -22,6 +23,7 @@
                         <td>{{ $productPackage->id }}</td>
                         <td>{{ $productPackage->title }}</td>
                         <td>{{ $productPackage->amount }}</td>
+                        <td>{{ $productPackage->product_type }}</td>
                         <td>
                             @php
                             $productItems = json_decode($productPackage->product_items);

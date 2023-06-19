@@ -32,12 +32,25 @@ function packagesscount(){
 
 function product_items($id){
     $products = ProductPackage::where('id', $id)->first();
-    $productsItems = [];
-    foreach (json_decode($products->product_items, true) as $packageitemId){
-        $productItem = ProductItem::find($packageitemId);
+    $productItems = [];
+    
+    $packageItems = json_decode($products->product_items, true);
+    $quantities = json_decode($products->quantity, true);
+    
+    $packageDeliveryFee = $products->deliver_fee;
+    $packageTax = $products->tax;
+    $packageDiscount = $products->discount;
+    foreach ($packageItems as $index => $packageItemId) {
+        $productItem = ProductItem::find($packageItemId);
         if ($productItem) {
-            $productsItems[] = $productItem;
+            $productItem->quantity = $quantities[$index] ?? 0;
+            $productItem->package_tax = $packageTax;
+            $productItem->package_discount = $packageDiscount;
+            $productItem->package_delivery_fee = $packageDeliveryFee;
+            $productItems[] = $productItem;
         }
     }
-    return $productsItems;
+    
+    return $productItems;
 }
+

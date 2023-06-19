@@ -102,12 +102,14 @@ All Deliver Routes List
 Route::middleware(['auth', 'user-access:deliver'])->group(function () {
 
     Route::get('/deliver/home', [HomeController::class, 'deliverHome'])->name('deliver.home');
-    Route::put('deliver/{id}', [InvoiceController::class, 'delive_update'])->name('deliver.update');
-    Route::get('/deliver/print/{id}', [InvoiceController::class, 'print_show'])->name('print_show');
+    
 });
 
 
-
+Route::middleware(['auth', 'user-access:admin,deliver'])->group(function () {
+    Route::put('deliver/{id}', [InvoiceController::class, 'delive_update'])->name('deliver.update');
+    Route::get('/deliver/print/{id}', [InvoiceController::class, 'print_show'])->name('print_show');
+});
 
 Route::middleware(['auth', 'user-access:admin,manager,user,deliver'])->group(function () {
     Route::get('invoice', [InvoiceController::class, 'index'])->name('invoice.index');
