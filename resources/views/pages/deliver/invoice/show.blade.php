@@ -44,7 +44,7 @@
 </style>
 <div class="content">
     <div class="container-fluid">
-        <form action="{{ route('deliver.update', $invoice->id) }}" method="POST" class="invoiceForm">
+        <form action="{{ route('deliver.update', $invoice->id) }}" method="POST" class="invoicePrintForm">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -170,7 +170,7 @@
       confirmButtonText: 'Yes, print it!'
           }).then((result) => {
             if (result.isConfirmed) {
-                $('.invoiceForm').submit(); // Submit the form
+                $('.invoicePrintForm').submit(); // Submit the form
             }
           });
         });
