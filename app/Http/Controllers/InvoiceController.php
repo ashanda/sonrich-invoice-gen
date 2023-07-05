@@ -303,7 +303,7 @@ class InvoiceController extends Controller
         $invoice->delivery_id = $request->delivery_id;
         $invoice->remark = $request->remark;
         $invoice->deliver_id = Auth::user()->id;
-       // $invoice->save();
+        $invoice->save();
       //  dd($invoice);
         $invoice['date'] = '';
         $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice]);
