@@ -639,7 +639,6 @@ border: none;
     .invoice-last-table p {
         margin: 0 auto;
     }
-
 </style>
 
 <body>
@@ -717,19 +716,28 @@ border: none;
 
 
         <section class="invi-heading border-bottom-2px">
-            <div class="row invi-row">
-                <div class="col2">
+            <table style="border: none;" width="100%">
+                <tr style="border: none;">
+                    <td style="border: none;">
+                        <p class="inv-title">Sonrich Asia (PVT) Ltd</p>
+                        <div class="address-company">
+                            <p class="address"><span>Address : </span>No.02, Union Place, Colombo |
+                                <span>TP:</span>0472224445
+                            </p>
+                            <p class="email-n"><span>sonrich@gmail.com</span></p>
+                            <p class="last-p"><span>Reciept Number : </span>{{ $invoice->invoice_no }}</p>
+                        </div>
+                    </td>
+                    <td style="border: none; text-align: end;">
+                        <p class="in-main-hea">Invoice</p>
+                        <div class="invoice-details">
+                            <p><span>Invoice number : </span>{{ $invoice->invoice_no }}</p>
+                            <p><span>Date : </span>{{ now() }}</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
 
-                </div>
-                <div class="col3">
-                    <p class="in-main-hea">Invoice</p>
-                    <div class="invoice-details">
-                        <p><span>Invoice number : </span>{{ $invoice->invoice_no }}</p>
-                        <p><span>Date : </span>{{ now() }}</p>
-                    </div>
-                </div>
-
-            </div>
 
         </section>
 
@@ -750,177 +758,177 @@ border: none;
                         <p class="hea uni-middlec right-align"><strong>AMOUNT</strong></p>
                     </th>
                 </tr>
-            
+
                 @php
-                    $subtotal = 0;
-                    $alldiscount = 0;
-                    $totalTax = 0;
-                    $deliverFee = 0;
-                    $packageIds = [];
+                $subtotal = 0;
+                $alldiscount = 0;
+                $totalTax = 0;
+                $deliverFee = 0;
+                $packageIds = [];
                 @endphp
-            
+
                 @foreach (json_decode($invoice->future_product_packages, true) as $packageId)
-                    @php
-                        $packageIds[] = $packageId;
-                    @endphp
-            
-                    @foreach (product_items($packageId) as $index => $productItem)
-                   
-                        <tr>
-                            <td>
-                                <strong>{{ ucfirst($productItem->title) }}</strong>
-                                <br><br>
-                                <hr>
-                            </td>
-                            <td>
-                                <p class="uni-middle-p right-align">{{ $productItem->amount }}</p>
-                                <br>
-                                <hr>
-                            </td>
-                            <td>
-                                <p class="uni-middle-p right-align">{{ $productItem->quantity }}</p>
-                                <br>
-                                <hr>
-                            </td>
-                            <td>
-                                @php
-                                    $row_sum = $productItem->amount * $productItem->quantity;
-                                @endphp
-                                <p class="last-un right-align">{{ 'Rs ' . $row_sum }}</p>
-                                <br>
-                                <hr>
-                            </td>
-                        </tr>
+                @php
+                $packageIds[] = $packageId;
+                @endphp
+
+                @foreach (product_items($packageId) as $index => $productItem)
+
+                <tr>
+                    <td>
+                        <strong>{{ ucfirst($productItem->title) }}</strong>
+                        <br><br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">{{ $productItem->amount }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">{{ $productItem->quantity }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
                         @php
-                            $subtotal += $row_sum;
-                            if ($index === 0 || !in_array($packageId, $packageIds)) {
-                                $alldiscount += $productItem->package_discount;
-                                $totalTax += $productItem->package_tax;
-                                $deliverFee += $productItem->package_delivery_fee;
-                            }
+                        $row_sum = $productItem->amount * $productItem->quantity;
                         @endphp
-                    @endforeach
+                        <p class="last-un right-align">{{ 'Rs ' . $row_sum }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                </tr>
+                @php
+                $subtotal += $row_sum;
+                if ($index === 0 || !in_array($packageId, $packageIds)) {
+                $alldiscount += $productItem->package_discount;
+                $totalTax += $productItem->package_tax;
+                $deliverFee += $productItem->package_delivery_fee;
+                }
+                @endphp
                 @endforeach
-            
+                @endforeach
+
                 @foreach (product_items($invoice->main_product_package) as $productItem)
-                    <tr>
-                        <td>
-                            <strong>{{ ucfirst($productItem->title) }}</strong>
-                            <br><br>
-                            <hr>
-                        </td>
-                        <td>
-                            <p class="uni-middle-p right-align">{{ $productItem->amount }}</p>
-                            <br>
-                            <hr>
-                        </td>
-                        <td>
-                            <p class="uni-middle-p right-align">{{ $productItem->quantity }}</p>
-                            <br>
-                            <hr>
-                        </td>
-                        <td>
-                            @php
-                                $row_sum = $productItem->amount * $productItem->quantity;
-                            @endphp
-                            <p class="last-un right-align">{{ 'Rs ' . $row_sum }}</p>
-                            <br>
-                            <hr>
-                        </td>
-                    </tr>
-                    @php
-                        $subtotal += $row_sum;
-                        $alldiscount += $productItem->package_discount;
-                        $totalTax += $productItem->package_tax;
-                        $deliverFee += $productItem->package_delivery_fee;
-                    @endphp
+                <tr>
+                    <td>
+                        <strong>{{ ucfirst($productItem->title) }}</strong>
+                        <br><br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">{{ $productItem->amount }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">{{ $productItem->quantity }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        @php
+                        $row_sum = $productItem->amount * $productItem->quantity;
+                        @endphp
+                        <p class="last-un right-align">{{ 'Rs ' . $row_sum }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                </tr>
+                @php
+                $subtotal += $row_sum;
+                $alldiscount += $productItem->package_discount;
+                $totalTax += $productItem->package_tax;
+                $deliverFee += $productItem->package_delivery_fee;
+                @endphp
                 @endforeach
                 <tr>
-                <td></td>
-                <td>
-                    <p class="uni-middle-p right-align"><b>Subtotals</b></p>
-                </td>
-                <td></td>
-                <td>
-                    <p class="uni-middle-p right-align">Rs.{{ $subtotal }}</p>
-                </td>
-            </tr>
-            
-            <tr>
-                <td></td>
-                <td>
-                    <p class="uni-middle-p right-align"><b>Whole Discount</b></p>
-                </td>
-                <td></td>
-                <td>
-                    <p class="uni-middle-p right-align">Rs.{{ $alldiscount }}</p>
-                </td>
-            </tr>
-            
-            <tr>
-                <td></td>
-                <td>
-                    <p class="uni-middle-p right-align"><b>Total Amount with Total Discount</b></p>
-                    <hr>
-                </td>
-                <td><br><br>
-                    <hr>
-                </td>
-            
-                <td>
-                    @php
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Subtotals</b></p>
+                    </td>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.{{ $subtotal }}</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Whole Discount</b></p>
+                    </td>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.{{ $alldiscount }}</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Total Amount with Total Discount</b></p>
+                        <hr>
+                    </td>
+                    <td><br><br>
+                        <hr>
+                    </td>
+
+                    <td>
+                        @php
                         $amountwithdiscount = $subtotal - $alldiscount;
-                    @endphp
-                    <p class="uni-middle-p right-align">Rs.{{ $amountwithdiscount }}</p>
-                    <br>
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <br>
-                </td>
-                <td>
-                    <p class="uni-middle-p right-align"><b>Tax</b></p>
-                </td>
-                <td>
-                    <br>
-                </td>
-                <td>
-                    <p class="uni-middle-p right-align">Rs.{{ $totalTax }}</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <br>
-                </td>
-                <td>
-                    <p class="uni-middle-p right-align"><b>Deliver</b></p>
-                    <hr>
-                </td>
-                <td>
-                    <br>
-                    <hr>
-                </td>
-                <td>
-                    <p class="uni-middle-p right-align">Rs.{{ $deliverFee }}</p>
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <p class="uni-middle-p right-align"><b>Total</b></p>
-                </td>
-                <td></td>
-                <td>
-                    <p class="uni-middle-p right-align">Rs.{{ $amountwithdiscount + $deliverFee + $totalTax }}</p>
-                </td>
-            </tr>
+                        @endphp
+                        <p class="uni-middle-p right-align">Rs.{{ $amountwithdiscount }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Tax</b></p>
+                    </td>
+                    <td>
+                        <br>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.{{ $totalTax }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Deliver</b></p>
+                        <hr>
+                    </td>
+                    <td>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.{{ $deliverFee }}</p>
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Total</b></p>
+                    </td>
+                    <td></td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.{{ $amountwithdiscount + $deliverFee + $totalTax }}</p>
+                    </td>
+                </tr>
 
 
 
-            <!-- <div class="tn-ta">
+                <!-- <div class="tn-ta">
                 <div class="row inv-row border-bottom">
                     <div class="col-01">
                         <p class="hea"><strong>DESCRIPTION</strong></p>
