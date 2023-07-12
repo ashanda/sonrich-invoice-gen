@@ -11,7 +11,14 @@
       $uniqueNumber = $prefix . time() . $randomNumber;
 
       @endphp
-
+       <div class="form-group">
+        <label for="delivery_code">Delivery code:</label>
+        <input type="text" name="delivery_code" id="delivery_code" class="form-control"  >
+    </div>
+    <div class="form-group">
+        <label for="delivery_id">Delivery Id:</label>
+        <input type="text" name="delivery_id" id="delivery_id" class="form-control"  >
+    </div>
       <div class="form-group">
         <label for="invoiceNo">Invoice No:</label>
         <input type="text" name="invoiceNo" id="invoiceNo" class="form-control" value="{{  $uniqueNumber  }}" readonly>
@@ -69,7 +76,7 @@
           <option value="N/A" data-main="{{ '0.00' }}">N/A</option>
           <!-- Add other package options here -->
           @foreach ( $packages_main as $package_main)
-          <option value="{{ $package_main->id }}" data-main="{{ $package_main->amount }}">{{ $package_main->title }}</option>
+          <option value="{{ $package_main->id }}" data-main="{{ $package_main->amount-$package_main->discount }}">{{ $package_main->title }}</option>
           @endforeach
         </select>
       </div>

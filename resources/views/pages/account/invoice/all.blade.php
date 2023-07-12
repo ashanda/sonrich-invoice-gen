@@ -83,11 +83,7 @@
                                   {{ $invoice->updated_at }}
                                  </td>
                                 <td class="text-right">
-                                    <a href="{{ route('invoice.show', $invoice->id) }}" class="btn btn-success mb-2">show</a>
-                                    <a href="{{ route('invoice.edit', $invoice->id) }}" class="btn btn-primary mb-2">Check</a>
-                                   
-                                    <a href="{{ route('invoice.destroy', $invoice->id) }}" class="btn btn-danger" data-confirm-delete="true">Delete</a>
-                                      
+                                    <a href="{{ route('invoice.show', $invoice->id) }}" class="btn btn-success mb-2">show</a>   
                                       
                                   </td>
                               </tr>

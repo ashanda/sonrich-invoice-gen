@@ -54,3 +54,6 @@ function product_items($id){
     return $productItems;
 }
 
+function product_packags($id){
+    $products = ProductPackage::where('id', $id)->first();
+}

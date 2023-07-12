@@ -114,9 +114,38 @@
 </style>
 <div class="content">
     <div class="container-fluid">
-        @if (Auth::user()->type == 'admin')
-
+        @if (Auth::user()->type == 'deliver')
+     
+       
+        @if($invoice->tracking == "")
+        <form action="{{ route('invoice.tracking', $invoice->id) }}" method="POST" class="invoicePrintForm">
+            @csrf
+            @method('PUT')
+            <div class="form-group">
+                <label for="tracking">Tracking:</label>
+                <input type="text" name="tracking" id="tracking" class="form-control" >
+                <input type="hidden" name="id" value={{ $invoice->id }} class="form-control" >
+            </div>
+            <button type="submit" id="saveButton" class="btn btn-primary mb-2">Update</button>
+            
+            
+        </form>
+        @else
+        <div class="form-group">
+            <label for="tracking">Tracking :</label>
+            <input type="text" name="tracking" id="tracking" value="{{ $invoice->tracking }}" readonly  class="form-control"  >
+        </div>
+        
         @endif
+        @endif
+        <div class="form-group">
+            <label for="delivery_code">Delivery code:</label>
+            <input type="text" name="delivery_code" id="delivery_code" value="{{ $invoice->delivery_code }}" readonly  class="form-control"  >
+        </div>
+        <div class="form-group">
+            <label for="delivery_id">Delivery Id:</label>
+            <input type="text" name="delivery_id" id="delivery_id" value="{{ $invoice->delivery_id }}" readonly class="form-control"  >
+        </div>
         <div class="form-group">
             <label for="invoiceNo">Invoice No:</label>
             <input type="text" name="invoiceNo" id="invoiceNo" class="form-control" value="{{ $invoice->invoice_no }}" readonly>
@@ -136,14 +165,15 @@
             <label for="sriNo3">SRI No:</label>
             <input type="text" name="sriNo3" id="sriNo3" class="form-control" value="{{ $invoice->sri_no3 }}" readonly>
         </div>
-
+        @php
+        $futurePlans = json_decode($invoice->future_plans);
+        @endphp
+        @if ($futurePlans != null)
         <div class="form-group">
             <label for="futurePlan">Future Plan:</label>
             <div id="futurePlanFields">
                 <!-- Existing future plans will be displayed here -->
-                @php
-                $futurePlans = json_decode($invoice->future_plans);
-                @endphp
+           
                 @foreach ($futurePlans as $plan)
                 <div class="form-group">
 
@@ -154,6 +184,8 @@
             </div>
 
         </div>
+        @endif
+        
 
         <div class="form-group">
             <label for="customerName">Customer Name:</label>
@@ -193,6 +225,7 @@
         @php
         $selectedPackages = json_decode($invoice->future_product_packages, true);
         @endphp
+         @if ($selectedPackages != null)
         <div class="form-group">
             <label for="futureProductPackages">Future Product Packages:</label>
             <select name="futureProductPackages[]" id="futureProductPackages" class="form-control" multiple readonly>
@@ -202,7 +235,7 @@
                 @endforeach
             </select>
         </div>
-
+        @endif
 
 
 
@@ -220,11 +253,13 @@
                         <img src="{{ asset('attachments/'.$invoice->attachments1) }}">
                     </a>
                 </div>
+                @if ($invoice->attachments2 != NULL)
                 <div class="col-sm-6 col-md-4">
                     <a class="lightbox" href="{{ asset('attachments/'.$invoice->attachments2) }}">
                         <img src="{{ asset('attachments/'.$invoice->attachments2) }}">
                     </a>
                 </div>
+                @endif
                 @if ($invoice->attachments3 != NULL)
                 <div class="col-sm-6 col-md-4">
                     <a class="lightbox" href="{{ asset('attachments/'.$invoice->attachments3) }}">

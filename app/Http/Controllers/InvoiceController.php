@@ -30,11 +30,30 @@ class InvoiceController extends Controller
             $invoices = Invoice::where('account_departmet_checked','checked')->where('deliver_departmet_checked','not printed')->orderBy('created_at', 'asc')->get();
             return view('pages.deliver.invoice.index',compact('invoices'));
         }else{
-            $invoices = Invoice::where('user_id',Auth::user()->id)->orderBy('created_at', 'asc')->get();
+            $invoices = Invoice::where('user_id',Auth::user()->id)->where('account_departmet_checked','unchecked')->where('deliver_departmet_checked','not printed')->orderBy('created_at', 'asc')->get();
             return view('pages.agent.index',compact('invoices'));
         }
     }
 
+    public function all()
+    {
+        $title = 'Delete Invoice!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+        if(Auth::user()->type == 'admin'){
+            $invoices = Invoice::orderBy('created_at', 'asc')->get();
+            return view('pages.admin.invoice.all',compact('invoices'));
+        }else if(Auth::user()->type == 'manager'){
+            $invoices = Invoice::where('account_departmet_checked','checked')->where('manager_id',Auth::user()->id)->orderBy('created_at', 'asc')->get();
+            return view('pages.account.invoice.all',compact('invoices'));
+        }else if(Auth::user()->type == 'deliver'){
+            $invoices = Invoice::where('account_departmet_checked','checked')->where('deliver_id',Auth::user()->id)->where('deliver_departmet_checked','printed')->orderBy('created_at', 'asc')->get();
+            return view('pages.deliver.invoice.all',compact('invoices'));
+        }else{
+            $invoices = Invoice::where('user_id',Auth::user()->id)->where('account_departmet_checked','checked')->where('deliver_departmet_checked','printed')->orderBy('created_at', 'asc')->get();
+            return view('pages.agent.all',compact('invoices'));
+        }
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -55,45 +74,29 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'invoiceNo' => 'required',
-            'sriNo1' => 'required',
-            'sriNo2' => 'required',
-            'sriNo3' => 'required',
-            'futurePlans' => 'array',
-            'futurePlans.*' => 'numeric',
-            'customerName' => 'required',
-            'customerAddress' => 'required',
-            'customerDistrict' => 'required',
-            'mobileNo1' => 'required',
-            'mobileNo2' => 'required',
-            'mainProductPackage' => 'required',
-            'futureProductPackages' => 'array',
-            'futureProductPackages.*' => 'required',
-            'amount' => 'required',
-            'attachments1' => 'required',
-            'attachments2' => 'required',
-            'attachments1' => 'file',
-            'attachments2' => 'file',
-        ]);
+        
     
         // Create a new Invoice instance
         $invoice = new Invoice();
     
         // Assign the form data to the Invoice model attributes
-        $invoice->invoice_no = $validatedData['invoiceNo'];
-        $invoice->sri_no1 = $validatedData['sriNo1'];
-        $invoice->sri_no2 = $validatedData['sriNo2'];
-        $invoice->sri_no3 = $validatedData['sriNo3'];
-        $invoice->future_plans = json_encode($validatedData['futurePlans']);
-        $invoice->customer_name = $validatedData['customerName'];
-        $invoice->customer_address = $validatedData['customerAddress'];
-        $invoice->customer_district = $validatedData['customerDistrict'];
-        $invoice->mobile_no1 = $validatedData['mobileNo1'];
-        $invoice->mobile_no2 = $validatedData['mobileNo2'];
-        $invoice->main_product_package = $validatedData['mainProductPackage'];
-        $invoice->future_product_packages = json_encode($validatedData['futureProductPackages']);
-        $invoice->amount = $validatedData['amount'];
+        
+        $invoice->invoice_no = $request->invoiceNo;
+        $invoice->delivery_code = $request->delivery_code;
+        $invoice->delivery_id = $request->delivery_id;
+        $invoice->sri_no1 = $request->sriNo1;
+        $invoice->sri_no2 = $request->sriNo2;
+        $invoice->sri_no3 = $request->sriNo3;
+        $invoice->future_plans = json_encode($request->futurePlans);
+        $invoice->customer_name = $request->customerName;
+        $invoice->customer_address = $request->customerAddress;
+        $invoice->customer_district = $request->customerDistrict;
+        $invoice->mobile_no1 = $request->mobileNo1;
+        $invoice->mobile_no2 = $request->mobileNo2;
+        $invoice->main_product_package = $request->mainProductPackage;
+        $invoice->future_product_packages = json_encode($request->futureProductPackages);
+        $invoice->amount = $request->amount;
+
         if($request->file('attachments1')){
             $file= $request->file('attachments1');
             $filename= date('YmdHi').$file->getClientOriginalName();
@@ -165,33 +168,11 @@ class InvoiceController extends Controller
     $invoice = Invoice::findOrFail($id);
     
     // Validate the input data
-    $validatedData = $request->validate([
-        'sriNo1' => 'nullable|string',
-        'sriNo2' => 'nullable|string',
-        'sriNo3' => 'nullable|string',
-        'customerName' => 'required|string',
-        'customerAddress' => 'required|string',
-        'customerDistrict' => 'required|string',
-        'mobileNo1' => 'nullable|string',
-        'mobileNo2' => 'nullable|string',
-        'mainProductPackage' => 'required',
-        'futureProductPackages' => 'nullable|array',
-        'futureProductPackages.*' => 'exists:product_packages,id',
-        'attachments1' => 'nullable|array',
-        'attachments1.*' => 'nullable|file|max:2048',
-        'attachments2' => 'nullable|array',
-        'attachments2.*' => 'nullable|file|max:2048',
-        'attachments3' => 'nullable|array',
-        'attachments3.*' => 'nullable|file|max:2048',
-        'attachments4' => 'nullable|array',
-        'attachments4.*' => 'nullable|file|max:2048',
-        'attachments5' => 'nullable|array',
-        'attachments5.*' => 'nullable|file|max:2048',
-        'switchone' => 'required',
-
-    ]);
+    
 
     // Update the invoice data
+    $invoice->delivery_code = $request->delivery_code;
+    $invoice->delivery_id = $request->delivery_id;
     $invoice->sri_no1 = $request->input('sriNo1');
     $invoice->sri_no2 = $request->input('sriNo2');
     $invoice->sri_no3 = $request->input('sriNo3');
@@ -249,7 +230,7 @@ class InvoiceController extends Controller
     }
     $invoice->amount = $amount;
     $invoice->account_departmet_checked = $request->switchone;
-    $invoice->manager_id = Auth::user()->id;
+       $invoice->manager_id = Auth::user()->id;
     $invoice->save();
     
     Alert::Alert('Success', 'Invoice Update Sucessfully.')->persistent(true,false);
@@ -258,6 +239,15 @@ class InvoiceController extends Controller
 
 }
 
+public function tracking(Request $request, $id)
+{
+$invoice = Invoice::findOrFail($id);
+$invoice->tracking = $request->tracking;
+
+    $invoice->save();
+    Alert::Alert('Success', 'Invoice Update Sucessfully.')->persistent(true,false);
+    return redirect()->back();
+}
     /**
      * Remove the specified resource from storage.
      */
@@ -299,8 +289,6 @@ class InvoiceController extends Controller
         
         $invoice = Invoice::findOrFail($id);
         $invoice->deliver_departmet_checked = 'printed';
-        $invoice->delivery_code  = $request->delivery_code;
-        $invoice->delivery_id = $request->delivery_id;
         $invoice->remark = $request->remark;
         $invoice->deliver_id = Auth::user()->id;
         $invoice->save();

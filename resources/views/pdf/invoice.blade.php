@@ -757,9 +757,11 @@ border: none;
                     $totalTax = 0;
                     $deliverFee = 0;
                     $packageIds = [];
+                    $futurePlans = $invoice->future_product_packages;
+                    $mainPlans = $invoice->main_product_package;
                 @endphp
-            
-                @foreach (json_decode($invoice->future_product_packages, true) as $packageId)
+             @if ($futurePlans != null) 
+                @foreach (json_decode($futurePlans, true) as $packageId)
                     @php
                         $packageIds[] = $packageId;
                     @endphp
@@ -793,16 +795,18 @@ border: none;
                         </tr>
                         @php
                             $subtotal += $row_sum;
-                            if ($index === 0 || !in_array($packageId, $packageIds)) {
-                                $alldiscount += $productItem->package_discount;
-                                $totalTax += $productItem->package_tax;
-                                $deliverFee += $productItem->package_delivery_fee;
-                            }
                         @endphp
                     @endforeach
+                    @php
+                        $packageItems = product_items($packageId);
+                        $alldiscount += $packageItems->discount;
+                        $totalTax += $packageItems->tax;
+                        $deliverFee += $packageItems->delivery_fee;
+                    @endphp
                 @endforeach
-            
-                @foreach (product_items($invoice->main_product_package) as $productItem)
+              @endif
+              @if( $mainPlans != null)
+                @foreach (product_items( $mainPlans) as $productItem)
                     <tr>
                         <td>
                             <strong>{{ ucfirst($productItem->title) }}</strong>
@@ -835,6 +839,7 @@ border: none;
                         $deliverFee += $productItem->package_delivery_fee;
                     @endphp
                 @endforeach
+               @endif 
                 <tr>
                 <td></td>
                 <td>

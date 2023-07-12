@@ -117,7 +117,14 @@
         <form id="invoiceForm" action="{{ route('invoice.update', $invoice->id) }}" enctype="multipart/form-data" method="POST">
             @csrf
             @method('PUT')
-
+            <div class="form-group">
+                <label for="delivery_code">Delivery code:</label>
+                <input type="text" name="delivery_code" id="delivery_code" value="{{ $invoice->delivery_code }}"  class="form-control"  >
+            </div>
+            <div class="form-group">
+                <label for="delivery_id">Delivery Id:</label>
+                <input type="text" name="delivery_id" id="delivery_id" value="{{ $invoice->delivery_id }}" class="form-control"  >
+            </div>
             <div class="form-group">
                 <label for="invoiceNo">Invoice No:</label>
                 <input type="text" name="invoiceNo" id="invoiceNo" class="form-control" value="{{ $invoice->invoice_no }}" readonly>
@@ -137,14 +144,15 @@
                 <label for="sriNo3">SRI No:</label>
                 <input type="text" name="sriNo3" id="sriNo3" class="form-control" value="{{ $invoice->sri_no3 }}">
             </div>
-
+            @php
+            $futurePlans = json_decode($invoice->future_plans);
+            @endphp
+            @if ($futurePlans != null)
             <div class="form-group">
                 <label for="futurePlan">Future Plan:</label>
                 <div id="futurePlanFields">
                     <!-- Existing future plans will be displayed here -->
-                    @php
-                    $futurePlans = json_decode($invoice->future_plans);
-                    @endphp
+                   
                     @foreach ($futurePlans as $plan)
                     <div class="form-group">
                         <label for="futurePlan{{$loop->iteration}}">Future Plan {{$loop->iteration}}:</label>
@@ -155,7 +163,16 @@
                 </div>
                 <button type="button" id="addFuturePlan" class="btn btn-secondary">Add Future Plan</button>
             </div>
-
+            @else
+            <div class="form-group">
+                <label for="futurePlan">Future Plan:</label>
+                <div id="futurePlanFields">
+                  <!-- Future plan input fields will be dynamically added here -->
+                </div>
+                <button type="button" id="addFuturePlan" class="btn btn-secondary">Add Future Plan</button>
+              </div>
+         
+            @endif
             <div class="form-group">
                 <label for="customerName">Customer Name:</label>
                 <input type="text" name="customerName" id="customerName" class="form-control" value="{{ $invoice->customer_name }}">
@@ -194,6 +211,7 @@
             @php
             $selectedPackages = json_decode($invoice->future_product_packages, true);
             @endphp
+             @if ($selectedPackages != null)
             <div class="form-group">
                 <label for="futureProductPackages">Future Product Packages:</label>
                 <select name="futureProductPackages[]" id="futureProductPackages" class="form-control" multiple>
@@ -203,7 +221,17 @@
                     @endforeach
                 </select>
             </div>
-
+            @else
+            <div class="form-group">
+                <label for="futureProductPackages">Future Product Packages:</label>
+                <select name="futureProductPackages[]" id="futureProductPackages" class="form-control" multiple>
+                  <option value="N/A" data-future="{{ "0.00" }}">N/A</option>
+                  @foreach ( $packages_future as $package_future)
+                  <option value="{{ $package_future->id }}" data-future="{{ $package_future->amount }}">{{ $package_future->title }}</option>
+                  @endforeach
+                </select>
+              </div>
+              @endif
 
 
 
@@ -221,11 +249,13 @@
                             <img src="{{ asset('attachments/'.$invoice->attachments1) }}">
                         </a>
                     </div>
+                    @if ($invoice->attachments2 != NULL)
                     <div class="col-sm-6 col-md-4">
                         <a class="lightbox" href="{{ asset('attachments/'.$invoice->attachments2) }}">
                             <img src="{{ asset('attachments/'.$invoice->attachments2) }}">
                         </a>
                     </div>
+                    @endif
                     @if ($invoice->attachments3 != NULL)
                     <div class="col-sm-6 col-md-4">
                         <a class="lightbox" href="{{ asset('attachments/'.$invoice->attachments3) }}">

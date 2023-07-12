@@ -47,14 +47,7 @@
         <form action="{{ route('deliver.update', $invoice->id) }}" method="POST" class="invoicePrintForm">
             @csrf
             @method('PUT')
-            <div class="form-group">
-                <label for="delivery_code">Delivery code:</label>
-                <input type="text" name="delivery_code" id="delivery_code" class="form-control"  >
-            </div>
-            <div class="form-group">
-                <label for="delivery_id">Delivery Id:</label>
-                <input type="text" name="delivery_id" id="delivery_id" class="form-control"  >
-            </div>
+
             <button type="submit" id="saveButton" data-confirm-save="true" class="btn btn-primary mb-2">Print</button>
             <a href="{{ route('invoice.index') }}" class="btn btn-warning mb-2">You Click the button and you can't again this invoioce print</a>
             
@@ -62,6 +55,14 @@
         
         <button class="btn btn-warning mb-2" id="openModalButton">remark</button>
         <hr>
+        <div class="form-group">
+          <label for="delivery_code">Delivery code:</label>
+          <input type="text" name="delivery_code" id="delivery_code" value="{{ $invoice->delivery_code }}" readonly class="form-control"  >
+      </div>
+      <div class="form-group">
+          <label for="delivery_id">Delivery Id:</label>
+          <input type="text" name="delivery_id" id="delivery_id" value="{{ $invoice->delivery_id }}" readonly class="form-control"  >
+      </div>
         <div class="form-group">
             <label for="invoiceNo">Invoice No:</label>
             <input type="text" name="invoiceNo" id="invoiceNo" class="form-control" value="{{ $invoice->invoice_no }}" readonly>
@@ -118,7 +119,16 @@
             <label for="amount">Amount(Rs):</label>
             <input type="number" step="0.00" class="form-control" value="{{ $invoice->amount }}" readonly>
         </div>
+        <div class="form-group">
+          @if (Auth::user()->type == 'admin' || Auth::user()->type == 'deliver')
+          <div class="form-group">
+              <label for="amount">Remark:</label>
+           
+              <textarea name="remark" id="remark" class="form-control" cols="30" rows="10" readonly>{{ !empty($invoice->remark) ? $invoice->remark : '' }}</textarea>
+          </div>
+          @endif
 
+      </div>
         </div>
 
 

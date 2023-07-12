@@ -113,6 +113,7 @@ Route::middleware(['auth', 'user-access:admin,deliver'])->group(function () {
 
 Route::middleware(['auth', 'user-access:admin,manager,user,deliver'])->group(function () {
     Route::get('invoice', [InvoiceController::class, 'index'])->name('invoice.index');
+    Route::get('all', [InvoiceController::class, 'all'])->name('invoice.all');
     Route::get('invoice/show/{id}', [InvoiceController::class, 'show'])->name('invoice.show');
 });
 
@@ -124,6 +125,9 @@ Route::middleware(['auth', 'user-access:admin,user'])->group(function () {
 Route::middleware(['auth', 'user-access:admin,manager,deliver'])->group(function () {
     Route::get('invoice/edit/{invoice}', [InvoiceController::class, 'edit'])->name('invoice.edit');
     Route::put('invoice/{invoice}', [InvoiceController::class, 'update'])->name('invoice.update');
+    Route::put('tracking/{invoice}', [InvoiceController::class, 'tracking'])->name('invoice.tracking');
+
+
 });
 
 Route::middleware(['auth', 'user-access:admin,manager'])->group(function () { 

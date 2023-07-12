@@ -36,10 +36,15 @@
       <li>
         <a href="{{ route('invoice.index') }}">
           <i class="nc-icon nc-paper"></i>
-          <p>Invoice</p>
+          <p>New Invoice</p>
         </a>
       </li>
-
+      <li>
+        <a href="{{ route('invoice.all') }}">
+          <i class="nc-icon nc-paper"></i>
+          <p>All Invoice</p>
+        </a>
+      </li>
      
       @endif
       @if (Auth::user()->type == 'admin' )
