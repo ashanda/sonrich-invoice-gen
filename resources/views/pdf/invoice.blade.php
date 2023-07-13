@@ -725,10 +725,10 @@ border: none;
                                 <span>TP:</span>0472224445
                             </p>
                             <p class="email-n"><span>sonrich@gmail.com</span></p>
-                            <p class="last-p"><span>Reciept Number : </span>{{ $invoice->invoice_no }}</p>
+                          
                         </div>
                     </td>
-                    <td style="border: none; text-align: end;">
+                    <td style="border: none; text-align: right;">
                         <p class="in-main-hea">Invoice</p>
                         <div class="invoice-details">
                             <p><span>Invoice number : </span>{{ $invoice->invoice_no }}</p>
@@ -765,8 +765,12 @@ border: none;
                     $totalTax = 0;
                     $deliverFee = 0;
                     $packageIds = [];
+                    $futurePlans = $invoice->future_product_packages;
+                    $mainPlans = $invoice->main_product_package;
+
+
                 @endphp
-            
+                @if($futurePlans != null)
                 @foreach (json_decode($invoice->future_product_packages, true) as $packageId)
                     @php
                         $packageIds[] = $packageId;
@@ -809,8 +813,11 @@ border: none;
                         @endphp
                     @endforeach
                 @endforeach
+            @endif
+            @if ($mainPlans != null)
             
-                @foreach (product_items($invoice->main_product_package) as $productItem)
+                @foreach (product_items($invoice->main_product_package) as $index => $productItem)
+               
                     <tr>
                         <td>
                             <strong>{{ ucfirst($productItem->title) }}</strong>
@@ -838,9 +845,11 @@ border: none;
                     </tr>
                     @php
                         $subtotal += $row_sum;
+                        if ($index === 0) {
                         $alldiscount += $productItem->package_discount;
                         $totalTax += $productItem->package_tax;
                         $deliverFee += $productItem->package_delivery_fee;
+                    }
                     @endphp
                 @endforeach
                @endif 
@@ -1062,18 +1071,13 @@ border: none;
             </div> -->
         </section>
 
-        <section class="signature-section">
-            <div class="sign right-align">
-                <p>..........................................</p>
-                <p>Authorized Sign</p>
-            </div>
-        </section>
+       
 
-        <section class="footer-section">
+        <section class="footer-section" style="margin-top:15px;">
             <div class="footer-row-end">
                 <p>THANK YOU! WE APPRECIATE YOUR BUSINESS</p>
             </div>
-
+            <p style='text-align:center;'>This document digitally geney receipt. Won't be needing any signs...</p>
         </section>
     </div>
 

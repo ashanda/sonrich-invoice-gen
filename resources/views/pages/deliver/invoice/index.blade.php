@@ -35,7 +35,9 @@
                           <th>
                             Deliver Department
                           </th>
-                          
+                          <th>
+                            Remark
+                          </th>
                           <th>
                             Update Date
                           </th>
@@ -65,7 +67,9 @@
                                 <td>
                                     {{ $invoice->deliver_departmet_checked }}
                                 </td>
-                                
+                                <td>
+                                  {{ $invoice->remark }}
+                                 </td>
                                 <td>
                                   {{ $invoice->updated_at }}
                                  </td>

@@ -22,11 +22,14 @@
                             Invoice Number
                           </th>
                           <th>
-                            Customer Name
+                            Tracking Number
                           </th>
                           <th>
-                            Customer Address
+                            Customer Name
                           </th>
+                          {{-- <th>
+                            Customer Address
+                          </th> --}}
                           
                           <th>
                             Customer Contact
@@ -44,6 +47,9 @@
                             Create Date
                           </th>
                           <th>
+                            Remark  
+                          </th>
+                          <th>
                             Update Date
                           </th>
                           <th class="text-right">
@@ -57,12 +63,15 @@
                                   {{ $invoice->invoice_no }}
                                 </td>
                                 <td>
-                                    {{ $invoice->customer_name }}
+                                  {{ $invoice->tracking }}
                                 </td>
                                 <td>
+                                    {{ $invoice->customer_name }}
+                                </td>
+                                {{-- <td>
                                     {{ $invoice->customer_address }}<br />
                                     {{ $invoice->customer_district }}
-                                </td>
+                                </td> --}}
                                 <td>
                                     {{ $invoice->mobile_no1 }}<br />
                                     {{ $invoice->mobile_no2 }}<br />
@@ -79,6 +88,9 @@
                                 <td>
                                   {{ $invoice->created_at }}
                                 </td>
+                                <td>
+                                  {{ $invoice->remark }}
+                                 </td>
                                 <td>
                                   {{ $invoice->updated_at }}
                                  </td>

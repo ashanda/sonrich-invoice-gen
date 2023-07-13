@@ -86,7 +86,7 @@
         <select name="futureProductPackages[]" id="futureProductPackages" class="form-control" multiple>
           <option value="N/A" data-future="{{ "0.00" }}">N/A</option>
           @foreach ( $packages_future as $package_future)
-          <option value="{{ $package_future->id }}" data-future="{{ $package_future->amount }}">{{ $package_future->title }}</option>
+          <option value="{{ $package_future->id }}" data-future="{{ $package_future->amount-$package_future->discount }}">{{ $package_future->title }}</option>
           @endforeach
         </select>
       </div>

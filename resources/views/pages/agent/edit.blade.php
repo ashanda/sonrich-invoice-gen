@@ -238,7 +238,8 @@
 
             <div class="form-group">
                 <label for="amount">Amount:</label>
-                <input type="text" name="amount" id="amount" class="form-control" value="{{ $invoice->amount }}" readonly>
+                
+                <input type="text" name="amount"  class="form-control" value="{{ $invoice->amount }}" readonly>
             </div>
             <div class="tz-gallery">
 

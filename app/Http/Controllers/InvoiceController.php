@@ -93,7 +93,11 @@ class InvoiceController extends Controller
         $invoice->customer_district = $request->customerDistrict;
         $invoice->mobile_no1 = $request->mobileNo1;
         $invoice->mobile_no2 = $request->mobileNo2;
-        $invoice->main_product_package = $request->mainProductPackage;
+        
+        if($request->mainProductPackage != "N/A"){
+            $invoice->main_product_package = $request->mainProductPackage;
+        }
+       
         $invoice->future_product_packages = json_encode($request->futureProductPackages);
         $invoice->amount = $request->amount;
 
@@ -181,9 +185,9 @@ class InvoiceController extends Controller
     $invoice->customer_district = $request->input('customerDistrict');
     $invoice->mobile_no1 = $request->input('mobileNo1');
     $invoice->mobile_no2 = $request->input('mobileNo2');
-    $invoice->main_product_package = $request->input('mainProductPackage');
+    
     $invoice->future_product_packages = $request->input('futureProductPackages');
-
+   
     
     if($request->file('attachments1')){
         $file= $request->file('attachments1');
@@ -220,21 +224,34 @@ class InvoiceController extends Controller
     
     // Calculate the total amount based on selected packages
     $amount = 0.00;
-    $mainPackage = ProductPackage::findOrFail($request->input('mainProductPackage'));
-    $amount += $mainPackage->amount;
+    $discount=0.00;
+
+    if ($request->input('mainProductPackage') != 'N/A') {
+        $mainPackage = ProductPackage::findOrFail($request->input('mainProductPackage'));
+       
+        $amount += $mainPackage->amount;
+        $discount += $mainPackage->discount;
+
+        $invoice->main_product_package = $request->input('mainProductPackage');
+    }
+   
+    
     if ($request->filled('futureProductPackages')) {
         foreach ($request->input('futureProductPackages') as $futurePackageId) {
             $futurePackage = ProductPackage::findOrFail($futurePackageId);
             $amount += $futurePackage->amount;
+            $discount += $futurePackage->discount;
+            
         }
     }
-    $invoice->amount = $amount;
+   
+    $invoice->amount = $amount-$discount;
     $invoice->account_departmet_checked = $request->switchone;
-       $invoice->manager_id = Auth::user()->id;
+    $invoice->manager_id = Auth::user()->id;
     $invoice->save();
     
     Alert::Alert('Success', 'Invoice Update Sucessfully.')->persistent(true,false);
-    return redirect()->route('invoice.edit',$id)->with('success', 'User member created successfully.');
+    return redirect()->route('invoice.index')->with('success', 'User member created successfully.');
 
 
 }
