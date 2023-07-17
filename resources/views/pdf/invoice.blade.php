@@ -656,10 +656,10 @@ border: none;
                     <div class="col-new2">
                         <p class="inv-title">Sonrich Asia (PVT) Ltd</p>
                         <div class="address-company">
-                            <p class="address"><span>Address : </span>No.02, Union Place, Colombo |
-                                <span>TP:</span>0472224445
+                            <p class="address"><span>Address : </span>No.204/A/1,Bandaragama Road,Kesbewa <br>
+                                <span>TP:</span>(+94)383370000
                             </p>
-                            <p class="email-n"><span>sonrich@gmail.com</span></p>
+                            <p class="email-n"><span>Email : info@sonrich.lk</span></p>
                             <p class="last-p"><span>Reciept Number : </span>{{ $invoice->invoice_no }}</p>
                         </div>
                     </div>
@@ -721,10 +721,10 @@ border: none;
                     <td style="border: none;">
                         <p class="inv-title">Sonrich Asia (PVT) Ltd</p>
                         <div class="address-company">
-                            <p class="address"><span>Address : </span>No.02, Union Place, Colombo |
-                                <span>TP:</span>0472224445
+                            <p class="address"><span>Address : </span>No.204/A/1,Bandaragama Road,Kesbewa |
+                                <span>TP:</span>(+94)383370000
                             </p>
-                            <p class="email-n"><span>sonrich@gmail.com</span></p>
+                            <p class="email-n"><span>Email : info@sonrich.lk</span></p>
                           
                         </div>
                     </td>
