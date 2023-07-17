@@ -76,7 +76,7 @@
           <option value="N/A" data-main="{{ '0.00' }}">N/A</option>
           <!-- Add other package options here -->
           @foreach ( $packages_main as $package_main)
-          <option value="{{ $package_main->id }}" data-main="{{ $package_main->amount-$package_main->discount }}">{{ $package_main->title }}</option>
+          <option value="{{ $package_main->id }}" data-main="{{ ( $package_main->amount + $package_main->tax + $package_main->deliver_fee) - $package_main->discount }}">{{ $package_main->title }}</option>
           @endforeach
         </select>
       </div>
@@ -86,7 +86,7 @@
         <select name="futureProductPackages[]" id="futureProductPackages" class="form-control" multiple>
           <option value="N/A" data-future="{{ "0.00" }}">N/A</option>
           @foreach ( $packages_future as $package_future)
-          <option value="{{ $package_future->id }}" data-future="{{ $package_future->amount-$package_future->discount }}">{{ $package_future->title }}</option>
+          <option value="{{ $package_future->id }}" data-future="{{ ($package_future->amount + $package_future->tax + $package_future->deliver_fee) - $package_future->discount }}">{{ $package_future->title }}</option>
           @endforeach
         </select>
       </div>
