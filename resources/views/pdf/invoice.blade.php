@@ -690,19 +690,19 @@ border: none;
                 </tr>
                 <tr>
                     <td>Company Address:</td>
-                    <td>No.02, Union Place, Colombo</td>
+                    <td>No.204/A/1,Bandaragama Road,Kesbewa</td>
                     <td>Customer Address:</td>
                     <td>{{ $invoice->customer_address }}</td>
                 </tr>
                 <tr>
-                    <td>Phone No 1:</td>
-                    <td>0472224445</td>
+                    <td>Phone No :</td>
+                    <td>(+94) 38 337 0000 </td>
                     <td>Phone No 1:</td>
                     <td>{{ $invoice->mobile_no1 }}</td>
                 </tr>
                 <tr>
                     <td>Email Address:</td>
-                    <td>sonrich@gmail.com</td>
+                    <td>info@sonrich.lk</td>
                     <td>Phone No 2:</td>
                     <td>{{ $invoice->mobile_no2 }}</td>
                 </tr>
@@ -867,7 +867,7 @@ border: none;
                 <tr>
                     <td></td>
                     <td>
-                        <p class="uni-middle-p right-align"><b>Whole Discount</b></p>
+                        <p class="uni-middle-p right-align"><b>Wholesale Discount</b></p>
                     </td>
                     <td></td>
                     <td>
