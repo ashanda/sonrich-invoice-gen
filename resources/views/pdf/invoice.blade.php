@@ -77,7 +77,7 @@
 
     .ta-1 tr:nth-child(even),
     .ta-2 tr:nth-child(even) {
-        background-color: #21bb49;
+        background-color: #c3c3c3;
     }
 
     .invoice-c-table {
@@ -131,7 +131,7 @@
     }
 
     .col.col-color {
-        background: #21bb49;
+        background: #000;
     }
 
     .col.col-color.bo-radi {
@@ -173,13 +173,13 @@
 
     .col-2 {
         width: 20%;
-        color: #21bb49;
+        color: #000;
         font-weight: 700;
     }
 
     .row.in-table-row:first-child {
         margin: 50px;
-        color: #21bb49;
+        color: #000;
         font-weight: 700;
         font-size: 12px;
         letter-spacing: 1px;
@@ -204,7 +204,7 @@
 
     tr.table-headers-color th {
         font-size: 12px;
-        color: #21bb49;
+        color: #000;
         letter-spacing: 1px;
         border: none;
     }
@@ -261,7 +261,7 @@
     }
 
     section.invoice-last-table p.hea {
-        color: #21bb49;
+        color: #000;
     }
 
     .row.inv-row:last-child {
@@ -282,7 +282,7 @@
     }
 
     .row.inv-row:nth-child(10) {
-        border-bottom: 2px solid #21bb49;
+        border-bottom: 2px solid #000;
     }
 
     .sign {
@@ -311,12 +311,12 @@
     .footer-sec {
         margin: 10px 0px 0px 0px;
         padding: 10px 0px;
-        border: 2px solid #21bb49;
+        border: 2px solid #000;
     }
 
     .footer-row-end {
         text-align: center;
-        border: 2px solid #21bb49;
+        border: 2px solid #ff0001;
         margin: 0px 0px;
     }
 
@@ -332,7 +332,7 @@
     }
 
     p.inv-title {
-        font-size: 28px;
+        font-size: 26px;
         margin: 0px;
     }
 
@@ -548,13 +548,22 @@
             <div class="invoice-hea">
                 <div class="row header-row">
                     <div class="col-new2">
-                        <p class="inv-title">LUVNARICH INTERNATIONAL PVT LTD
-                            <br>
-                            (Sonrich Group)
-                        </p>
+                        <table style="border: none;">
+                            <tr style="border: none;">
+                                <td width="20%" style="border: none; background-color: #000; text-align: center;">
+                                    <img style="width: 100%;" src="http://sonrich.net/logo.png" alt="">
+                                </td>
+                                <td width="80%" style="border: none;">
+                                    <p class="inv-title">LUVNARICH INTERNATIONAL PVT LTD
+                                        <br>
+                                        (Sonrich Group)
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
                         <div style="text-align: left;" class="address-company">
                             <p><span>Address : </span>No.204/A/1, Bandaragama Road, Kesbewa</p>
-                            <p><span>TP:</span>(+94)383370000</p>
+                            <p><span>TP :</span> (+94)383370000</p>
                             <p class="email-n"><span>Email : info@sonrich.lk</span></p>
                             <p class="last-p"><span>Reciept Number : </span>{{ $invoice->invoice_no }}</p>
                         </div>
@@ -637,12 +646,11 @@
                     </td>
                 </tr>
             </table>
-
-
         </section>
 
 
-        <section class="invoice-last-table">
+        <section class="invoice-last-table" style="position: relative;">
+            <img style="width: 60%; position: absolute;  opacity: 0.1; top:0; right: 0; transform: translateX(-50%);" src="http://sonrich.net/icon.png" alt="">
             <table style="border: none;">
                 <tr class="border-bottom-2px">
                     <th width="40%">
@@ -778,10 +786,11 @@
                 <tr>
                     <td></td>
                     <td>
-                        <p class="uni-middle-p right-align"><b>Total Amount with Total Discount</b></p>
+                        <p class="uni-middle-p right-align"><b>Discounted price</b></p>
                         <hr>
                     </td>
-                    <td><br><br>
+                    <td>
+                        <br>
                         <hr>
                     </td>
 
@@ -790,7 +799,7 @@
                         $amountwithdiscount = $subtotal - $alldiscount;
                         @endphp
                         <p class="uni-middle-p right-align">Rs.{{ $amountwithdiscount }}</p>
-                        <br>
+                        
                         <hr>
                     </td>
                 </tr>
@@ -850,7 +859,8 @@
                 </p>
 
             </div>
-            <p style='text-align:center;'>This document digitally geneated receipt. Won't be needing any signs...</p>
+            <p style='text-align:center;'>This document is an digitally Generated receipt. Signature won't be necessary
+            </p>
         </section>
     </div>
 
