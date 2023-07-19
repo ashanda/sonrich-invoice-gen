@@ -705,7 +705,7 @@ border: none;
                     <td></td>
                     <td></td>
                     <td>Customer District</td>
-                    <td>{{ $invoice->customer_district }}</td>
+                    <td>{{ $invoice->customer_district }}</td>
                 </tr>
             </table>
 
