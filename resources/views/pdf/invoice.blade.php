@@ -51,7 +51,7 @@
     }
 
     .col-new2 {
-        width: 50%;
+        width: 100%;
         text-align: end;
         padding-top: 5px;
     }
@@ -342,18 +342,13 @@ border: none;
         font-family: auto;
     }
 
-    p.inv-title {
-        font-size: 35px;
-        margin: 0px;
-    }
-
     .header-title img {
         max-width: 110px;
         padding-right: 10px;
     }
 
     p.inv-title {
-        font-size: 30px;
+        font-size: 28px;
         margin: 0px;
     }
 
