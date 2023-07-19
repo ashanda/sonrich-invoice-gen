@@ -654,7 +654,7 @@ border: none;
                         
                     </div> -->
                     <div class="col-new2">
-                        <p class="inv-title">Sonrich Asia (PVT) Ltd</p>
+                        <p class="inv-title">LUUNARICH INT PVT LTD (Sonrich Group)</p>
                         <div class="address-company">
                             <p class="address"><span>Address : </span>No.204/A/1,Bandaragama Road,Kesbewa <br>
                                 <span>TP:</span>(+94)383370000
@@ -706,6 +706,12 @@ border: none;
                     <td>Phone No 2:</td>
                     <td>{{ $invoice->mobile_no2 }}</td>
                 </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Customer District</td>
+                    <td>{{ $invoice->customer_district }}</td>
+                </tr>
             </table>
 
 
@@ -719,13 +725,12 @@ border: none;
             <table style="border: none;" width="100%">
                 <tr style="border: none;">
                     <td style="border: none;">
-                        <p class="inv-title">Sonrich Asia (PVT) Ltd</p>
+                        <p class="inv-title">{{ $invoice->customer_name }}</p>
                         <div class="address-company">
-                            <p class="address"><span>Address : </span>No.204/A/1,Bandaragama Road,Kesbewa |
-                                <span>TP:</span>(+94)383370000
+                            <p class="address"><span>Address : </span>{{ $invoice->customer_address }} |
+                                <span>TP:</span>{{ $invoice->mobile_no1 }}
                             </p>
-                            <p class="email-n"><span>Email : info@sonrich.lk</span></p>
-                          
+                            <!-- <p class="email-n"><span>Email : info@sonrich.lk</span></p> -->
                         </div>
                     </td>
                     <td style="border: none; text-align: right;">
@@ -760,99 +765,99 @@ border: none;
                 </tr>
 
                 @php
-                    $subtotal = 0;
-                    $alldiscount = 0;
-                    $totalTax = 0;
-                    $deliverFee = 0;
-                    $packageIds = [];
-                    $futurePlans = $invoice->future_product_packages;
-                    $mainPlans = $invoice->main_product_package;
+                $subtotal = 0;
+                $alldiscount = 0;
+                $totalTax = 0;
+                $deliverFee = 0;
+                $packageIds = [];
+                $futurePlans = $invoice->future_product_packages;
+                $mainPlans = $invoice->main_product_package;
 
 
                 @endphp
                 @if($futurePlans != null)
                 @foreach (json_decode($invoice->future_product_packages, true) as $packageId)
-                    @php
-                        $packageIds[] = $packageId;
-                    @endphp
-            
-                    @foreach (product_items($packageId) as $index => $productItem)
-                   
-                        <tr>
-                            <td>
-                                <strong>{{ ucfirst($productItem->title) }}</strong>
-                                <br><br>
-                                <hr>
-                            </td>
-                            <td>
-                                <p class="uni-middle-p right-align">{{ $productItem->amount }}</p>
-                                <br>
-                                <hr>
-                            </td>
-                            <td>
-                                <p class="uni-middle-p right-align">{{ $productItem->quantity }}</p>
-                                <br>
-                                <hr>
-                            </td>
-                            <td>
-                                @php
-                                    $row_sum = $productItem->amount * $productItem->quantity;
-                                @endphp
-                                <p class="last-un right-align">{{ 'Rs ' . $row_sum }}</p>
-                                <br>
-                                <hr>
-                            </td>
-                        </tr>
+                @php
+                $packageIds[] = $packageId;
+                @endphp
+
+                @foreach (product_items($packageId) as $index => $productItem)
+
+                <tr>
+                    <td>
+                        <strong>{{ ucfirst($productItem->title) }}</strong>
+                        <br><br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">{{ $productItem->amount }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">{{ $productItem->quantity }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
                         @php
-                            $subtotal += $row_sum;
-                            if ($index === 0 || !in_array($packageId, $packageIds)) {
-                                $alldiscount += $productItem->package_discount;
-                                $totalTax += $productItem->package_tax;
-                                $deliverFee += $productItem->package_delivery_fee;
-                            }
+                        $row_sum = $productItem->amount * $productItem->quantity;
                         @endphp
-                    @endforeach
+                        <p class="last-un right-align">{{ 'Rs ' . $row_sum }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                </tr>
+                @php
+                $subtotal += $row_sum;
+                if ($index === 0 || !in_array($packageId, $packageIds)) {
+                $alldiscount += $productItem->package_discount;
+                $totalTax += $productItem->package_tax;
+                $deliverFee += $productItem->package_delivery_fee;
+                }
+                @endphp
                 @endforeach
-            @endif
-            @if ($mainPlans != null)
-            
+                @endforeach
+                @endif
+                @if ($mainPlans != null)
+
                 @foreach (product_items($invoice->main_product_package) as $index => $productItem)
-               
-                    <tr>
-                        <td>
-                            <strong>{{ ucfirst($productItem->title) }}</strong>
-                            <br><br>
-                            <hr>
-                        </td>
-                        <td>
-                            <p class="uni-middle-p right-align">{{ $productItem->amount }}</p>
-                            <br>
-                            <hr>
-                        </td>
-                        <td>
-                            <p class="uni-middle-p right-align">{{ $productItem->quantity }}</p>
-                            <br>
-                            <hr>
-                        </td>
-                        <td>
-                            @php
-                                $row_sum = $productItem->amount * $productItem->quantity;
-                            @endphp
-                            <p class="last-un right-align">{{ 'Rs ' . $row_sum }}</p>
-                            <br>
-                            <hr>
-                        </td>
-                    </tr>
-                    @php
-                        $subtotal += $row_sum;
-                        if ($index === 0) {
-                        $alldiscount += $productItem->package_discount;
-                        $totalTax += $productItem->package_tax;
-                        $deliverFee += $productItem->package_delivery_fee;
-                    }
-                    @endphp
+
+                <tr>
+                    <td>
+                        <strong>{{ ucfirst($productItem->title) }}</strong>
+                        <br><br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">{{ $productItem->amount }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">{{ $productItem->quantity }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        @php
+                        $row_sum = $productItem->amount * $productItem->quantity;
+                        @endphp
+                        <p class="last-un right-align">{{ 'Rs ' . $row_sum }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                </tr>
+                @php
+                $subtotal += $row_sum;
+                if ($index === 0) {
+                $alldiscount += $productItem->package_discount;
+                $totalTax += $productItem->package_tax;
+                $deliverFee += $productItem->package_delivery_fee;
+                }
+                @endphp
                 @endforeach
-               @endif 
+                @endif
                 <tr>
                     <td></td>
                     <td>
@@ -913,7 +918,7 @@ border: none;
                         <br>
                     </td>
                     <td>
-                        <p class="uni-middle-p right-align"><b>Deliver</b></p>
+                        <p class="uni-middle-p right-align"><b>Deliver Charge</b></p>
                         <hr>
                     </td>
                     <td>
@@ -1071,11 +1076,17 @@ border: none;
             </div> -->
         </section>
 
-       
+
 
         <section class="footer-section" style="margin-top:15px;">
             <div class="footer-row-end">
-                <p>THANK YOU! WE APPRECIATE YOUR BUSINESS</p>
+                <p>THANK YOU! WE APPRECIATE YOUR BUSINESS
+                    <br>
+                    Luunarich International Pvt ltd (Sonrich Group)
+                    <br>
+                    Address : No.204/A/1,Bandaragama Road,Kesbewa | TP:(+94)383370000
+                </p>
+
             </div>
             <p style='text-align:center;'>This document digitally geney receipt. Won't be needing any signs...</p>
         </section>
