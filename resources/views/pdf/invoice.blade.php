@@ -264,25 +264,9 @@
         color: #21bb49;
     }
 
-    /* .row.inv-row {
-border-bottom: 1px solid #21bb49;
-} */
-
     .row.inv-row:last-child {
         border: none;
     }
-
-    /* .row.inv-row:nth-child(1),
-.row.inv-row:nth-child(2),
-.row.inv-row:nth-child(3),
-.row.inv-row:nth-child(4),
-.row.inv-row:nth-child(5),
-.row.inv-row:nth-child(6),
-.row.inv-row:nth-child(7),
-.row.inv-row:nth-child(8),
-.row.inv-row:nth-child(9) {
-border: none;
-} */
 
     .right-align {
         text-align: right !important;
@@ -452,7 +436,7 @@ border: none;
         }
 
         .col-new2 {
-            width: 50%;
+            width: 100%;
         }
 
         .full-content {
@@ -478,7 +462,7 @@ border: none;
         }
 
         .col-new2 {
-            width: 50%;
+            width: 100%;
         }
 
         .invoice-c-table {
@@ -494,88 +478,6 @@ border: none;
         }
     }
 
-    /* @media screen and (max-width: 576px) {
-        .invoice-hea {
-            position: relative;
-            margin: 0px 10px;
-        }
-
-        .in-row-heading h2 {
-            width: 280px;
-            font-size: 17px;
-        }
-
-        .in-row-logo {
-            top: -18px;
-            left: -13px;
-        }
-
-        .in-row-logo img {
-            max-width: 60px;
-        }
-
-        .invoice-c-table {
-            padding: 10px 0px;
-            display: block;
-            margin: 0 auto;
-        }
-
-        section.secont-sec {
-            padding: 30px 10px;
-        }
-
-        section.invoice-last-table {
-            padding: 0px 0px;
-        }
-
-        .invoice-c-table table.ta-1,
-        .invoice-c-table table.ta-2 {
-            margin: 0px 0px;
-        }
-
-        .sign {
-            padding: 10px 0px;
-        }
-
-        .footer-sec {
-            margin: 50px 10px 0px 10px;
-            padding: 0px 0px;
-        }
-
-        .footer-row-end {
-            margin: 0px 0px;
-        }
-
-        .row.foot-row {
-            display: block;
-        }
-
-        .col-001,
-        .col-002,
-        .col-003 {
-            width: 100%;
-            text-align: center;
-        }
-
-        .header-title h2 {
-            font-size: 20px;
-        }
-
-        .col-new1 {
-            margin-top: 30px;
-            width: 100%;
-        }
-
-        .col-new2 {
-            width: 100%;
-            text-align: end;
-        }
-
-        .row.header-row {
-            display: block;
-        }
-
-    } */
 
     @media (min-width: 1500px) and (max-width: 1920px) {
         .in-row-logo {
@@ -645,15 +547,14 @@ border: none;
 
             <div class="invoice-hea">
                 <div class="row header-row">
-                    <!-- <div class="header-title">
-                        
-                    </div> -->
                     <div class="col-new2">
-                        <p class="inv-title">LUUNARICH INT PVT LTD (Sonrich Group)</p>
-                        <div class="address-company">
-                            <p class="address"><span>Address : </span>No.204/A/1,Bandaragama Road,Kesbewa <br>
-                                <span>TP:</span>(+94)383370000
-                            </p>
+                        <p class="inv-title">LUUNARICH INTERNATIONAL PVT LTD
+                            <br>
+                            (Sonrich Group)
+                        </p>
+                        <div style="text-align: left;" class="address-company">
+                            <p><span>Address : </span>No.204/A/1,Bandaragama Road,Kesbewa</p>
+                            <p><span>TP:</span>(+94)383370000</p>
                             <p class="email-n"><span>Email : info@sonrich.lk</span></p>
                             <p class="last-p"><span>Reciept Number : </span>{{ $invoice->invoice_no }}</p>
                         </div>
@@ -716,15 +617,14 @@ border: none;
 
 
 
-        <section class="invi-heading border-bottom-2px">
+        <section class="invi-heading">
             <table style="border: none;" width="100%">
                 <tr style="border: none;">
                     <td style="border: none;">
                         <p class="inv-title">{{ $invoice->customer_name }}</p>
-                        <div class="address-company">
-                            <p class="address"><span>Address : </span>{{ $invoice->customer_address }} |
-                                <span>TP:</span>{{ $invoice->mobile_no1 }}
-                            </p>
+                        <div class="invoice-details">
+                            <p><span>Address : </span>{{ $invoice->customer_address }}</p>
+                            <P><span>TP:</span>{{ $invoice->mobile_no1 }}</p>
                             <!-- <p class="email-n"><span>Email : info@sonrich.lk</span></p> -->
                         </div>
                     </td>
@@ -744,7 +644,7 @@ border: none;
 
         <section class="invoice-last-table">
             <table style="border: none;">
-                <tr>
+                <tr class="border-bottom-2px">
                     <th width="40%">
                         <p class="hea"><strong>DESCRIPTION</strong></p>
                     </th>
@@ -936,139 +836,6 @@ border: none;
                     </td>
                 </tr>
 
-
-
-                <!-- <div class="tn-ta">
-                <div class="row inv-row border-bottom">
-                    <div class="col-01">
-                        <p class="hea"><strong>DESCRIPTION</strong></p>
-                        <p><strong>Services</strong></p>
-                        <p>Cost of various services</p>
-                    </div>
-                    <div class="col-02">
-                        <p class="hea uni-middle right-align"><strong>RATE</strong></p>
-                        <p class="uni-middle-p right-align">Rs.10000</p>
-                        <p class="uni-middle-p right-align">+Tax</p>
-                    </div>
-                    <div class="col-02">
-                        <p class="hea uni-middlec right-align"><strong>QTY</strong></p>
-                        <p class="uni-middle-p right-align">10</p>
-                    </div>
-                    <div class="col-02">
-                        <p class="hea uni"><strong>AMOUNT</strong></p>
-                        <p class="last-un">Rs.5000</p>
-                    </div>
-                </div>
-
-                <div class="row inv-row border-bottom">
-                    <div class="col-01">
-                        <p><strong>Consulting</strong></p>
-                        <p>Consultant for your business</p>
-                    </div>
-                    <div class="col-02">
-                        <p class="uni-middle-p right-align">Rs.12000</p>
-                        <p class="uni-middle-p right-align">+tax</p>
-                    </div>
-                    <div class="col-02">
-                        <p class="uni-middle-p right-align">5</p>
-                    </div>
-                    <div class="col-02">
-                        <p class="last-un">Rs.30000</p>
-                    </div>
-                </div>
-
-
-
-                <div class="row inv-row">
-                    <div class="col-01">
-                        <p></p>
-                    </div>
-                    <div class="col-02">
-                        <p class="uni-middle-p p-bold right-align">Subtotals</p>
-                    </div>
-                    <div class="col-02">
-                        <p class="uni-middle-p"></p>
-                    </div>
-                    <div class="col-02">
-                        <p class="last-un">Rs.500000</p>
-                    </div>
-                </div>
-
-                <div class="row inv-row">
-                    <div class="col-01">
-                        <p></p>
-                    </div>
-                    <div class="col-02">
-                        <p class="uni-middle-p p-bold right-align">Discount</p>
-                    </div>
-                    <div class="col-02">
-                        <p class="uni-middle-p"></p>
-                    </div>
-                    <div class="col-02">
-                        <p class="last-un">Rs.300000</p>
-                    </div>
-                </div>
-
-                <div class="row inv-row">
-                    <div class="col-01">
-                        <p></p>
-                    </div>
-                    <div class="col-02 border-bottom">
-                        <p class="uni-middle-p p-bold right-align">Tax</p>
-                    </div>
-                    <div class="col-02 border-bottom">
-                        <p class="uni-middle-p"></p>
-                    </div>
-                    <div class="col-02 border-bottom">
-                        <p class="last-un">Rs.100000</p>
-                    </div>
-                </div>
-
-                <div class="row inv-row">
-                    <div class="col-01">
-                        <p></p>
-                    </div>
-                    <div class="col-02">
-                        <p class="uni-middle-p p-bold right-align">Total</p>
-                    </div>
-                    <div class="col-02">
-                        <p class="uni-middle-p"></p>
-                    </div>
-                    <div class="col-02">
-                        <p class="last-un">Rs.2000000</p>
-                    </div>
-                </div>
-
-                <div class="row inv-row">
-                    <div class="col-01">
-                        <p></p>
-                    </div>
-                    <div class="col-02">
-                        <p class="uni-middle-p p-bold right-align">Deposit Requested</p>
-                    </div>
-                    <div class="col-02">
-                        <p class="uni-middle-p"></p>
-                    </div>
-                    <div class="col-02">
-                        <p class="last-un">Rs.1500000</p>
-                    </div>
-                </div>
-
-                <div class="row inv-row">
-                    <div class="col-01">
-                        <p></p>
-                    </div>
-                    <div class="col-02 border-bottom-2px">
-                        <p class="uni-middle-p p-bold right-align">Deposit Due</p>
-                    </div>
-                    <div class="col-02 border-bottom-2px">
-                        <p class="uni-middle-p"></p>
-                    </div>
-                    <div class="col-02 border-bottom-2px">
-                        <p class="last-un">Rs.3000000</p>
-                    </div>
-                </div>
-            </div> -->
         </section>
 
 
