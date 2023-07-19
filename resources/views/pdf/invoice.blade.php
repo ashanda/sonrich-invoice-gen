@@ -548,12 +548,12 @@
             <div class="invoice-hea">
                 <div class="row header-row">
                     <div class="col-new2">
-                        <p class="inv-title">LUUNARICH INTERNATIONAL PVT LTD
+                        <p class="inv-title">LUVNARICH INTERNATIONAL PVT LTD
                             <br>
                             (Sonrich Group)
                         </p>
                         <div style="text-align: left;" class="address-company">
-                            <p><span>Address : </span>No.204/A/1,Bandaragama Road,Kesbewa</p>
+                            <p><span>Address : </span>No.204/A/1, Bandaragama Road, Kesbewa</p>
                             <p><span>TP:</span>(+94)383370000</p>
                             <p class="email-n"><span>Email : info@sonrich.lk</span></p>
                             <p class="last-p"><span>Reciept Number : </span>{{ $invoice->invoice_no }}</p>
@@ -586,7 +586,7 @@
                 </tr>
                 <tr>
                     <td>Company Address:</td>
-                    <td>No.204/A/1,Bandaragama Road,Kesbewa</td>
+                    <td>No.204/A/1, Bandaragama Road, Kesbewa</td>
                     <td>Customer Address:</td>
                     <td>{{ $invoice->customer_address }}</td>
                 </tr>
@@ -756,7 +756,7 @@
                 <tr>
                     <td></td>
                     <td>
-                        <p class="uni-middle-p right-align"><b>Subtotals</b></p>
+                        <p class="uni-middle-p right-align"><b>Subtotal</b></p>
                     </td>
                     <td></td>
                     <td>
@@ -813,7 +813,7 @@
                         <br>
                     </td>
                     <td>
-                        <p class="uni-middle-p right-align"><b>Deliver Charge</b></p>
+                        <p class="uni-middle-p right-align"><b>Delivery Charges</b></p>
                         <hr>
                     </td>
                     <td>
@@ -844,13 +844,13 @@
             <div class="footer-row-end">
                 <p>THANK YOU! WE APPRECIATE YOUR BUSINESS
                     <br>
-                    Luunarich International Pvt ltd (Sonrich Group)
+                    Luvnarich International Pvt ltd (Sonrich Group)
                     <br>
-                    Address : No.204/A/1,Bandaragama Road,Kesbewa | TP:(+94)383370000
+                    Address : No.204/A/1, Bandaragama Road, Kesbewa | TP:(+94)383370000
                 </p>
 
             </div>
-            <p style='text-align:center;'>This document digitally geney receipt. Won't be needing any signs...</p>
+            <p style='text-align:center;'>This document digitally geneated receipt. Won't be needing any signs...</p>
         </section>
     </div>
 
