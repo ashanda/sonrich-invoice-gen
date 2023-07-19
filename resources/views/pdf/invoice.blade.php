@@ -654,7 +654,7 @@ border: none;
                         
                     </div> -->
                     <div class="col-new2">
-                        <p class="inv-title">LUUNARICH INT PVT LTD (Sonrich Group)</p>
+                        <p class="inv-title">LUVNARICH INTERNATIONAL PVT LTD (Sonrich Group)</p>
                         <div class="address-company">
                             <p class="address"><span>Address : </span>No.204/A/1,Bandaragama Road,Kesbewa <br>
                                 <span>TP:</span>(+94)383370000
