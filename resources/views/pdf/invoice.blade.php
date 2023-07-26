@@ -564,7 +564,7 @@
                         <div style="text-align: left;" class="address-company">
                             <p><span>Address : </span>No.204/A/1, Bandaragama Road, Kesbewa</p>
                             <p><span>TP :</span> (+94)383370000</p>
-                            <p class="email-n"><span>Email : info@sonrich.lk</span></p>
+                            <p class="email-n"><span>Email : info@luvnarich.net</span></p>
                             <p class="last-p"><span>Reciept Number : </span>{{ $invoice->invoice_no }}</p>
                         </div>
                     </div>
@@ -589,7 +589,7 @@
                 </tr>
                 <tr>
                     <td>Company Name:</td>
-                    <td>Sonrich Asia (pvt) ltd</td>
+                    <td>Luvnarich International (pvt) ltd</td>
                     <td>Customer Name:</td>
                     <td>{{ $invoice->customer_name }}</td>
                 </tr>
@@ -607,7 +607,7 @@
                 </tr>
                 <tr>
                     <td>Email Address:</td>
-                    <td>info@sonrich.lk</td>
+                    <td>info@luvnarich.net</td>
                     <td>Phone No 2:</td>
                     <td>{{ $invoice->mobile_no2 }}</td>
                 </tr>
@@ -634,7 +634,7 @@
                         <div class="invoice-details">
                             <p><span>Address : </span>{{ $invoice->customer_address }}</p>
                             <P><span>TP:</span>{{ $invoice->mobile_no1 }}</p>
-                            <!-- <p class="email-n"><span>Email : info@sonrich.lk</span></p> -->
+                            <!-- <p class="email-n"><span>Email : info@luvnarich.net</span></p> -->
                         </div>
                     </td>
                     <td style="border: none; text-align: right;">
