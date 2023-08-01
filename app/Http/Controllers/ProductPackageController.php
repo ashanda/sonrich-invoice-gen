@@ -80,11 +80,12 @@ public function update(Request $request, ProductPackage $productPackage)
     return redirect()->route('product_packages.index')->with('success', 'Product Package updated successfully.');
 }
 
-public function destroy(ProductPackage $productPackage)
+public function destroy($id)
 {
-    $productPackage->productItems()->detach();
-    $productPackage->delete();
+    $productItem = ProductPackage::findOrFail($id);
+    $productItem->delete();
 
-    return redirect()->route('product_packages.index')->with('success', 'Product Package deleted successfully.');
+        return redirect()->route('product_packages.index')->with('success', 'Product package deleted successfully.');
 }
+
 }

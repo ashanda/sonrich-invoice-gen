@@ -18,9 +18,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $i=1;
+                    @endphp
                     @foreach ($productPackages as $productPackage)
                     <tr>
-                        <td>{{ $productPackage->id }}</td>
+                        <td>{{ $i }}</td>
                         <td>{{ $productPackage->title }}</td>
                         <td>{{ $productPackage->amount }}</td>
                         <td>{{ $productPackage->product_type }}</td>
@@ -41,6 +44,9 @@
                             </form>
                         </td>
                     </tr>
+                    @php
+                        $i++;
+                    @endphp
                     @endforeach
                 </tbody>
             </table>
