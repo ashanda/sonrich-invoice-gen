@@ -21,6 +21,7 @@ return new class extends Migration
             $table->bigInteger('tax');
             $table->bigInteger('discount');
             $table->bigInteger('deliver_fee');
+            $table->Integer('package_visibility');
             $table->timestamps();
         });
     }

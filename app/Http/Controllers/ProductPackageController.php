@@ -35,6 +35,7 @@ public function store(Request $request)
         'tax' => 'required',
         'discount' => 'required',
         'deliver_fee' => 'required',
+        'package_visibility' => 'required',
     ]);
 
     $productPackage = new ProductPackage;
@@ -46,6 +47,7 @@ public function store(Request $request)
     $productPackage->tax = $validatedData['tax'];
     $productPackage->discount = $validatedData['discount'];
     $productPackage->deliver_fee = $validatedData['deliver_fee'];
+    $productPackage->package_visibility = $validatedData['package_visibility'];
     $productPackage->save();
 
     // Redirect or perform any other actions
@@ -74,6 +76,7 @@ public function update(Request $request, ProductPackage $productPackage)
         'tax' => $request->input('tax'),
         'discount' => $request->input('discount'),
         'deliver_fee' => $request->input('deliver_fee'),
+        'package_visibility' => $request->input('package_visibility'),
     ]);
     //$productPackage->productItems()->sync($request->input('product_items'));
 
