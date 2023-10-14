@@ -60,7 +60,7 @@ class InvoiceController extends Controller
     public function create()
     {
 
-        $packages_main = ProductPackage::where('product_type','Main')->get();
+        $packages_main = ProductPackage::where('product_type','Main')->where('package_visibility',1)->get();
         $packages_future = ProductPackage::where('product_type','Future')->get();
         $title = 'Confirm!';
         $text = "Are you sure you want to save this?";

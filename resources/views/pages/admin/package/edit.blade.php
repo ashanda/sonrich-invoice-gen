@@ -72,7 +72,14 @@
                 <label for="deliver_fee">Deliver Fee:</label>
                 <input type="number" name="deliver_fee" id="deliver_fee" class="form-control" value="{{ $productPackage->deliver_fee }}">
             </div>
-
+            <div class="form-group">
+                <label for="package_visibility">Package Visibility:</label>
+                <select name="package_visibility" class="form-control">
+                    <option value='0' {{ $productPackage->package_visibility == 0 ? 'selected' : '' }}>Hidden</option>
+                    <option value='1' {{ $productPackage->package_visibility == 1 ? 'selected' : '' }}>Show</option>
+                </select>
+                
+            </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
 

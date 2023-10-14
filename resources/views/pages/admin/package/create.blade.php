@@ -45,7 +45,14 @@
                 <label for="amount">Deliver Fee:</label>
                 <input type="number" name="deliver_fee" id="deliver_fee" class="form-control" >
             </div>
-
+            <div class="form-group">
+                <label for="package_visibility">Package Visibility:</label>
+                <select name="package_visibility" class="form-control">
+                    <option value= '1' >Show</option>
+                    <option value= '0' >Hidden</option>
+                </select>
+                
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
     </div>
