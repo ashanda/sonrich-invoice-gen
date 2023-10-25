@@ -58,7 +58,11 @@
                         </tr></thead>
                         <tbody>
                             @foreach ( $invoices as $invoice)
-                            <tr>
+                            @php
+                                $rowColour = ($invoice->taken_by_office == 1) ? 'background-color: lightblue;' : '';
+                            @endphp
+
+                            <tr style="{{ $rowColour }}">
                                 <td>
                                   {{ $invoice->invoice_no }}
                                 </td>

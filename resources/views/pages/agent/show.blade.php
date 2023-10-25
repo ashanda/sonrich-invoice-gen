@@ -126,15 +126,37 @@
                 <input type="text" name="tracking" id="tracking" class="form-control" >
                 <input type="hidden" name="id" value={{ $invoice->id }} class="form-control" >
             </div>
+            <div class="form-group">
+          <div class="row">
+
+            <div class="col-md-5">
+                    <label for="delivery_code">Taken by Office:</label>
+                    <select name="tbo" id="delivery_code" class="form-control">
+                        <option value="1" {{ $invoice->taken_by_office == 1 ? 'selected' : '' }}>Yes</option>
+                        <option value="0" {{ $invoice->taken_by_office == 0 ? 'selected' : '' }}>NO</option>
+                    </select>
+
+                                </div>
+                                <div class="col-md-7">
+                    <label for="delivery_code">Reason:</label>
+                            <textarea name="tbr" id="customerAddress" class="form-control" >{{ $invoice->reason }}</textarea>
+                                </div>
+                            </div>
+                        </div>
             <button type="submit" id="saveButton" class="btn btn-primary mb-2">Update</button>
             
             
         </form>
         @else
-        <div class="form-group">
+        <form action="{{ route('invoice.tracking', $invoice->id) }}" method="POST" class="invoicePrintForm">
+            @csrf
+            @method('PUT')
+            <div class="form-group">
             <label for="tracking">Tracking :</label>
-            <input type="text" name="tracking" id="tracking" value="{{ $invoice->tracking }}" readonly  class="form-control"  >
+            <input type="text" name="tracking" id="tracking" value="{{ $invoice->tracking }}"  class="form-control"  >
+            <input type="hidden" name="id" value={{ $invoice->id }} class="form-control" >
         </div>
+            <button type="submit" id="saveButton" class="btn btn-primary mb-2">Update</button>
         
         @endif
         @endif

@@ -44,13 +44,13 @@ class InvoiceController extends Controller
             $invoices = Invoice::orderBy('created_at', 'asc')->get();
             return view('pages.admin.invoice.all',compact('invoices'));
         }else if(Auth::user()->type == 'manager'){
-            $invoices = Invoice::where('account_departmet_checked','checked')->where('manager_id',Auth::user()->id)->orderBy('created_at', 'asc')->get();
+            $invoices = Invoice::where('account_departmet_checked','checked')->where('manager_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
             return view('pages.account.invoice.all',compact('invoices'));
         }else if(Auth::user()->type == 'deliver'){
-            $invoices = Invoice::where('account_departmet_checked','checked')->where('deliver_id',Auth::user()->id)->where('deliver_departmet_checked','printed')->orderBy('created_at', 'asc')->get();
+            $invoices = Invoice::where('account_departmet_checked','checked')->where('deliver_id',Auth::user()->id)->where('deliver_departmet_checked','printed')->orderBy('created_at', 'desc')->get();
             return view('pages.deliver.invoice.all',compact('invoices'));
         }else{
-            $invoices = Invoice::where('user_id',Auth::user()->id)->where('account_departmet_checked','checked')->where('deliver_departmet_checked','printed')->orderBy('created_at', 'asc')->get();
+            $invoices = Invoice::where('user_id',Auth::user()->id)->where('account_departmet_checked','checked')->where('deliver_departmet_checked','printed')->orderBy('created_at', 'desc')->get();
             return view('pages.agent.all',compact('invoices'));
         }
     }
@@ -260,6 +260,8 @@ public function tracking(Request $request, $id)
 {
 $invoice = Invoice::findOrFail($id);
 $invoice->tracking = $request->tracking;
+$invoice->taken_by_office = $request->tbo;
+$invoice->reason = $request->tbr;
 
     $invoice->save();
     Alert::Alert('Success', 'Invoice Update Sucessfully.')->persistent(true,false);
@@ -305,6 +307,35 @@ $invoice->tracking = $request->tracking;
         // Retrieve the invoice, update the fields, and save
         
         $invoice = Invoice::findOrFail($id);
+        $invoice->remark = $request->remark;
+        $invoice->first_call = $request->fcd;
+        $invoice->first_call_address = $request->input('fca');
+        $invoice->first_call_reason = $request->fcr;
+        $invoice->secound_call = $request->scd;
+        $invoice->secound_call_address = $request->input('sca');
+        $invoice->secound_call_reason = $request->scr;
+        $invoice->third_call = $request->tcd;
+        $invoice->third_call_address = $request->input('tca');
+        $invoice->third_call_reason = $request->tcr;
+        $invoice->customer_name = $request->customerName;
+        $invoice->customer_address = $request->customerAddress;
+        $invoice->customer_district = $request->customerDistrict;
+        $invoice->mobile_no1 = $request->mobileNo1;
+        $invoice->taken_by_office = $request->tbo;
+        $invoice->reason = $request->tbr;
+        $invoice->deliver_id = Auth::user()->id;
+        $invoice->save();
+        Alert::Alert('Success', 'Invoice Data Update Sucessfully.')->persistent(true,false);
+        return redirect()->back();
+        }
+
+
+ public function delive_print(Request $request, $id)
+    {
+        // Use $user_id and $id as needed
+        // Retrieve the invoice, update the fields, and save
+        
+        $invoice = Invoice::findOrFail($id);
         $invoice->deliver_departmet_checked = 'printed';
         $invoice->remark = $request->remark;
         $invoice->deliver_id = Auth::user()->id;
@@ -331,7 +362,7 @@ $pdfUrl = asset($directory . $filename);
 
 // Return the PDF file for download
 return response()->download(public_path($directory . $filename))->deleteFileAfterSend(true);
-        }
+        }       
 
 
         public function  print_show(string $id)
