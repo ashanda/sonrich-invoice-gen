@@ -260,6 +260,8 @@ public function tracking(Request $request, $id)
 {
 $invoice = Invoice::findOrFail($id);
 $invoice->tracking = $request->tracking;
+$invoice->taken_by_office = $request->tbo;
+$invoice->reason = $request->tbr;
 
     $invoice->save();
     Alert::Alert('Success', 'Invoice Update Sucessfully.')->persistent(true,false);
@@ -319,6 +321,8 @@ $invoice->tracking = $request->tracking;
         $invoice->customer_address = $request->customerAddress;
         $invoice->customer_district = $request->customerDistrict;
         $invoice->mobile_no1 = $request->mobileNo1;
+        $invoice->taken_by_office = $request->tbo;
+        $invoice->reason = $request->tbr;
         $invoice->deliver_id = Auth::user()->id;
         $invoice->save();
         Alert::Alert('Success', 'Invoice Data Update Sucessfully.')->persistent(true,false);

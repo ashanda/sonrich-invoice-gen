@@ -189,6 +189,23 @@
           @endif
 
       </div>
+      <div class="form-group">
+          <div class="row">
+
+            <div class="col-md-5">
+                    <label for="delivery_code">Taken by Office:</label>
+                    <select name="tbo" id="delivery_code" class="form-control">
+                        <option value="1" {{ $invoice->taken_by_office == 1 ? 'selected' : '' }}>Yes</option>
+                        <option value="0" {{ $invoice->taken_by_office == 0 ? 'selected' : '' }}>NO</option>
+                    </select>
+
+                                </div>
+                                <div class="col-md-7">
+                    <label for="delivery_code">Reason:</label>
+                            <textarea name="tbr" id="customerAddress" class="form-control" >{{ $invoice->reason }}</textarea>
+                                </div>
+                            </div>
+      </div>
       <button type="submit" id="saveButton2" data-confirm-save="true" class="btn btn-primary mb-2">Update</button>
        </form>
         </div>
