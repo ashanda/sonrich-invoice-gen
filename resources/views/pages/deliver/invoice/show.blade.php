@@ -44,7 +44,7 @@
 </style>
 <div class="content">
     <div class="container-fluid">
-        <form action="{{ route('deliver.update', $invoice->id) }}" method="POST" class="invoicePrintForm">
+        <form action="{{ route('deliver.print', $invoice->id) }}" method="POST" class="invoicePrintForm">
             @csrf
             @method('PUT')
 
@@ -55,6 +55,66 @@
         
         <button class="btn btn-warning mb-2" id="openModalButton">remark</button>
         <hr>
+        <form action="{{ route('deliver.update', $invoice->id) }}" method="POST" class="invoicePrintForm2">
+            @csrf
+            @method('PUT')
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-3">
+<label for="delivery_code">First Call:</label>
+          <input type="date" name="fcd" id="delivery_code" value="{{ $invoice->first_call }}"  class="form-control"  >
+            </div>
+            <div class="col-md-2">
+<label for="delivery_code">Address:</label>
+  <select name="fca" id="delivery_code" class="form-control">
+      <option value="1" {{ $invoice->first_call_address == 1 ? 'selected' : '' }}>OK</option>
+      <option value="0" {{ $invoice->first_call_address == 0 ? 'selected' : '' }}>NO</option>
+  </select>
+
+            </div>
+            <div class="col-md-7">
+<label for="delivery_code">Reason:</label>
+          <textarea name="fcr" id="customerAddress" class="form-control" >{{ $invoice->first_call_reason }}</textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+<label for="delivery_code">Second Call:</label>
+          <input type="date" name="scd" id="delivery_code" value="{{ $invoice->secound_call }}"  class="form-control"  >
+            </div>
+            <div class="col-md-2">
+<label for="delivery_code">Address:</label>
+<select name="sca" id="delivery_code" class="form-control">
+    <option value="1" {{ $invoice->secound_call_address == 1 ? 'selected' : '' }}>OK</option>
+    <option value="0" {{ $invoice->secound_call_address == 0 ? 'selected' : '' }}>NO</option>
+</select>
+
+            </div>
+            <div class="col-md-7">
+<label for="delivery_code">Reason:</label>
+          <textarea name="scr" id="customerAddress" class="form-control" >{{ $invoice->secound_call_reason }}</textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+<label for="delivery_code">Third Call:</label>
+          <input type="date" name="tcd" id="delivery_code" value="{{ $invoice->third_call }}"  class="form-control"  >
+            </div>
+            <div class="col-md-2">
+<label for="delivery_code">Address:</label>
+<select name="tca" id="delivery_code" class="form-control">
+    <option value="1" {{ $invoice->third_call_address == 1 ? 'selected' : '' }}>OK</option>
+    <option value="0" {{ $invoice->third_call_address == 0 ? 'selected' : '' }}>NO</option>
+</select>
+            </div>
+            <div class="col-md-7">
+<label for="delivery_code">Reason:</label>
+         <textarea name="tcr" id="customerAddress" class="form-control" >{{ $invoice->third_call_reason }}</textarea>
+            </div>
+          </div>
+      </div>
+
         <div class="form-group">
           <label for="delivery_code">Delivery code:</label>
           <input type="text" name="delivery_code" id="delivery_code" value="{{ $invoice->delivery_code }}" readonly class="form-control"  >
@@ -70,22 +130,22 @@
 
         <div class="form-group">
             <label for="customerName">Customer Name:</label>
-            <input type="text" name="customerName" id="customerName" class="form-control" value="{{ $invoice->customer_name }}" readonly>
+            <input type="text" name="customerName" id="customerName" class="form-control" value="{{ $invoice->customer_name }}" >
         </div>
 
         <div class="form-group">
             <label for="customerAddress">Customer Address:</label>
-            <textarea name="customerAddress" id="customerAddress" class="form-control" readonly>{{ $invoice->customer_address }}</textarea>
+            <textarea name="customerAddress" id="customerAddress" class="form-control" >{{ $invoice->customer_address }}</textarea>
         </div>
 
         <div class="form-group">
             <label for="customerDistrict">District:</label>
-            <input type="text" name="customerDistrict" id="customerDistrict" class="form-control" value="{{ $invoice->customer_district }}" readonly>
+            <input type="text" name="customerDistrict" id="customerDistrict" class="form-control" value="{{ $invoice->customer_district }}" >
         </div>
 
         <div class="form-group">
             <label for="mobileNo1">Mobile No:</label>
-            <input type="text" name="mobileNo1" id="mobileNo1" class="form-control" value="{{ $invoice->mobile_no1 }}" readonly>
+            <input type="text" name="mobileNo1" id="mobileNo1" class="form-control" value="{{ $invoice->mobile_no1 }}" >
         </div>
 
         <div class="form-group">
@@ -129,6 +189,8 @@
           @endif
 
       </div>
+      <button type="submit" id="saveButton2" data-confirm-save="true" class="btn btn-primary mb-2">Update</button>
+       </form>
         </div>
 
 
@@ -173,7 +235,7 @@
           Swal.fire({
             title: 'Confirm Print',
 
-      icon: 'warning',
+      icon: '',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -181,6 +243,24 @@
           }).then((result) => {
             if (result.isConfirmed) {
                 $('.invoicePrintForm').submit(); // Submit the form
+            }
+          });
+        });
+
+        $('#saveButton2').on('click', function(e) {
+          e.preventDefault();
+      
+          Swal.fire({
+            title: 'Confirm Update',
+
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Update!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                $('.invoicePrintForm2').submit(); // Submit the form
             }
           });
         });

@@ -131,10 +131,15 @@
             
         </form>
         @else
-        <div class="form-group">
+        <form action="{{ route('invoice.tracking', $invoice->id) }}" method="POST" class="invoicePrintForm">
+            @csrf
+            @method('PUT')
+            <div class="form-group">
             <label for="tracking">Tracking :</label>
-            <input type="text" name="tracking" id="tracking" value="{{ $invoice->tracking }}" readonly  class="form-control"  >
+            <input type="text" name="tracking" id="tracking" value="{{ $invoice->tracking }}"  class="form-control"  >
+            <input type="hidden" name="id" value={{ $invoice->id }} class="form-control" >
         </div>
+            <button type="submit" id="saveButton" class="btn btn-primary mb-2">Update</button>
         
         @endif
         @endif
