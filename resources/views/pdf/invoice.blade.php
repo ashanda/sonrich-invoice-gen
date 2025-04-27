@@ -551,7 +551,7 @@
                         <table style="border: none;">
                             <tr style="border: none;">
                                 <td width="20%" style="border: none; background-color: #000; text-align: center;">
-                                    <img style="width: 100%;" src="http://sonrich.net/logo.png" alt="">
+                                    <img style="width: 100%;" src="https://i.ibb.co/FmFDdRN/logo.png" alt="">
                                 </td>
                                 <td width="80%" style="border: none;">
                                     <p class="inv-title">LUVNARICH INTERNATIONAL PVT LTD
@@ -650,7 +650,7 @@
 
 
         <section class="invoice-last-table" style="position: relative;">
-            <img style="width: 60%; position: absolute;  opacity: 0.1; top:0; right: 0; transform: translateX(-50%);" src="http://sonrich.net/icon.png" alt="">
+            <img style="width: 60%; position: absolute;  opacity: 0.1; top:0; right: 0; transform: translateX(-50%);" src="https://i.ibb.co/sF5SRDr/icon.png" alt="">
             <table style="border: none;">
                 <tr class="border-bottom-2px">
                     <th width="40%">
@@ -808,7 +808,7 @@
                         <br>
                     </td>
                     <td>
-                        <p class="uni-middle-p right-align"><b>Tax</b></p>
+                        <p class="uni-middle-p right-align"><b>Tax & Packaging</b></p>
                     </td>
                     <td>
                         <br>

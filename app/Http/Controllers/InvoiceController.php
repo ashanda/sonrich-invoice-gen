@@ -61,7 +61,8 @@ class InvoiceController extends Controller
     {
 
         $packages_main = ProductPackage::where('product_type','Main')->where('package_visibility',1)->get();
-        $packages_future = ProductPackage::where('product_type','Future')->get();
+        $packages_future = ProductPackage::where('product_type','Future')->where('package_visibility',1)->get();
+        
         $title = 'Confirm!';
         $text = "Are you sure you want to save this?";
         confirmDelete($title, $text);

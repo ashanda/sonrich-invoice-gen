@@ -54,7 +54,7 @@ class ProductItemController extends Controller
         $productItem = ProductItem::findOrFail($id);
         $productItem->update($validatedData);
 
-        return redirect()->route('pages.admin.product-items.index')->with('success', 'Product item updated successfully.');
+        return redirect()->route('product_items.index')->with('success', 'Product item updated successfully.');
     }
 
     // Remove the specified product item from the database
@@ -64,5 +64,15 @@ class ProductItemController extends Controller
         $productItem->delete();
 
         return redirect()->route('product_items.index')->with('success', 'Product item deleted successfully.');
+    }
+
+
+    public function show($id)
+    {
+        // Find the product item by its ID
+        $productItem = ProductItem::findOrFail($id);
+
+        // Pass the product item to the view
+        return view('product_items.show', compact('productItem'));
     }
 }

@@ -39,17 +39,23 @@ class StaffController extends Controller
 
     public function update(Request $request, User $staff)
     {
+       
+
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:staff,email,' . $staff->id,
-            'password' => 'required|min:8',
-            'type' => 'required'
-        ]);
+	        'password' => 'sometimes|min:8', // Password is sometimes required and must have a minimum length of 8 characters
+	    ]);
 
-        $staff->update($request->all());
+	    // Update other fields from the request
+	    $staff->update($request->except('password'));
 
-        return redirect()->route('pages.staff.index')
-            ->with('success', 'User member updated successfully.');
+	    // Check if a new password is provided and update it if so
+	    if ($request->filled('password')) {
+	        $staff->password = bcrypt($request->password);
+	        $staff->save();
+	    }
+
+        return redirect()->route('staff.index')
+            ->with('success', 'User staff updated successfully.');
     }
 
     public function destroy(User $staff)

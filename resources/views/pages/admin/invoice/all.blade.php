@@ -21,6 +21,7 @@
                           <tr><th>
                             Invoice Number
                           </th>
+                          <th>Tracking Number</th>
                           <th>
                             Customer Name
                           </th>
@@ -57,6 +58,9 @@
                                   {{ $invoice->invoice_no }}
                                 </td>
                                 <td>
+                                  {{ $invoice->tracking ?? '' }}
+                                </td>
+                                <td>
                                     {{ $invoice->customer_name }}
                                 </td>
                                 <td>
@@ -86,7 +90,7 @@
                                     <a href="{{ route('invoice.show', $invoice->id) }}" class="btn btn-success mb-2">show</a>
                                     <a href="{{ route('invoice.edit', $invoice->id) }}" class="btn btn-primary mb-2">Check</a>
                                    
-                                    <a href="{{ route('invoice.destroy', $invoice->id) }}" class="btn btn-danger" data-confirm-delete="true">Delete</a>
+                                  <a href="{{ route('invoice.destroy', $invoice->id) }}" class="btn btn-danger" data-confirm-delete="true">Delete</a>
                                       
                                       
                                   </td>

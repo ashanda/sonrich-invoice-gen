@@ -114,6 +114,14 @@
 </style>
 <div class="content">
     <div class="container-fluid">
+    @if (Auth::user()->type == 'admin')
+            <form action="{{ route('deliver.print', $invoice->id) }}" method="POST" class="invoicePrintForm">
+            @csrf
+            @method('PUT')
+
+            <button type="submit" id="saveButton" data-confirm-save="true" class="btn btn-primary mb-2">Print</button>
+        </form>
+    @endif
         @if (Auth::user()->type == 'deliver')
      
        
