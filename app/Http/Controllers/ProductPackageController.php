@@ -33,6 +33,7 @@ public function store(Request $request)
         'product_items' => 'nullable|array',
         'quantity' => 'nullable|array',
         'tax' => 'required',
+        'service_charge' => 'required',
         'discount' => 'required',
         'deliver_fee' => 'required',
         'package_visibility' => 'required',
@@ -45,6 +46,7 @@ public function store(Request $request)
     $productPackage->product_items = json_encode($validatedData['product_items']);
     $productPackage->quantity = json_encode($validatedData['quantity']);
     $productPackage->tax = $validatedData['tax'];
+    $productPackage->service_charge = $validatedData['service_charge'];
     $productPackage->discount = $validatedData['discount'];
     $productPackage->deliver_fee = $validatedData['deliver_fee'];
     $productPackage->package_visibility = $validatedData['package_visibility'];
@@ -74,6 +76,7 @@ public function update(Request $request, ProductPackage $productPackage)
         'product_type' => $request->input('product_type'),
         'amount' => $request->input('amount'),
         'tax' => $request->input('tax'),
+        'service_charge' => $request->input('service_charge'),
         'discount' => $request->input('discount'),
         'deliver_fee' => $request->input('deliver_fee'),
         'package_visibility' => $request->input('package_visibility'),

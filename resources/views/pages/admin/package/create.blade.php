@@ -38,8 +38,12 @@
                 <input type="number" name="discount" id="discount" class="form-control" >
             </div>
             <div class="form-group">
-                <label for="amount">Tax:</label>
+                <label for="amount">Packaging, Distribution & Handling Fee:</label>
                 <input type="number" name="tax" id="tax" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="service_charge">Tax and Service Charges:</label>
+                <input type="number" name="service_charge" id="service_charge" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="amount">Deliver Fee:</label>

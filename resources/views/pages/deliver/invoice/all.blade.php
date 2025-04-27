@@ -9,7 +9,39 @@
                 <div class="card card-plain">
                   <div class="card-header">
                     <h4 class="card-title">Invoices</h4>
-                    
+                    <form action="{{ route('invoice.all') }}" method="GET" id="filter-form">
+                      <div class="row">
+                          <!-- Date Range Picker -->
+                          <div class="col-md-3">
+                              <label for="start_date">Start Date:</label>
+                              <input type="date" name="start_date" id="start_date" class="form-control" value="{{ request()->start_date }}">
+                          </div>
+                          <div class="col-md-3">
+                              <label for="end_date">End Date:</label>
+                              <input type="date" name="end_date" id="end_date" class="form-control" value="{{ request()->end_date }}">
+                          </div>
+                          <!-- Company Dropdown -->
+                          <div class="col-md-3">
+                              <label for="company">Company:</label>
+                              <select name="company" id="company" class="form-control">
+                                  <option value="">Select Company</option>
+                                  @foreach ($companies as $company)
+                                      <option value="{{ $company->id }}" {{ request()->company == $company->id ? 'selected' : '' }}>
+                                          {{ $company->company_name }}
+                                      </option>
+                                  @endforeach
+                              </select>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group  mt-3">
+                              <button type="submit" class="btn btn-primary">Filter</button>
+                              <a href="{{ route('invoice.all') }}" class="btn btn-warning">Reset</a>
+                          </div>
+                          </div>
+                      </div>
+                      
+                      
+                  </form>
                   </div>
                 
 
@@ -20,6 +52,9 @@
                         <thead class=" text-primary">
                           <tr><th>
                             Invoice Number
+                          </th>
+                          <th>
+                            Company  
                           </th>
                           <th>
                             Tracking Number
@@ -65,6 +100,9 @@
                             <tr style="{{ $rowColour }}">
                                 <td>
                                   {{ $invoice->invoice_no }}
+                                </td>
+                                <td>
+                                  {{ $invoice->companies->company_name }}
                                 </td>
                                 <td>
                                   {{ $invoice->tracking }}

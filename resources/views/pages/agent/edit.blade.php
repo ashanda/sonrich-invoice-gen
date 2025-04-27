@@ -118,6 +118,19 @@
             @csrf
             @method('PUT')
             <div class="form-group">
+                <label for="company">Company:</label>
+                <select name="company" id="company" class="form-control" required>
+                    <option value="">Select Company</option>
+                    @foreach ($companies as $company)
+                        <option value="{{ $company->id }}" 
+                            {{ old('company', $invoice->company) == $company->id ? 'selected' : '' }}>
+                            {{ $company->company_name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="delivery_code">Delivery code:</label>
                 <input type="text" name="delivery_code" id="delivery_code" value="{{ $invoice->delivery_code }}"  class="form-control"  >
             </div>
@@ -198,7 +211,7 @@
                 <input type="text" name="mobileNo2" id="mobileNo2" class="form-control" value="{{ $invoice->mobile_no2 }}">
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="mainProductPackage">Main Product Package:</label>
                 <select name="mainProductPackage" id="mainProductPackage" class="form-control">
                     <option value="N/A" data-main="{{ '0.00' }}">N/A</option>
@@ -207,7 +220,35 @@
                     <option value="{{ $package_main->id }}" data-main="{{ $package_main->amount }}" @if ($invoice->main_product_package == $package_main->id) selected @endif>{{ $package_main->title }}</option>
                     @endforeach
                 </select>
+            </div> --}}
+
+
+            @php
+            $selectedPackages = json_decode($invoice->main_product_package, true);
+            @endphp
+             @if ($selectedPackages != null)
+            <div class="form-group">
+                <label for="mainProductPackage">Main Product Package:</label>
+                <select name="mainProductPackage[]" id="mainProductPackage" class="form-control" multiple>
+                    <option value="N/A" data-main="{{ "0.00" }}">N/A</option>
+                    @foreach ($packages_main as $package_main)
+                    <option value="{{ $package_main->id }}" data-main="{{ $package_main->amount }}" @if (in_array($package_main->id, $selectedPackages)) selected @endif>{{ $package_main->title }}</option>
+                    @endforeach
+                </select>
             </div>
+            @else
+            <div class="form-group">
+                <label for="futureProductPackages">Future Product Packages:</label>
+                <select name="futureProductPackages[]" id="futureProductPackages" class="form-control" multiple>
+                  <option value="N/A" data-future="{{ "0.00" }}">N/A</option>
+                  @foreach ( $packages_future as $package_future)
+                  <option value="{{ $package_future->id }}" data-future="{{ $package_future->amount }}">{{ $package_future->title }}</option>
+                  @endforeach
+                </select>
+              </div>
+              @endif
+
+
             @php
             $selectedPackages = json_decode($invoice->future_product_packages, true);
             @endphp
@@ -239,7 +280,7 @@
             <div class="form-group">
                 <label for="amount">Amount:</label>
                 
-                <input type="text" name="amount"  class="form-control" value="{{ $invoice->amount }}" readonly>
+                <input type="text" name="amount" id="amount" class="form-control" value="{{ $invoice->amount }}" readonly>
             </div>
             <div class="tz-gallery">
 

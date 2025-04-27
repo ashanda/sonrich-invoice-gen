@@ -129,6 +129,7 @@
         <form action="{{ route('invoice.tracking', $invoice->id) }}" method="POST" class="invoicePrintForm">
             @csrf
             @method('PUT')
+            
             <div class="form-group">
                 <label for="tracking">Tracking:</label>
                 <input type="text" name="tracking" id="tracking" class="form-control" >
@@ -168,6 +169,10 @@
         
         @endif
         @endif
+        <div class="form-group">
+            <label for="company">Company:</label>
+            <input type="text" name="company" id="company" value="{{ $invoice->companies->company_name }}" readonly class="form-control"  >
+        </div>
         <div class="form-group">
             <label for="delivery_code">Delivery code:</label>
             <input type="text" name="delivery_code" id="delivery_code" value="{{ $invoice->delivery_code }}" readonly  class="form-control"  >
@@ -242,7 +247,30 @@
             <input type="text" name="mobileNo2" id="mobileNo2" class="form-control" value="{{ $invoice->mobile_no2 }}" readonly>
         </div>
 
-        <div class="form-group">
+        
+        @php
+            $selectedPackages = json_decode($invoice->main_product_package, true);
+        @endphp
+
+        @if ($selectedPackages != null && count($selectedPackages) > 0)
+            <div class="form-group">
+                <label for="mainProductPackage">Main Product Package:</label>
+                <div class="selected-packages">
+                    <ul class="list-unstyled">
+                        @foreach ($packages_main as $package_main)
+                            @if (in_array($package_main->id, $selectedPackages))
+                                <li class="badge badge-info p-2 mb-2">
+                                    {{ $package_main->title }}
+                                </li> <!-- Display selected package title with a badge -->
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @else
+            <p>No main product selected.</p>
+        @endif
+        {{-- <div class="form-group">
             <label for="mainProductPackage">Main Product Package:</label>
             <select name="mainProductPackage" id="mainProductPackage" class="form-control" readonly>
                 <option value="N/A" data-main="{{ '0.00' }}">N/A</option>
@@ -251,8 +279,9 @@
                 <option value="{{ $package_main->id }}" data-main="{{ $package_main->amount }}" @if ($invoice->main_product_package == $package_main->id) selected @endif>{{ $package_main->title }}</option>
                 @endforeach
             </select>
-        </div>
-        @php
+        </div> --}}
+
+        {{-- @php
         $selectedPackages = json_decode($invoice->future_product_packages, true);
         @endphp
          @if ($selectedPackages != null)
@@ -265,6 +294,29 @@
                 @endforeach
             </select>
         </div>
+        @endif --}}
+
+        @php
+            $selectedPackages = json_decode($invoice->future_product_packages, true);
+        @endphp
+
+        @if ($selectedPackages != null && count($selectedPackages) > 0)
+            <div class="form-group">
+                <label for="mainProductPackage">Future Product Packages:</label>
+                <div class="selected-packages">
+                    <ul class="list-unstyled">
+                        @foreach ($packages_future as $package_future)
+                            @if (in_array($package_future->id, $selectedPackages))
+                                <li class="badge badge-info p-2 mb-2">
+                                    {{ $package_future->title }}
+                                </li> <!-- Display selected package title with a badge -->
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @else
+            <p>No future product selected.</p>
         @endif
 
 
@@ -272,7 +324,7 @@
 
         <div class="form-group">
             <label for="amount">Amount:</label>
-            <input type="text" name="amount" id="amount" class="form-control" value="{{ $invoice->amount }}" readonly>
+            <input type="text" name="amount1" id="amount1" class="form-control" value="{{ $invoice->amount }}" readonly>
         </div>
         <div class="tz-gallery">
 

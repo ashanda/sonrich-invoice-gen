@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -550,21 +551,30 @@
                     <div class="col-new2">
                         <table style="border: none;">
                             <tr style="border: none;">
+                                @php
+                                    $logo = public_path('storage/' . $invoice->companies->logo);
+                                    // Get the MIME type of the image
+                                    $imageMimeType = mime_content_type($logo);
+
+                                    // Read the image file and convert it to base64
+                                    $logoBase64 = base64_encode(file_get_contents($logo));
+
+                                    // Create the data URI with the dynamic MIME type
+                                    $dataUri = 'data:' . $imageMimeType . ';base64,' . $logoBase64;
+                                @endphp
                                 <td width="20%" style="border: none; background-color: #000; text-align: center;">
-                                    <img style="width: 100%;" src="https://i.ibb.co/FmFDdRN/logo.png" alt="">
+                                    <img style="width: 100%;" src="{{ $dataUri  }}" alt="">
                                 </td>
                                 <td width="80%" style="border: none;">
-                                    <p class="inv-title">LUVNARICH INTERNATIONAL PVT LTD
-                                        <br>
-                                        (Sonrich Group)
+                                    <p class="inv-title">{{ $invoice->companies->company_name }}
                                     </p>
                                 </td>
                             </tr>
                         </table>
                         <div style="text-align: left;" class="address-company">
-                            <p><span>Address : </span>No.204/A/1, Bandaragama Road, Kesbewa</p>
-                            <p><span>TP :</span> (+94)383370000</p>
-                            <p class="email-n"><span>Email : info@luvnarich.net</span></p>
+                            <p><span>Address : </span>{{ $invoice->companies->address }}</p>
+                            <p><span>TP :</span>{{ $invoice->companies->telephone_number }}</p>
+                            <p class="email-n"><span>Email : {{ $invoice->companies->email }}</span></p>
                             <p class="last-p"><span>Reciept Number : </span>{{ $invoice->invoice_no }}</p>
                         </div>
                     </div>
@@ -589,25 +599,25 @@
                 </tr>
                 <tr>
                     <td>Company Name:</td>
-                    <td>Luvnarich International (pvt) ltd</td>
+                    <td>{{ $invoice->companies->company_name }}</td>
                     <td>Customer Name:</td>
                     <td>{{ $invoice->customer_name }}</td>
                 </tr>
                 <tr>
                     <td>Company Address:</td>
-                    <td>No.204/A/1, Bandaragama Road, Kesbewa</td>
+                    <td>{{ $invoice->companies->address }}</td>
                     <td>Customer Address:</td>
                     <td>{{ $invoice->customer_address }}</td>
                 </tr>
                 <tr>
                     <td>Phone No :</td>
-                    <td>(+94) 38 337 0000 </td>
+                    <td>{{ $invoice->companies->telephone_number }} </td>
                     <td>Phone No 1:</td>
                     <td>{{ $invoice->mobile_no1 }}</td>
                 </tr>
                 <tr>
                     <td>Email Address:</td>
-                    <td>info@luvnarich.net</td>
+                    <td>{{ $invoice->companies->email }}</td>
                     <td>Phone No 2:</td>
                     <td>{{ $invoice->mobile_no2 }}</td>
                 </tr>
@@ -672,14 +682,16 @@
                 $alldiscount = 0;
                 $totalTax = 0;
                 $deliverFee = 0;
+                $serviceCharge = 0;
                 $packageIds = [];
                 $futurePlans = $invoice->future_product_packages;
                 $mainPlans = $invoice->main_product_package;
 
 
                 @endphp
+
                 @if($futurePlans != null)
-                @foreach (json_decode($invoice->future_product_packages, true) as $packageId)
+                    @foreach (json_decode($invoice->future_product_packages, true) as $packageId)
                 @php
                 $packageIds[] = $packageId;
                 @endphp
@@ -717,12 +729,61 @@
                 $alldiscount += $productItem->package_discount;
                 $totalTax += $productItem->package_tax;
                 $deliverFee += $productItem->package_delivery_fee;
+                $serviceCharge += $productItem->service_charge;
                 }
                 @endphp
                 @endforeach
                 @endforeach
                 @endif
-                @if ($mainPlans != null)
+
+                @if($mainPlans != null)
+                    @foreach (json_decode($invoice->main_product_package, true) as $packageId)
+                @php
+                $packageIds[] = $packageId;
+                @endphp
+
+                @foreach (product_items($packageId) as $index => $productItem)
+
+                <tr>
+                    <td>
+                        <strong>{{ ucfirst($productItem->title) }}</strong>
+                        <br><br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">{{ $productItem->amount }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">{{ $productItem->quantity }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        @php
+                        $row_sum = $productItem->amount * $productItem->quantity;
+                        @endphp
+                        <p class="last-un right-align">{{ 'Rs ' . $row_sum }}</p>
+                        <br>
+                        <hr>
+                    </td>
+                </tr>
+                @php
+                $subtotal += $row_sum;
+                if ($index === 0 || !in_array($packageId, $packageIds)) {
+                $alldiscount += $productItem->package_discount;
+                $totalTax += $productItem->package_tax;
+                $deliverFee += $productItem->package_delivery_fee;
+                $serviceCharge += $productItem->service_charge;
+                }
+                @endphp
+                @endforeach
+                @endforeach
+                @endif
+
+
+                {{-- @if ($mainPlans != null)
 
                 @foreach (product_items($invoice->main_product_package) as $index => $productItem)
 
@@ -760,7 +821,7 @@
                 }
                 @endphp
                 @endforeach
-                @endif
+                @endif --}}
                 <tr>
                     <td></td>
                     <td>
@@ -808,7 +869,7 @@
                         <br>
                     </td>
                     <td>
-                        <p class="uni-middle-p right-align"><b>Tax & Packaging</b></p>
+                        <p class="uni-middle-p right-align"><b>Packaging, Distribution & Handling Fee </b></p>
                     </td>
                     <td>
                         <br>
@@ -817,6 +878,25 @@
                         <p class="uni-middle-p right-align">Rs.{{ $totalTax }}</p>
                     </td>
                 </tr>
+                @if($serviceCharge != 0)
+                <tr>
+                    <td>
+                        <br>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Tax and service charges</b></p>
+                        <hr>
+                    </td>
+                    <td>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.{{ $serviceCharge }}</p>
+                        <hr>
+                    </td>
+                </tr>
+                @endif
                 <tr>
                     <td>
                         <br>
@@ -841,7 +921,7 @@
                     </td>
                     <td></td>
                     <td>
-                        <p class="uni-middle-p right-align">Rs.{{ $amountwithdiscount + $deliverFee + $totalTax }}</p>
+                        <p class="uni-middle-p right-align">Rs.{{ $amountwithdiscount + $deliverFee + $totalTax + $serviceCharge }}</p>
                     </td>
                 </tr>
 
@@ -853,9 +933,9 @@
             <div class="footer-row-end">
                 <p>THANK YOU! WE APPRECIATE YOUR BUSINESS
                     <br>
-                    Luvnarich International Pvt ltd (Sonrich Group)
+                    {{ $invoice->companies->company_name }}
                     <br>
-                    Address : No.204/A/1, Bandaragama Road, Kesbewa | TP:(+94)383370000
+                    Address : {{ $invoice->companies->address }} | TP:{{ $invoice->companies->telephone_number }}
                 </p>
 
             </div>

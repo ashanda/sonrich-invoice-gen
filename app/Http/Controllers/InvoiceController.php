@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
 Use App\Models\ProductPackage;
@@ -15,43 +16,108 @@ class InvoiceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Delete Invoice!';
         $text = "Are you sure you want to delete?";
         confirmDelete($title, $text);
-        if(Auth::user()->type == 'admin'){
-            $invoices = Invoice::orderBy('created_at', 'asc')->get();
-            return view('pages.admin.invoice.index',compact('invoices'));
-        }else if(Auth::user()->type == 'manager'){
-            $invoices = Invoice::where('account_departmet_checked','unchecked')->orderBy('created_at', 'asc')->get();
-            return view('pages.account.invoice.index',compact('invoices'));
-        }else if(Auth::user()->type == 'deliver'){
-            $invoices = Invoice::where('account_departmet_checked','checked')->where('deliver_departmet_checked','not printed')->orderBy('created_at', 'asc')->get();
-            return view('pages.deliver.invoice.index',compact('invoices'));
-        }else{
-            $invoices = Invoice::where('user_id',Auth::user()->id)->where('account_departmet_checked','unchecked')->where('deliver_departmet_checked','not printed')->orderBy('created_at', 'asc')->get();
-            return view('pages.agent.index',compact('invoices'));
+        
+        // Get all companies
+        $companies = Company::get();
+    
+        // Start building the query to fetch invoices
+        $query = Invoice::with('companies');
+    
+        // Filter by start date if provided
+        if ($request->start_date) {
+            $query->where('created_at', '>=', $request->start_date);
+        }
+    
+        // Filter by end date if provided
+        if ($request->end_date) {
+            $query->where('created_at', '<=', $request->end_date);
+        }
+    
+        // Filter by company if provided
+        if ($request->company) {
+            $query->where('company', $request->company);
+        }
+    
+        // Apply different filters based on user type
+        if (Auth::user()->type == 'admin') {
+            $invoices = $query->orderBy('created_at', 'asc')->get();
+            return view('pages.admin.invoice.index', compact('invoices', 'companies'));
+        } else if (Auth::user()->type == 'manager') {
+            $invoices = $query->where('account_departmet_checked', 'unchecked')
+                              ->orderBy('created_at', 'asc')
+                              ->get();
+            return view('pages.account.invoice.index', compact('invoices', 'companies'));
+        } else if (Auth::user()->type == 'deliver') {
+            $invoices = $query->where('account_departmet_checked', 'checked')
+                              ->where('deliver_departmet_checked', 'not printed')
+                              ->orderBy('created_at', 'asc')
+                              ->get();
+            return view('pages.deliver.invoice.index', compact('invoices', 'companies'));
+        } else {
+            $invoices = $query->where('user_id', Auth::user()->id)
+                              ->where('account_departmet_checked', 'unchecked')
+                              ->where('deliver_departmet_checked', 'not printed')
+                              ->orderBy('created_at', 'asc')
+                              ->get();
+            return view('pages.agent.index', compact('invoices', 'companies'));
         }
     }
+    
 
-    public function all()
+    public function all(Request $request)
     {
         $title = 'Delete Invoice!';
         $text = "Are you sure you want to delete?";
         confirmDelete($title, $text);
-        if(Auth::user()->type == 'admin'){
-            $invoices = Invoice::orderBy('created_at', 'asc')->get();
-            return view('pages.admin.invoice.all',compact('invoices'));
-        }else if(Auth::user()->type == 'manager'){
-            $invoices = Invoice::where('account_departmet_checked','checked')->where('manager_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
-            return view('pages.account.invoice.all',compact('invoices'));
-        }else if(Auth::user()->type == 'deliver'){
-            $invoices = Invoice::where('account_departmet_checked','checked')->where('deliver_id',Auth::user()->id)->where('deliver_departmet_checked','printed')->orderBy('created_at', 'desc')->get();
-            return view('pages.deliver.invoice.all',compact('invoices'));
-        }else{
-            $invoices = Invoice::where('user_id',Auth::user()->id)->where('account_departmet_checked','checked')->where('deliver_departmet_checked','printed')->orderBy('created_at', 'desc')->get();
-            return view('pages.agent.all',compact('invoices'));
+    
+        $companies = Company::get();
+    
+        // Start building the query based on user type
+        $query = Invoice::with('companies');
+    
+        // Filter by start and end date if provided
+        if ($request->start_date) {
+            $query->where('created_at', '>=', $request->start_date);
+        }
+    
+        if ($request->end_date) {
+            $query->where('created_at', '<=', $request->end_date);
+        }
+    
+        // Filter by company if provided
+        if ($request->company) {
+            $query->where('company', $request->company);
+        }
+    
+        // Apply different filters based on user type
+        if (Auth::user()->type == 'admin') {
+            $invoices = $query->orderBy('created_at', 'asc')->get();
+            return view('pages.admin.invoice.all', compact('invoices', 'companies'));
+        } else if (Auth::user()->type == 'manager') {
+            $invoices = $query->where('account_departmet_checked', 'checked')
+                              ->where('manager_id', Auth::user()->id)
+                              ->orderBy('created_at', 'desc')
+                              ->get();
+            return view('pages.account.invoice.all', compact('invoices', 'companies'));
+        } else if (Auth::user()->type == 'deliver') {
+            $invoices = $query->where('account_departmet_checked', 'checked')
+                              ->where('deliver_id', Auth::user()->id)
+                              ->where('deliver_departmet_checked', 'printed')
+                              ->orderBy('created_at', 'desc')
+                              ->get();
+            return view('pages.deliver.invoice.all', compact('invoices', 'companies'));
+        } else {
+            $invoices = $query->where('user_id', Auth::user()->id)
+                              ->where('account_departmet_checked', 'checked')
+                              ->where('deliver_departmet_checked', 'printed')
+                              ->orderBy('created_at', 'desc')
+                              ->get();
+            return view('pages.agent.all', compact('invoices', 'companies'));
         }
     }
     /**
@@ -62,12 +128,12 @@ class InvoiceController extends Controller
 
         $packages_main = ProductPackage::where('product_type','Main')->where('package_visibility',1)->get();
         $packages_future = ProductPackage::where('product_type','Future')->where('package_visibility',1)->get();
-        
+        $companies = Company::get();
         $title = 'Confirm!';
         $text = "Are you sure you want to save this?";
         confirmDelete($title, $text);
 
-        return view('pages.agent.create',compact('packages_main','packages_future'));
+        return view('pages.agent.create',compact('packages_main','packages_future','companies'));
     }
 
     /**
@@ -94,12 +160,14 @@ class InvoiceController extends Controller
         $invoice->customer_district = $request->customerDistrict;
         $invoice->mobile_no1 = $request->mobileNo1;
         $invoice->mobile_no2 = $request->mobileNo2;
+        $invoice->company = $request->company;
         
-        if($request->mainProductPackage != "N/A"){
-            $invoice->main_product_package = $request->mainProductPackage;
+        if($request->mainProductPackage != "N/A" && $request->mainProductPackage != null){
+            $invoice->main_product_package = json_encode($request->mainProductPackage);
         }
-       
-        $invoice->future_product_packages = json_encode($request->futureProductPackages);
+        if($request->futureProductPackages != "N/A" && $request->futureProductPackages != null){
+            $invoice->future_product_packages = json_encode($request->futureProductPackages);
+        }
         $invoice->amount = $request->amount;
 
         if($request->file('attachments1')){
@@ -145,10 +213,11 @@ class InvoiceController extends Controller
      */
     public function show(string $id)
     {
-        $invoice = Invoice::where('id',$id)->first();
+        $invoice = Invoice::with('companies')->where('id',$id)->first();
+        $companies = Company::all();
         $packages_main = ProductPackage::where('product_type','Main')->get();
         $packages_future = ProductPackage::where('product_type','Future')->get();
-        return view('pages.agent.show',compact('invoice', 'packages_main', 'packages_future'));
+        return view('pages.agent.show',compact('invoice', 'packages_main', 'packages_future','companies'));
     }
 
     /**
@@ -156,13 +225,14 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-        $invoice = Invoice::where('id',$id)->first();
+        $invoice = Invoice::with('companies')->where('id',$id)->first();
+        $companies = Company::all();
         $packages_main = ProductPackage::where('product_type','Main')->get();
         $packages_future = ProductPackage::where('product_type','Future')->get();
         $title = 'Confirm!';
         $text = "Are you sure you want to save this?";
         confirmDelete($title, $text);
-        return view('pages.agent.edit',compact('invoice', 'packages_main', 'packages_future'));
+        return view('pages.agent.edit',compact('invoice', 'packages_main', 'packages_future', 'companies'));
     }
 
     /**
@@ -188,7 +258,7 @@ class InvoiceController extends Controller
     $invoice->mobile_no2 = $request->input('mobileNo2');
     
     $invoice->future_product_packages = $request->input('futureProductPackages');
-   
+    $invoice->main_product_package = $request->input('mainProductPackage');
     
     if($request->file('attachments1')){
         $file= $request->file('attachments1');
@@ -227,13 +297,22 @@ class InvoiceController extends Controller
     $amount = 0.00;
     $discount=0.00;
 
-    if ($request->input('mainProductPackage') != 'N/A') {
-        $mainPackage = ProductPackage::findOrFail($request->input('mainProductPackage'));
+    // if ($request->input('mainProductPackage') != 'N/A') {
+    //     $mainPackage = ProductPackage::findOrFail($request->input('mainProductPackage'));
        
-        $amount += $mainPackage->amount;
-        $discount += $mainPackage->discount;
+    //     $amount += $mainPackage->amount;
+    //     $discount += $mainPackage->discount;
 
-        $invoice->main_product_package = $request->input('mainProductPackage');
+    //     $invoice->main_product_package = $request->input('mainProductPackage');
+    // }
+    
+    if ($request->filled('mainProductPackage')) {
+        foreach ($request->input('mainProductPackage') as $mainPackageId) {
+            $mainPackage = ProductPackage::findOrFail($mainPackageId);
+            $amount += $mainPackage->amount;
+            $discount += $mainPackage->discount;
+            
+        }
     }
    
     
@@ -336,7 +415,7 @@ $invoice->reason = $request->tbr;
         // Use $user_id and $id as needed
         // Retrieve the invoice, update the fields, and save
         
-        $invoice = Invoice::findOrFail($id);
+        $invoice = Invoice::with('companies')->findOrFail($id);
         $invoice->deliver_departmet_checked = 'printed';
         $invoice->remark = $request->remark;
         $invoice->deliver_id = Auth::user()->id;
@@ -369,7 +448,7 @@ return response()->download(public_path($directory . $filename))->deleteFileAfte
         public function  print_show(string $id)
         {
             
-            $invoice = Invoice::where('id',$id)->first();
+            $invoice = Invoice::where('id',$id)->with('companies')->first();
             $packages_main = ProductPackage::where('product_type','Main')->get();
             $packages_future = ProductPackage::where('product_type','Future')->get();
             $title = 'Confirm!';
