@@ -21,7 +21,7 @@
             Keep it up and improve your progress.</p>
         </div>
       </div>
-      {{ updateAllMainProductPackages() }}
+      {{-- {{ updateAllMainProductPackages() }} --}}
       <div class="col-md-1 col-lg-2 col-xl-2 d-none d-xl-inline"></div>
       <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
         <div class="left_sec text-center">
