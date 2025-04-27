@@ -65,8 +65,12 @@
                 <input type="number" name="discount" id="discount" class="form-control" value="{{ $productPackage->discount }}">
             </div>
             <div class="form-group">
-                <label for="tax">Tax:</label>
+                <label for="tax">Packaging, Distribution & Handling Fee:</label>
                 <input type="number" name="tax" id="tax" class="form-control" value="{{ $productPackage->tax }}">
+            </div>
+            <div class="form-group">
+                <label for="tax">Tax and Service Charges:</label>
+                <input type="number" name="service_charge" id="tax" class="form-control" value="{{ $productPackage->service_charge ?? 0.00 }}" required>
             </div>
             <div class="form-group">
                 <label for="deliver_fee">Deliver Fee:</label>

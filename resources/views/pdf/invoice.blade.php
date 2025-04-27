@@ -682,6 +682,7 @@
                 $alldiscount = 0;
                 $totalTax = 0;
                 $deliverFee = 0;
+                $serviceCharge = 0;
                 $packageIds = [];
                 $futurePlans = $invoice->future_product_packages;
                 $mainPlans = $invoice->main_product_package;
@@ -728,6 +729,7 @@
                 $alldiscount += $productItem->package_discount;
                 $totalTax += $productItem->package_tax;
                 $deliverFee += $productItem->package_delivery_fee;
+                $serviceCharge += $productItem->service_charge;
                 }
                 @endphp
                 @endforeach
@@ -773,6 +775,7 @@
                 $alldiscount += $productItem->package_discount;
                 $totalTax += $productItem->package_tax;
                 $deliverFee += $productItem->package_delivery_fee;
+                $serviceCharge += $productItem->service_charge;
                 }
                 @endphp
                 @endforeach
@@ -866,7 +869,7 @@
                         <br>
                     </td>
                     <td>
-                        <p class="uni-middle-p right-align"><b>Packaging</b></p>
+                        <p class="uni-middle-p right-align"><b>Packaging, Distribution & Handling Fee </b></p>
                     </td>
                     <td>
                         <br>
@@ -875,6 +878,25 @@
                         <p class="uni-middle-p right-align">Rs.{{ $totalTax }}</p>
                     </td>
                 </tr>
+                @if($serviceCharge != 0)
+                <tr>
+                    <td>
+                        <br>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align"><b>Tax and service charges</b></p>
+                        <hr>
+                    </td>
+                    <td>
+                        <br>
+                        <hr>
+                    </td>
+                    <td>
+                        <p class="uni-middle-p right-align">Rs.{{ $serviceCharge }}</p>
+                        <hr>
+                    </td>
+                </tr>
+                @endif
                 <tr>
                     <td>
                         <br>
@@ -899,7 +921,7 @@
                     </td>
                     <td></td>
                     <td>
-                        <p class="uni-middle-p right-align">Rs.{{ $amountwithdiscount + $deliverFee + $totalTax }}</p>
+                        <p class="uni-middle-p right-align">Rs.{{ $amountwithdiscount + $deliverFee + $totalTax + $serviceCharge }}</p>
                     </td>
                 </tr>
 
