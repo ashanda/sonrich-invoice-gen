@@ -57,3 +57,21 @@ function product_items($id){
 function product_packags($id){
     $products = ProductPackage::where('id', $id)->first();
 }
+
+
+function updateAllMainProductPackages()
+{
+    $invoices = Invoice::all(); // get all invoices
+
+    foreach ($invoices as $invoice) {
+        $currentValue = $invoice->main_product_package;
+
+        if ($currentValue && !is_array(json_decode($currentValue, true))) {
+            // Wrap the current value into an array
+            $invoice->main_product_package = json_encode([(string) $currentValue]);
+            $invoice->save();
+        }
+    }
+
+    return true;
+}

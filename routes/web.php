@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -72,6 +73,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::resource('product_packages', ProductPackageController::class);
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
     Route::get('/reports', [ReportController::class, 'report'])->name('admin.report');
+    Route::resource('companies', CompanyController::class);
 });
 
 /*------------------------------------------

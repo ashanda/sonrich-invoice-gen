@@ -49,6 +49,12 @@
       @endif
       @if (Auth::user()->type == 'admin' )
       <li>
+        <a href="{{ route('companies.index') }}">
+          <i class="nc-icon nc-badge"></i>
+          <p>Companies</p>
+        </a>
+      </li>
+      <li>
         <a href="{{ route('product_items.index') }}">
           <i class="nc-icon nc-bag-16"></i>
           <p>Product Items</p>
