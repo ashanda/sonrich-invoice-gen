@@ -39,6 +39,7 @@ function product_items($id){
     
     $packageDeliveryFee = $products->deliver_fee;
     $packageTax = $products->tax;
+    $packageServiceCharge = $products->service_charge;
     $packageDiscount = $products->discount;
     foreach ($packageItems as $index => $packageItemId) {
         $productItem = ProductItem::find($packageItemId);
@@ -47,6 +48,7 @@ function product_items($id){
             $productItem->package_tax = $packageTax;
             $productItem->package_discount = $packageDiscount;
             $productItem->package_delivery_fee = $packageDeliveryFee;
+            $productItem->service_charge = $packageServiceCharge;
             $productItems[] = $productItem;
         }
     }
