@@ -223,64 +223,64 @@
             </div> --}}
 
 
-            @php
-            $selectedPackages = json_decode($invoice->main_product_package, true);
-            @endphp
-             @if ($selectedPackages != null)
-            <div class="form-group">
-                <label for="mainProductPackage">Main Product Package:</label>
-                <select name="mainProductPackage[]" id="mainProductPackage" class="form-control" multiple>
-                    <option value="N/A" data-main="{{ "0.00" }}">N/A</option>
-                    @foreach ($packages_main as $package_main)
-                    <option value="{{ $package_main->id }}" data-main="{{ $package_main->amount }}" @if (in_array($package_main->id, $selectedPackages)) selected @endif>{{ $package_main->title }}</option>
-                    @endforeach
-                </select>
-            </div>
-            @else
-            <div class="form-group">
-                <label for="futureProductPackages">Future Product Packages:</label>
-                <select name="futureProductPackages[]" id="futureProductPackages" class="form-control" multiple>
-                  <option value="N/A" data-future="{{ "0.00" }}">N/A</option>
-                  @foreach ( $packages_future as $package_future)
-                  <option value="{{ $package_future->id }}" data-future="{{ $package_future->amount }}">{{ $package_future->title }}</option>
-                  @endforeach
-                </select>
-              </div>
-              @endif
+            {{-- Main Product Package --}}
+<div class="form-group">
+    <label for="mainProductPackage">Main Product Package:</label>
+    <select name="mainProductPackage[]" id="mainProductPackage" class="form-control" multiple>
+        @foreach ($packages_main as $package_main)
+            <option value="{{ $package_main->id }}" data-main="{{ $package_main->amount }}"
+                {{ in_array($package_main->id, $selectedMainPackages) ? 'selected' : '' }}>
+                {{ $package_main->title }}
+            </option>
+        @endforeach
+    </select>
 
+    {{-- Main package quantity fields --}}
+    
+    @foreach ($selectedMainPackages as $packageId => $qty)
+    <div class="form-group mt-2">
+        <label for="mainPackageQty_{{ $packageId }}">
+            Qty for {{ $packages_main->firstWhere('id', $packageId)?->title ?? 'Unknown' }}:
+        </label>
+        <input type="number" name="mainProductPackage_quantities[{{ $packageId }}]"
+               value="{{ $qty ?? 1 }}"
+               class="form-control" min="1">
+    </div>
+@endforeach
+</div>
 
-            @php
-            $selectedPackages = json_decode($invoice->future_product_packages, true);
-            @endphp
-             @if ($selectedPackages != null)
-            <div class="form-group">
-                <label for="futureProductPackages">Future Product Packages:</label>
-                <select name="futureProductPackages[]" id="futureProductPackages" class="form-control" multiple>
-                    <option value="N/A" data-future="{{ "0.00" }}">N/A</option>
-                    @foreach ($packages_future as $package_future)
-                    <option value="{{ $package_future->id }}" data-future="{{ $package_future->amount }}" @if (in_array($package_future->id, $selectedPackages)) selected @endif>{{ $package_future->title }}</option>
-                    @endforeach
-                </select>
-            </div>
-            @else
-            <div class="form-group">
-                <label for="futureProductPackages">Future Product Packages:</label>
-                <select name="futureProductPackages[]" id="futureProductPackages" class="form-control" multiple>
-                  <option value="N/A" data-future="{{ "0.00" }}">N/A</option>
-                  @foreach ( $packages_future as $package_future)
-                  <option value="{{ $package_future->id }}" data-future="{{ $package_future->amount }}">{{ $package_future->title }}</option>
-                  @endforeach
-                </select>
-              </div>
-              @endif
+{{-- Future Product Package --}}
+<div class="form-group mt-4">
+    <label for="futureProductPackages">Future Product Packages:</label>
+    <select name="futureProductPackages[]" id="futureProductPackages" class="form-control" multiple>
+        @foreach ($packages_future as $package_future)
+            <option value="{{ $package_future->id }}" data-future="{{ $package_future->amount }}"
+                {{ in_array($package_future->id, $selectedFuturePackages) ? 'selected' : '' }}>
+                {{ $package_future->title }}
+            </option>
+        @endforeach
+    </select>
+
+    {{-- Future package quantity fields --}}
+    @foreach ($selectedFuturePackages as $futureId => $qty)
+        <div class="form-group mt-2">
+            <label for="futurePackageQty_{{ $futureId }}">
+                Qty for {{ $packages_future->firstWhere('id', $futureId)?->title ?? 'Unknown' }}:
+            </label>
+            <input type="number" name="futureProductPackages_quantities[{{ $futureId }}]"
+                value="{{ $qty ?? 1 }}"
+                class="form-control" min="1">
+        </div>
+    @endforeach
+</div>
 
 
 
 
             <div class="form-group">
                 <label for="amount">Amount:</label>
-                
-                <input type="text" name="amount" id="amount" class="form-control" value="{{ $invoice->amount }}" readonly>
+                {{ $invoice->amount }}
+                <input type="hidden" name="amount"  class="form-control" value="{{ $invoice->amount }}" readonly>
             </div>
             <div class="tz-gallery">
 

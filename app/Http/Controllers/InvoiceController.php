@@ -100,13 +100,13 @@ class InvoiceController extends Controller
             return view('pages.admin.invoice.all', compact('invoices', 'companies'));
         } else if (Auth::user()->type == 'manager') {
             $invoices = $query->where('account_departmet_checked', 'checked')
-                              ->where('manager_id', Auth::user()->id)
+                              //->where('manager_id', Auth::user()->id)
                               ->orderBy('created_at', 'desc')
                               ->get();
             return view('pages.account.invoice.all', compact('invoices', 'companies'));
         } else if (Auth::user()->type == 'deliver') {
             $invoices = $query->where('account_departmet_checked', 'checked')
-                              ->where('deliver_id', Auth::user()->id)
+                             // ->where('deliver_id', Auth::user()->id)
                               ->where('deliver_departmet_checked', 'printed')
                               ->orderBy('created_at', 'desc')
                               ->get();
@@ -168,6 +168,15 @@ class InvoiceController extends Controller
         if($request->futureProductPackages != "N/A" && $request->futureProductPackages != null){
             $invoice->future_product_packages = json_encode($request->futureProductPackages);
         }
+
+         // Save quantities if available
+        $mainQuantities = $request->input('mainProductPackage_quantities', []); // default empty array
+        $futureQuantities = $request->input('futureProductPackages_quantities', []);
+
+        // Save quantities as JSON (you need columns in invoices table for these)
+        $invoice->main_product_package_quantities = json_encode($mainQuantities);
+        $invoice->future_product_packages_quantities = json_encode($futureQuantities);
+
         $invoice->amount = $request->amount;
 
         if($request->file('attachments1')){
@@ -217,7 +226,9 @@ class InvoiceController extends Controller
         $companies = Company::all();
         $packages_main = ProductPackage::where('product_type','Main')->get();
         $packages_future = ProductPackage::where('product_type','Future')->get();
-        return view('pages.agent.show',compact('invoice', 'packages_main', 'packages_future','companies'));
+        $selectedMainPackages = json_decode($invoice->main_product_package_quantities, true) ?? [];
+        $selectedFuturePackages = json_decode($invoice->future_product_packages_quantities, true) ?? [];
+        return view('pages.agent.show',compact('invoice', 'packages_main', 'packages_future','companies', 'selectedMainPackages', 'selectedFuturePackages'));
     }
 
     /**
@@ -229,10 +240,12 @@ class InvoiceController extends Controller
         $companies = Company::all();
         $packages_main = ProductPackage::where('product_type','Main')->get();
         $packages_future = ProductPackage::where('product_type','Future')->get();
+        $selectedMainPackages = json_decode($invoice->main_product_package_quantities, true) ?? [];
+        $selectedFuturePackages = json_decode($invoice->future_product_packages_quantities, true) ?? [];
         $title = 'Confirm!';
         $text = "Are you sure you want to save this?";
         confirmDelete($title, $text);
-        return view('pages.agent.edit',compact('invoice', 'packages_main', 'packages_future', 'companies'));
+        return view('pages.agent.edit',compact('invoice', 'packages_main', 'packages_future', 'companies', 'selectedMainPackages', 'selectedFuturePackages'));
     }
 
     /**
@@ -257,8 +270,8 @@ class InvoiceController extends Controller
     $invoice->mobile_no1 = $request->input('mobileNo1');
     $invoice->mobile_no2 = $request->input('mobileNo2');
     
-    $invoice->future_product_packages = $request->input('futureProductPackages');
-    $invoice->main_product_package = $request->input('mainProductPackage');
+    //$invoice->future_product_packages = $request->input('futureProductPackages');
+    //$invoice->main_product_package = $request->input('mainProductPackage');
     
     if($request->file('attachments1')){
         $file= $request->file('attachments1');
@@ -306,26 +319,26 @@ class InvoiceController extends Controller
     //     $invoice->main_product_package = $request->input('mainProductPackage');
     // }
     
-    if ($request->filled('mainProductPackage')) {
-        foreach ($request->input('mainProductPackage') as $mainPackageId) {
-            $mainPackage = ProductPackage::findOrFail($mainPackageId);
-            $amount += $mainPackage->amount;
-            $discount += $mainPackage->discount;
+    // if ($request->filled('mainProductPackage')) {
+    //     foreach ($request->input('mainProductPackage') as $mainPackageId) {
+    //         $mainPackage = ProductPackage::findOrFail($mainPackageId);
+    //         $amount += $mainPackage->amount;
+    //         $discount += $mainPackage->discount;
             
-        }
-    }
+    //     }
+    // }
    
     
-    if ($request->filled('futureProductPackages')) {
-        foreach ($request->input('futureProductPackages') as $futurePackageId) {
-            $futurePackage = ProductPackage::findOrFail($futurePackageId);
-            $amount += $futurePackage->amount;
-            $discount += $futurePackage->discount;
+    // if ($request->filled('futureProductPackages')) {
+    //     foreach ($request->input('futureProductPackages') as $futurePackageId) {
+    //         $futurePackage = ProductPackage::findOrFail($futurePackageId);
+    //         $amount += $futurePackage->amount;
+    //         $discount += $futurePackage->discount;
             
-        }
-    }
+    //     }
+    // }
    
-    $invoice->amount = $amount-$discount;
+    // $invoice->amount = $amount-$discount;
     $invoice->account_departmet_checked = $request->switchone;
     $invoice->manager_id = Auth::user()->id;
     $invoice->save();
@@ -412,6 +425,7 @@ $invoice->reason = $request->tbr;
 
  public function delive_print(Request $request, $id)
     {
+        
         // Use $user_id and $id as needed
         // Retrieve the invoice, update the fields, and save
         
@@ -451,11 +465,28 @@ return response()->download(public_path($directory . $filename))->deleteFileAfte
             $invoice = Invoice::where('id',$id)->with('companies')->first();
             $packages_main = ProductPackage::where('product_type','Main')->get();
             $packages_future = ProductPackage::where('product_type','Future')->get();
+            $selectedMainPackages = json_decode($invoice->main_product_package_quantities, true) ?? [];
+            $selectedFuturePackages = json_decode($invoice->future_product_packages_quantities, true) ?? [];
             $title = 'Confirm!';
             $text = "Are you sure you want to save this?";
             confirmDelete($title, $text);
-            return view('pages.deliver.invoice.show',compact('invoice', 'packages_main', 'packages_future'));
-        }    
+            return view('pages.deliver.invoice.show',compact('invoice', 'packages_main', 'packages_future', 'selectedMainPackages', 'selectedFuturePackages'));
+        }
+        
+        
+
+public function delive_print_show(Request $request, $id)
+{
+    $invoice = Invoice::with('companies')->findOrFail($id);
+    
+    $invoice->remark = $request->remark;
+    $invoice->deliver_id = Auth::id();
+    $invoice->save();
+
+    $invoice['date'] = '';
+
+    return view('pdf.invoiceShow', compact('invoice'));
+}
 
         
     

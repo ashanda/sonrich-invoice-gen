@@ -80,32 +80,46 @@
         <input type="text" name="mobileNo2" id="mobileNo2" class="form-control">
       </div>
 
-      <div class="form-group" style="margin-top: 30px">
-        <label for="mainProductPackage">Main Product Package: <br><span id="mainProductPackageLabel" style="font-size: smaller;">Select Product </span></label>
-        <select name="mainProductPackage[]" id="mainProductPackage" class="form-control selectpicker" multiple data-live-search="true" data-width="100%" >
-            
-            @foreach ($packages_main as $package_main)
-                <option value="{{ $package_main->id }}" data-main="{{ ($package_main->amount + $package_main->tax + $package_main->service_charge + $package_main->deliver_fee) - $package_main->discount }}">
-                    {{ $package_main->title }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+<!-- Main Product Package -->
+<div class="form-group" style="margin-top: 30px">
+    <label>Main Product Package:</label>
+    <select name="mainProductPackage[]" id="mainProductPackage" class="form-control selectpicker" multiple data-live-search="true" data-width="100%">
+        @foreach ($packages_main as $package_main)
+            <option value="{{ $package_main->id }}"
+                data-title="{{ $package_main->title }}"
+                data-main="{{ ($package_main->amount + $package_main->tax + $package_main->service_charge + $package_main->deliver_fee) - $package_main->discount }}">
+                {{ $package_main->title }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
-      <div class="form-group" style="margin-top: 30px">
-        <label for="futureProductPackages">Future Product Packages:<br><span id="futureProductPackagesLabel" style="font-size: smaller;">Select Product </span></label>
-        <select name="futureProductPackages[]" id="futureProductPackages" class="form-control selectpicker " multiple>
-          <option value="N/A" data-future="{{ "0.00" }}">N/A</option>
-          @foreach ( $packages_future as $package_future)
-          <option value="{{ $package_future->id }}" data-future="{{ ($package_future->amount + $package_future->tax + $package_future->service_charge +  $package_future->deliver_fee) - $package_future->discount }}">{{ $package_future->title }}</option>
-          @endforeach
-        </select>
-      </div>
+<!-- Dynamic Qty Inputs -->
+<div id="mainProductQtyContainer" style="margin-top:20px;padding-left: 50px; padding-right: 50px;text-align: center"></div>
 
-      <div class="form-group">
-        <label for="amount">Amount:</label>
-        <input type="text" name="amount" id="amount" class="form-control" readonly>
-      </div>
+<!-- Future Product Package -->
+<div class="form-group">
+    <label>Future Product Packages:</label>
+    <select name="futureProductPackages[]" id="futureProductPackages" class="form-control selectpicker" multiple data-live-search="true" data-width="100%">
+        <option value="N/A" data-title="N/A" data-future="0.00">N/A</option>
+        @foreach ($packages_future as $package_future)
+            <option value="{{ $package_future->id }}"
+                data-title="{{ $package_future->title }}"
+                data-future="{{ ($package_future->amount + $package_future->tax + $package_future->service_charge + $package_future->deliver_fee) - $package_future->discount }}">
+                {{ $package_future->title }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
+<!-- Dynamic Qty Inputs -->
+<div id="futureProductQtyContainer" style="margin-top:20px;padding-left: 50px; padding-right: 50px;text-align: center"></div>
+
+<!-- Final Total -->
+<div class="form-group">
+    <label>Total Amount:</label>
+    <input type="text" name="amount" id="amount" class="form-control" readonly>
+</div>
 
 
       <div class="form-group">
@@ -200,4 +214,5 @@
       $('.selectpicker').selectpicker();
   });
 </script>
+
 @endsection

@@ -44,16 +44,24 @@
 </style>
 <div class="content">
     <div class="container-fluid">
+      <div class="row">
         <form action="{{ route('deliver.print', $invoice->id) }}" method="POST" class="invoicePrintForm">
             @csrf
             @method('PUT')
 
             <button type="submit" id="saveButton" data-confirm-save="true" class="btn btn-primary mb-2">Print</button>
-            <a href="{{ route('invoice.index') }}" class="btn btn-warning mb-2">You Click the button and you can't again this invoioce print</a>
+            {{-- <a href="{{ route('invoice.index') }}" class="btn btn-warning mb-2">You Click the button and you can't again this invoioce print</a> --}}
             
         </form>
+        {{-- <form action="{{ route('deliver.print.show', $invoice->id) }}" method="GET" class="invoicePrintForm">
+            @csrf
+            <button type="submit" class="btn btn-info mb-2">Show</button>
+        </form> --}}
+        <a href="{{ route('deliver.print.show', $invoice->id) }}" class="btn btn-info mb-2">Show</a>
+
         
         <button class="btn btn-warning mb-2" id="openModalButton">remark</button>
+      </div>
         <hr>
         <form action="{{ route('deliver.update', $invoice->id) }}" method="POST" class="invoicePrintForm2">
             @csrf
@@ -169,6 +177,8 @@
 
         @php
             $selectedPackages = json_decode($invoice->main_product_package, true);
+    
+            $mainPackageQuantities = json_decode($invoice->main_product_package_quantities, true);
         @endphp
 
         @if ($selectedPackages != null && count($selectedPackages) > 0)
@@ -179,7 +189,8 @@
                         @foreach ($packages_main as $package_main)
                             @if (in_array($package_main->id, $selectedPackages))
                                 <li class="badge badge-info p-2 mb-2">
-                                    {{ $package_main->title }}
+                                    {{ $package_main->title }} - Qty: 
+                                    {{ $mainPackageQuantities[$package_main->id] ?? 1 }}
                                 </li> <!-- Display selected package title with a badge -->
                             @endif
                         @endforeach
@@ -193,6 +204,7 @@
 
         @php
             $selectedPackages = json_decode($invoice->future_product_packages, true);
+            $selectedFuturePackages = json_decode($invoice->future_product_package_quantities, true);
         @endphp
 
         @if ($selectedPackages != null && count($selectedPackages) > 0)
@@ -203,7 +215,8 @@
                         @foreach ($packages_future as $package_future)
                             @if (in_array($package_future->id, $selectedPackages))
                                 <li class="badge badge-info p-2 mb-2">
-                                    {{ $package_future->title }}
+                                    {{ $package_future->title }} - Qty: 
+                                    {{ $selectedFuturePackages[$package_main->id] ?? 1 }}
                                 </li> <!-- Display selected package title with a badge -->
                             @endif
                         @endforeach

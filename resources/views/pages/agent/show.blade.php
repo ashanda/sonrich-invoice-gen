@@ -114,6 +114,7 @@
 </style>
 <div class="content">
     <div class="container-fluid">
+        
     @if (Auth::user()->type == 'admin')
             <form action="{{ route('deliver.print', $invoice->id) }}" method="POST" class="invoicePrintForm">
             @csrf
@@ -122,9 +123,21 @@
             <button type="submit" id="saveButton" data-confirm-save="true" class="btn btn-primary mb-2">Print</button>
         </form>
     @endif
-        @if (Auth::user()->type == 'deliver')
-     
        
+        @if (Auth::user()->type == 'deliver')
+        <form action="{{ route('deliver.print', $invoice->id) }}" method="POST" class="invoicePrintForm">
+            @csrf
+            @method('PUT')
+
+            <button type="submit" id="saveButton" data-confirm-save="true" class="btn btn-primary mb-2">Print</button>
+        </form>
+        <form action="{{ route('deliver.print.show', $invoice->id) }}" method="POST" class="invoicePrintForm">
+            @csrf
+            @method('GET')
+
+            <button type="submit" id="saveButton" data-confirm-save="true" class="btn btn-info mb-2">Show</button>
+        </form>
+        
         @if($invoice->tracking == "")
         <form action="{{ route('invoice.tracking', $invoice->id) }}" method="POST" class="invoicePrintForm">
             @csrf
@@ -201,24 +214,25 @@
             <input type="text" name="sriNo3" id="sriNo3" class="form-control" value="{{ $invoice->sri_no3 }}" readonly>
         </div>
         @php
-        $futurePlans = json_decode($invoice->future_plans);
+        $selectedFuturePlans = json_decode($invoice->future_plans);
+        $futurePlanQuantities = json_decode($invoice->future_product_packages_quantities, true);
         @endphp
-        @if ($futurePlans != null)
-        <div class="form-group">
-            <label for="futurePlan">Future Plan:</label>
-            <div id="futurePlanFields">
-                <!-- Existing future plans will be displayed here -->
-           
-                @foreach ($futurePlans as $plan)
-                <div class="form-group">
-
-                    <input type="text" name="futurePlans[]" id="futurePlan{{$loop->iteration}}" class="form-control" value="{{$plan}}" readonly>
-
-                </div>
-                @endforeach
+        @if ($selectedFuturePlans && count($selectedFuturePlans) > 0)
+            <div class="form-group">
+                <label>Future Plans with Quantities:</label>
+                <ul class="list-unstyled">
+                    @foreach ($packages_future as $package_future)
+                        @if (in_array($package_future->id, $selectedFuturePlans))
+                            <li class="badge badge-info p-2 mb-2">
+                                {{ $package_future->title }} - Qty: 
+                                {{ $futurePlanQuantities[$package_future->id] ?? 1 }}
+                            </li>
+                        @endif
+                    @endforeach
+                </ul>
             </div>
-
-        </div>
+        @else
+            <p>No future plans selected.</p>
         @endif
         
 
@@ -250,6 +264,8 @@
         
         @php
             $selectedPackages = json_decode($invoice->main_product_package, true);
+    
+            $mainPackageQuantities = json_decode($invoice->main_product_package_quantities, true);
         @endphp
 
         @if ($selectedPackages != null && count($selectedPackages) > 0)
@@ -260,7 +276,8 @@
                         @foreach ($packages_main as $package_main)
                             @if (in_array($package_main->id, $selectedPackages))
                                 <li class="badge badge-info p-2 mb-2">
-                                    {{ $package_main->title }}
+                                    {{ $package_main->title }} - Qty: 
+                                    {{ $mainPackageQuantities[$package_main->id] ?? 1 }}
                                 </li> <!-- Display selected package title with a badge -->
                             @endif
                         @endforeach
@@ -298,6 +315,7 @@
 
         @php
             $selectedPackages = json_decode($invoice->future_product_packages, true);
+            $selectedFuturePackages = json_decode($invoice->future_product_package_quantities, true);
         @endphp
 
         @if ($selectedPackages != null && count($selectedPackages) > 0)
@@ -308,7 +326,8 @@
                         @foreach ($packages_future as $package_future)
                             @if (in_array($package_future->id, $selectedPackages))
                                 <li class="badge badge-info p-2 mb-2">
-                                    {{ $package_future->title }}
+                                    {{ $package_future->title }} - Qty: 
+                                    {{ $selectedFuturePackages[$package_main->id] ?? 1 }}
                                 </li> <!-- Display selected package title with a badge -->
                             @endif
                         @endforeach

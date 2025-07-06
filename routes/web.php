@@ -111,7 +111,8 @@ Route::middleware(['auth', 'user-access:deliver'])->group(function () {
 Route::middleware(['auth', 'user-access:admin,deliver'])->group(function () {
     Route::put('deliver/{id}', [InvoiceController::class, 'delive_update'])->name('deliver.update');
     Route::get('/deliver/print/{id}', [InvoiceController::class, 'print_show'])->name('print_show');
-    Route::put('/deliver_print/{id}', [InvoiceController::class, 'delive_print'])->name('deliver.print');
+    Route::put('/deliver_print_bill/{id}', [InvoiceController::class, 'delive_print'])->name('deliver.print');
+    Route::get('/deliver_print_show/{id}', [InvoiceController::class, 'delive_print_show'])->name('deliver.print.show');
 });
 
 Route::middleware(['auth', 'user-access:admin,manager,user,deliver'])->group(function () {
