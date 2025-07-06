@@ -10,11 +10,15 @@
     <title>Invoice</title>
 </head>
 <style>
-    body {
+
+     body {
         font-family: "Open Sans";
         font-size: 12px;
+        
     }
 
+
+  
     .address-company {
         padding-top: 5px;
         line-height: 1;
@@ -396,11 +400,12 @@
     }
 
     .full-content {
-        max-width: 1270px;
+        max-width: 794px;
         margin: auto;
         border: 1px solid #eee;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
         padding: 0 30px;
+        height: 100%;
     }
 
     .row.invi-row {
@@ -689,13 +694,14 @@
                 $mainPlans = $invoice->main_product_package;
                 $quantitiesMain = json_decode($invoice->main_product_package_quantities, true) ?? [];
 
+
                 @endphp
 
                 @if($futurePlans != null)
                     @foreach (json_decode($invoice->future_product_packages, true) as $packageId)
                 @php
                 $packageIds[] = $packageId;
-                 $packageQtyFutures = $quantitiesFuture[$packageId] ?? 1;
+                $packageQtyFutures = $quantitiesFuture[$packageId] ?? 1;
                 @endphp
 
                 @foreach (product_items($packageId) as $index => $productItem)
@@ -743,10 +749,11 @@
                 @php
                 $packageIds[] = $packageId;
                 $packageQtyMains = $quantitiesMain[$packageId] ?? 1;
+                
                 @endphp
 
                 @foreach (product_items($packageId) as $index => $productItem)
-                
+
                 <tr>
                     <td>
                         <strong>{{ ucfirst($productItem->title) }}</strong>
@@ -786,45 +793,6 @@
                 @endif
 
 
-                {{-- @if ($mainPlans != null)
-
-                @foreach (product_items($invoice->main_product_package) as $index => $productItem)
-
-                <tr>
-                    <td>
-                        <strong>{{ ucfirst($productItem->title) }}</strong>
-                        <br><br>
-                        <hr>
-                    </td>
-                    <td>
-                        <p class="uni-middle-p right-align">{{ $productItem->amount }}</p>
-                        <br>
-                        <hr>
-                    </td>
-                    <td>
-                        <p class="uni-middle-p right-align">{{ $productItem->quantity }}</p>
-                        <br>
-                        <hr>
-                    </td>
-                    <td>
-                        @php
-                        $row_sum = $productItem->amount * $productItem->quantity;
-                        @endphp
-                        <p class="last-un right-align">{{ 'Rs ' . $row_sum }}</p>
-                        <br>
-                        <hr>
-                    </td>
-                </tr>
-                @php
-                $subtotal += $row_sum;
-                if ($index === 0) {
-                $alldiscount += $productItem->package_discount;
-                $totalTax += $productItem->package_tax;
-                $deliverFee += $productItem->package_delivery_fee;
-                }
-                @endphp
-                @endforeach
-                @endif --}}
                 <tr>
                     <td></td>
                     <td>
@@ -930,21 +898,6 @@
 
         </section>
 
-
-
-        <section class="footer-section" style="margin-top:15px;">
-            <div class="footer-row-end">
-                <p>THANK YOU! WE APPRECIATE YOUR BUSINESS
-                    <br>
-                    {{ $invoice->companies->company_name }}
-                    <br>
-                    Address : {{ $invoice->companies->address }} | TP:{{ $invoice->companies->telephone_number }}
-                </p>
-
-            </div>
-            <p style='text-align:center;'>This document is an digitally Generated receipt. Signature won't be necessary
-            </p>
-        </section>
     </div>
 
     <!-- Display other invoice details as needed -->

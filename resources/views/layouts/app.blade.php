@@ -87,29 +87,88 @@
             demo.initChartsPages();
         });
     </script>
-    <script>
-        $(document).ready(function() {
-            // Calculate the sum of selected product items' values
-            function calculateSum() {
-                var sum = 0;
-                $('#product_items option:selected').each(function() {
-                    var value = $(this).data('value');
-                    if (value) {
-                        sum += parseFloat(value);
-                    }
-                });
-                $('#amount').val(sum);
+<script>
+$(document).ready(function () {
+    function renderQtyFields(selectorId, containerId, priceAttr) {
+        const selected = $(`#${selectorId}`).find(':selected');
+        const container = $(`#${containerId}`);
+        container.html('');
+
+        selected.each(function () {
+            const id = $(this).val();
+            const title = $(this).data('title');
+            const price = $(this).data(priceAttr);
+
+            if (id !== "N/A") {
+                const field = `
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">${title} - Qty:</label>
+                        <div class="col-md-4">
+                            <input type="number" min="1" value="1" class="form-control qty-input"
+                                data-id="${id}"
+                                data-price="${price}"
+                                data-type="${priceAttr}"
+                                name="${selectorId}_quantities[${id}]">
+                        </div>
+                    </div>`;
+                container.append(field);
             }
-
-            // Call calculateSum function when the selection changes
-            $('#product_items').change(function() {
-                calculateSum();
-            });
-
-            // Calculate the initial sum when the page loads
-            calculateSum();
         });
-    </script>
+
+        calculateTotalAmount(); // update total on render
+    }
+
+    function calculateTotalAmount() {
+        let total = 0;
+
+        $('.qty-input').each(function () {
+            const price = parseFloat($(this).data('price'));
+            const qty = parseInt($(this).val());
+            if (!isNaN(price) && !isNaN(qty)) {
+                total += price * qty;
+            }
+        });
+
+        $('#amount').val(total.toFixed(2));
+    }
+
+    $('#mainProductPackage').on('change', function () {
+        renderQtyFields('mainProductPackage', 'mainProductQtyContainer', 'main');
+    });
+
+    $('#futureProductPackages').on('change', function () {
+        renderQtyFields('futureProductPackages', 'futureProductQtyContainer', 'future');
+    });
+
+    // Recalculate when quantity fields change
+    $(document).on('input', '.qty-input', calculateTotalAmount);
+
+    // Initial trigger on page load
+    renderQtyFields('mainProductPackage', 'mainProductQtyContainer', 'main');
+    renderQtyFields('futureProductPackages', 'futureProductQtyContainer', 'future');
+});
+$(document).on('keydown', '.qty-input', function (e) {
+    const allowedKeys = [8, 9, 13, 27, 37, 38, 39, 40, 46]; // backspace, tab, enter, esc, arrows, delete
+    if (allowedKeys.includes(e.keyCode)) return;
+
+    // Prevent entering '0' as first char if input is empty
+    if (e.key === '0' && $(this).val().length === 0) {
+        e.preventDefault();
+    }
+
+    // Prevent minus and plus signs
+    if (e.key === '-' || e.key === '+') {
+        e.preventDefault();
+    }
+});
+
+$(document).on('blur', '.qty-input', function () {
+    let val = parseInt($(this).val(), 10);
+    if (isNaN(val) || val < 1) {
+        $(this).val(1);
+    }
+});
+</script>
     <script>
         $(document).ready(function() {
             // Function to add future plan input field
@@ -140,43 +199,7 @@
             });
         });
     </script>
-    <script>
-        $(document).ready(function() {
-            // Function to calculate the sum of selected options' data-value attributes
-            function calculateTotalAmount() {
-                var totalAmount = 0;
 
-                // Calculate the sum for the main product package
-                var mainProductPackage = $('#mainProductPackage').find(':selected');
-                if (mainProductPackage.length > 0) {
-                    mainProductPackage.each(function() {
-                        totalAmount += parseFloat($(this).data('main'));
-                    });
-
-                    
-                }
-
-                // Calculate the sum for the future product packages
-                var futureProductPackages = $('#futureProductPackages').find(':selected');
-                if (futureProductPackages.length > 0) {
-                    futureProductPackages.each(function() {
-                        totalAmount += parseFloat($(this).data('future'));
-                    });
-                }
-
-                // Display the total amount in the 'amount' input field
-                $('#amount').val(totalAmount.toFixed(2));
-            }
-
-            // Call the calculateTotalAmount function when the main product package or future product packages are changed
-            $('#mainProductPackage, #futureProductPackages').on('change', function() {
-                calculateTotalAmount();
-            });
-
-            // Call the calculateTotalAmount function on page load
-            calculateTotalAmount();
-        });
-    </script>
 
     @yield('script')
 </body>
