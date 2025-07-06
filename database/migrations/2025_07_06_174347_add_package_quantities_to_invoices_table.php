@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('invoices', function (Blueprint $table) {
             $table->json('main_product_package_quantities')->nullable()->after('main_product_package');
-            $table->json('')->nullable()->after('future_product_packages');
+            $table->json('future_product_package_quantities')->nullable()->after('future_product_packages');
         });
     }
 
