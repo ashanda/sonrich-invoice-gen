@@ -175,7 +175,7 @@ class InvoiceController extends Controller
 
         // Save quantities as JSON (you need columns in invoices table for these)
         $invoice->main_product_package_quantities = json_encode($mainQuantities);
-        $invoice->future_product_packages_quantities = json_encode($futureQuantities);
+        $invoice->future_product_package_quantities = json_encode($futureQuantities);
 
         $invoice->amount = $request->amount;
 
