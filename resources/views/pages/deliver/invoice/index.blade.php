@@ -74,7 +74,7 @@
                             Remark
                           </th>
                           <th>
-                            Update Date
+                            Create Date
                           </th>
                           <th class="text-right">
                             Action
@@ -113,7 +113,7 @@
                                   {{ $invoice->remark }}
                                  </td>
                                 <td>
-                                  {{ $invoice->updated_at }}
+                                  {{ $invoice->created_at }}
                                  </td>
                                 <td class="text-right">
                                     @if ($invoice->deliver_departmet_checked == "printed")
