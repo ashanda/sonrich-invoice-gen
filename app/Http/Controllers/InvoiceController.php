@@ -55,7 +55,7 @@ class InvoiceController extends Controller
         } else if (Auth::user()->type == 'deliver') {
             $invoices = $query->where('account_departmet_checked', 'checked')
                               ->where('deliver_departmet_checked', 'not printed')
-                              ->orderBy('created_at', 'asc')
+                              ->orderBy('created_at', 'desc')
                               ->get();
             return view('pages.deliver.invoice.index', compact('invoices', 'companies'));
         } else {
